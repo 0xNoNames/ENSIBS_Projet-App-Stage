@@ -1,0 +1,33 @@
+{
+  "name": "projet-app-stage",
+  "version": "1.0.0",
+  "description": "Projet S7",
+  "main": "server.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "server": "nodemon server.js --exec babel-node --presets babel-preset-env",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arthur-petre/projet-app-stage.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arthur-petre/projet-app-stage/issues"
+  },
+  "homepage": "https://github.com/arthur-petre/projet-app-stage#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "config": "^3.3.6",
+    "concurrently": "^6.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.7",
+    "nodemon": "^2.0.13"
+  }
+}
