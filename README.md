@@ -13,5 +13,5 @@ npm install
 # Run the back-end server
 npm start
 
-# Server runs on http://localhost:5000 and client on http://localhost:3000
+# Le serveur est en écoute sur l'adresse http://localhost:5000
 ```
