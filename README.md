@@ -1,4 +1,4 @@
-# PROJET S7 MERN
+# PROJET S7 METN
 
 > Projet de site web pour le semestre 7.
 
