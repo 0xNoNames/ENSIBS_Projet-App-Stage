@@ -10,10 +10,22 @@ import config from './config/index.js';
 import authRoutes from './routes/api/auth.js';
 import itemRoutes from './routes/api/items.js';
 import userRoutes from './routes/api/users.js';
+import cvthequeRoutes from './routes/cvtheque.js';
+import soutenancesRoutes from './routes/soutenance.js'
 
 const { MONGO_URI, MONGO_DB_NAME } = config;
 
 const app = express();
+
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+
+app.set('view engine', 'html');
+
 
 // CORS Middleware
 app.use(cors());
@@ -50,6 +62,49 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
+// Static folder
+app.use(express.static(__dirname + '/public'));
+
+
 const { PORT } = config;
+
+
+
+
+// Routing
+
+// Main Page
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/client/index.html');
+});
+
+
+// Contact Page
+app.get('/contact', function(req, res) {
+  res.sendFile(__dirname + '/client/contact.html');
+});
+
+
+// Page de la CVtheque
+app.use('/cvtheque', cvthequeRoutes);
+
+
+
+// Page des soutenances
+app.use('/soutenances',soutenancesRoutes)
+
+
+// Send a mail
+app.post('/mail', function(req, res) {
+  res.send('Soutenances Page');
+});
+
+
+
+
+
+
+
+
 
 app.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));
