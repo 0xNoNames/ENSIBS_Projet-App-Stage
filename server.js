@@ -85,12 +85,11 @@ app.get('/contact', function(req, res) {
 });
 
 
-// Page de la CVtheque
+// Pages de la CVtheque
 app.use('/cvtheque', cvthequeRoutes);
 
 
-
-// Page des soutenances
+// Pages des soutenances
 app.use('/soutenances',soutenancesRoutes)
 
 
@@ -100,9 +99,16 @@ app.post('/mail', function(req, res) {
 });
 
 
+// Profil page
+app.get('/profil', function(req, res) {
+  res.sendFile(__dirname + '/client/profil.html');
+});
 
 
-
+//The 404 Route (ALWAYS Keep this as the last route)
+app.get('*', function(req, res){
+  res.sendFile(__dirname + '/client/error404.html', 404);
+});
 
 
 

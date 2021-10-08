@@ -3,15 +3,17 @@ const { Schema, model } = pkg;
 
 
 // Create Schema
-const Cv = new Schema({
+const CvSchema = new Schema({
   path: {
     type: String,
     required: true
   },
-  date: {
-    type: Date,
-    default: Date.now
+  id_student: {
+    type: Number,
+    required : true
   }
 });
 
-const Item = model('item', Cv);
+const Cv = model('cv', CvSchema);
+
+export default Cv;
