@@ -4,7 +4,7 @@
 
 ## Démarrage rapide
 
-Ajouter "MONGOURI", "MONGO_DB_NAME" et "JWTSECRET" au fichier "backend\.env".
+Ajouter "MONGOURI", "MONGO_DB_NAME" et "JWTSECRET" au fichier "backend/.env".
 
 ```bash
 # Installer les dépendances de l'application.
