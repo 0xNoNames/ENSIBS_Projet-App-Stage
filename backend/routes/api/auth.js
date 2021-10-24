@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
-import config from '../../config/index.js';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import auth from '../../middleware/auth.js';
-// User Model
-import User from '../../models/User.js';
 
-const { JWT_SECRET } = config;
+// User Model
+import User from '../../models/user.js';
+
 const router = Router();
+dotenv.config({ path: 'backend/.env' });
 
 /**
  * @route   POST api/auth/login
@@ -31,7 +32,7 @@ router.post('/login', async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw Error('Invalid credentials');
 
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: 3600 });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: 3600 });
     if (!token) throw Error('Couldnt sign the token');
 
     res.status(200).json({
@@ -80,7 +81,7 @@ router.post('/register', async (req, res) => {
     const savedUser = await newUser.save();
     if (!savedUser) throw Error('Something went wrong saving the user');
 
-    const token = jwt.sign({ id: savedUser._id }, JWT_SECRET, {
+    const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, {
       expiresIn: 3600
     });
 

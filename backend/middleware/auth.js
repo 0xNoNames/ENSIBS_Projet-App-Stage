@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
-import config from '../config/index.js';
-
-const { JWT_SECRET } = config;
+import dotenv from 'dotenv';
+dotenv.config({ path: 'backend/.env' });
 
 export default (req, res, next) => {
   const token = req.header('x-auth-token');
@@ -12,7 +11,7 @@ export default (req, res, next) => {
 
   try {
     // Verify token
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     // Add user from payload
     req.user = decoded;
     next();

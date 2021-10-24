@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import auth from '../../middleware/auth.js';
+
 // Item Model
-import Item from '../../models/Item.js';
+import Item from '../../models/item.js';
 
 const router = Router();
 

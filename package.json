@@ -1,32 +1,43 @@
 {
-  "name": "projet-app-stage",
-  "version": "1.0.0",
-  "description": "Projet S7",
-  "main": "server.js",
-  "scripts": {
-    "start": "nodemon server.js "
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/arthur-petre/projet-app-stage.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/arthur-petre/projet-app-stage/issues"
-  },
-  "homepage": "https://github.com/arthur-petre/projet-app-stage#readme",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
-    "config": "^3.3.6",
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.7",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.13"
-  },
-  "type": "module"
+    "name": "projet-app-stage",
+    "version": "1.0.0",
+    "description": "Projet S7",
+    "main": "server.js",
+    "scripts": {
+        "server:build": "cross-env NODE_ENV=production node server.js",
+        "server:watch": "cross-env NODE_ENV=development nodemon server.js",
+        "tailwind:build": "cross-env TAILWIND_MODE=build cross-env NODE_ENV=production postcss frontend/assets/css/styles.css -o frontend/assets/css/tailwind.css --minify",
+        "tailwind:watch": "cross-env TAILWIND_MODE=watch cross-env NODE_ENV=development postcss frontend/assets/css/styles.css -o frontend/assets/css/tailwind.css --watch",
+        "dev": "concurrently \"npm run server:watch\" \"npm run tailwind:watch\"",
+        "build": "npm run tailwind:build && npm run server:build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/arthur-petre/projet-app-stage.git"
+    },
+    "author": "François JULLION, Alan PERRON, Arthur PÊTRE, Simon PROVOT",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/arthur-petre/projet-app-stage/issues"
+    },
+    "homepage": "https://github.com/arthur-petre/projet-app-stage#readme",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^6.0.7",
+        "morgan": "^1.10.0"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.3.7",
+        "concurrently": "^6.3.0",
+        "cross-env": "^7.0.3",
+        "nodemon": "^2.0.14",
+        "postcss-cli": "^9.0.1",
+        "tailwindcss": "^2.2.17"
+    },
+    "type": "module"
 }

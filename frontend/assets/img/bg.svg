@@ -1,0 +1,46 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_5:10)">
+        <rect width="1920" height="1080" fill="#818181"/>
+        <g filter="url(#filter0_f_5:10)">
+            <circle cx="1520.15" cy="34.1544" r="873.5" transform="rotate(-158.349 1520.15 34.1544)" fill="url(#paint0_linear_5:10)"/>
+        </g>
+        <g filter="url(#filter1_f_5:10)">
+            <circle cx="1311.52" cy="1329.52" r="873.5" transform="rotate(-19.237 1311.52 1329.52)" fill="url(#paint1_linear_5:10)"/>
+        </g>
+        <g filter="url(#filter2_f_5:10)">
+            <ellipse cx="-44.4432" cy="540.282" rx="1068.5" ry="1058" transform="rotate(112.323 -44.4432 540.282)" fill="url(#paint2_linear_5:10)"/>
+        </g>
+    </g>
+    <defs>
+        <filter id="filter0_f_5:10" x="396.421" y="-1089.58" width="2247.47" height="2247.47" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+            <feGaussianBlur stdDeviation="125" result="effect1_foregroundBlur_5:10"/>
+        </filter>
+        <filter id="filter1_f_5:10" x="187.787" y="205.787" width="2247.48" height="2247.48" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+            <feGaussianBlur stdDeviation="125" result="effect1_foregroundBlur_5:10"/>
+        </filter>
+        <filter id="filter2_f_5:10" x="-1354.24" y="-776.992" width="2619.6" height="2634.55" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+            <feGaussianBlur stdDeviation="125" result="effect1_foregroundBlur_5:10"/>
+        </filter>
+        <linearGradient id="paint0_linear_5:10" x1="1520.15" y1="-839.346" x2="1520.15" y2="907.654" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#C9D61F" stop-opacity="0.23"/>
+            <stop offset="1" stop-color="#C7D321"/>
+        </linearGradient>
+        <linearGradient id="paint1_linear_5:10" x1="1311.52" y1="456.025" x2="1311.52" y2="2203.02" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#107237" stop-opacity="0.21"/>
+            <stop offset="1" stop-color="#008233"/>
+        </linearGradient>
+        <linearGradient id="paint2_linear_5:10" x1="-44.4431" y1="-517.718" x2="-44.4431" y2="1598.28" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#62B31A" stop-opacity="0.26"/>
+            <stop offset="1" stop-color="#63A924"/>
+        </linearGradient>
+        <clipPath id="clip0_5:10">
+            <rect width="1920" height="1080" fill="white"/>
+        </clipPath>
+    </defs>
+</svg>

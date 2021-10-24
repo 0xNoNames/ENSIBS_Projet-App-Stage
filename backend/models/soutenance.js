@@ -6,17 +6,17 @@ const { Schema, model } = pkg;
 const SoutenanceSchema = new Schema({
   id_organisateur: {
     type: Number,
-    required : true
+    required: true
   },
-  date: { 
-    type: Date, 
-    default: Date.now 
-  }
-  place : {
-    type : String,
+  date: {
+    type: Date,
+    default: Date.now
+  },
+  place: {
+    type: String,
     default: undefined
   },
-  invited_id : {
+  invited_id: {
     type: [Number],
     default: undefined
   }
