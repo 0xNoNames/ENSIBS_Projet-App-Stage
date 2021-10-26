@@ -1,12 +1,16 @@
 module.exports = {
-    mode: 'jit',
-    purge: ['frontend/*.html'],
+    mode: "jit",
+    purge: ["frontend/*.html"],
     darkMode: false, // or 'media' or 'class'
     theme: {
-        extend: {},
-    },
-    variants: {
-        extend: {},
-    },
-    plugins: [],
-}
+        extend: {
+            colors: {
+                green: {
+                    "ensibs-light": "#dee686",
+                    ensibs: "#a9c332",
+                    "ensibs-dark": "#608a3c"
+                }
+            }
+        }
+    }
+};
