@@ -97,6 +97,11 @@ app.get('/inscription', function(req, res) {
     res.sendFile(__dirname + '/frontend/inscription.html');
 });
 
+// Page de récupéation
+app.get('/recuperation', function(req, res) {
+    res.sendFile(__dirname + '/frontend/recuperation.html');
+});
+
 // Page des offres
 app.get('/offres', function(req, res) {
     res.sendFile(__dirname + '/frontend/offres.html');
