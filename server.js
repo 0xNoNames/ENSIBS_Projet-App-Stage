@@ -126,4 +126,4 @@ app.get('*', function(req, res) {
 
 // -- -- -- -- -- -- -- -- --  -- DEMARRAGE SERVEUR -- -- -- -- -- -- -- -- --  -- \\
 
-app.listen(process.env.PORT, () => console.log(`Server started on PORT ${process.env.PORT}`));
+app.listen(process.env.PORT, () => console.log(`Server started on http://localhost:${process.env.PORT}`));
