@@ -47,9 +47,7 @@ const db = `${process.env.MONGO_URI}/${process.env.MONGO_DB_NAME}`;
 // Connect to Mongo
 mongoose
     .connect(db, {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true
+        useNewUrlParser: true
     }) // Adding new mongo url parser
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
