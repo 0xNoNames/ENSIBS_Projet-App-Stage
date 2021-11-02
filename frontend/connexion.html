@@ -13,7 +13,7 @@
     <div class="fixed h-full w-full bg-cover" style="background-image: url('assets/img/bg.jpg'); z-index: -99;"> </div>
 
     <!-- navbar goes here -->
-    <nav class="sticky top-0 z-10 backdrop-blur-md border-b border-gray-200 border-opacity-50 bg-black bg-opacity-20 backdrop-saturate-125">
+    <nav class="sticky top-0 px-12 z-10 backdrop-blur-md border-b border-gray-200 border-opacity-50 bg-black bg-opacity-20 backdrop-saturate-125">
         <div class="max-w-6xl mx-auto">
             <div class="flex justify-between">
 
@@ -63,12 +63,26 @@
 
     <div class="h-4/5 flex justify-center items-center">
         <!-- content goes here -->
-        <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20  border border-white border-opacity-50">
+        <!-- <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20  border border-white border-opacity-50">
             <p class="text-4xl text-white">Page CONNEXION</p>
-        </div>
+        </div> -->
+        <form class="flex flex-col py-10 px-8 text-left text-white rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+            <h3 class="flex flex-col mx-28 text-white text-4xl font-medium text-center">Bienvenue
+                <span class="pt-2 text-gray-200 text-lg font-light">Veuillez vous connecter.</span>
+            </h3>
+
+            <label for="username" class="mt-6 text-lg">E-mail</label>
+            <input type="text" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="mail@domain.net" id="username">
+
+            <label for="password" class="mt-8 text-lg">Mot de passe</label>
+            <input type="password" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Minimum 6 caractères" id="password">
+            <button class="p-3 mx-10 mt-12 text-lg font-semibold bg-white text-gray-800 rounded shadow-2xl bg-opacity-75 hover:bg-opacity-100">Se connecter</button>
+            <button onclick="location.href='inscription'" class="p-3 mx-10 mt-8 text-lg font-semibold bg-green-ensibs text-white rounded shadow-2xl bg-opacity-75 hover:bg-opacity-100">S'incrire</button>
+            <span onclick="location.href='recuperation'" class="mt-8 w-full text-center text-lg text-green-ensibs-light font-semibold cursor-pointer hover:underline">Mot de passe oublié ?</span>
+        </form>
     </div>
 
-    <script src="assets/js/index.js"></script>
+    <script src="assets/js/connexion.js"></script>
 </body>
 
 </html>
