@@ -18,12 +18,10 @@ import cvsRoutesAPI from "./backend/routes/api/cvs.js";
 import soutenancesRoutesAPI from "./backend/routes/api/soutenances.js";
 
 // -- -- -- non-API -- -- -- \\
-import connexionRoutes from "./backend/routes/connexion.js";
 import contactRoutes from "./backend/routes/contact.js";
 import cvthequeRoutes from "./backend/routes/cvtheque.js";
-import inscriptionRoutes from "./backend/routes/inscription.js";
+import utilisateurRoutes from "./backend/routes/utilisateur.js";
 import offresRoutes from "./backend/routes/offres.js";
-import profilRoutes from "./backend/routes/profil.js";
 import recuperationRoutes from "./backend/routes/recuperation.js";
 import soutenancesRoutes from "./backend/routes/soutenance.js";
 
@@ -100,20 +98,14 @@ app.use("/soutenances", soutenancesRoutes);
 // Page de contact
 app.use("/contact", contactRoutes);
 
-// Page de connexion
-app.use("/connexion", connexionRoutes);
-
-// Page d'inscription
-app.use("/inscription", inscriptionRoutes);
+// Page de connexion, inscription et profile
+app.use("/utilisateur", utilisateurRoutes);
 
 // Page de récupération
 app.use("/recuperation", recuperationRoutes);
 
 // Page des offres
 app.use("/offres", offresRoutes);
-
-// Page de profil
-app.use("/profil", profilRoutes);
 
 // // Send a mail
 // app.post("/mail", function(req, res) {

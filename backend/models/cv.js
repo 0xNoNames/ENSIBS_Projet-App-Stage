@@ -4,11 +4,11 @@ const { Schema, model } = pkg;
 
 // Create Schema
 const CvSchema = new Schema({
-    path: {
+    chemin: {
         type: String,
         required: true
     },
-    id_student: {
+    id_eleve: {
         type: Number,
         required: true
     }

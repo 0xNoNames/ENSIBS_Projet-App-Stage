@@ -16,7 +16,7 @@ const SoutenanceSchema = new Schema({
     type: String,
     default: undefined
   },
-  invited_id: {
+  id_invitation: {
     type: [Number],
     default: undefined
   }
