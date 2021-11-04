@@ -1,20 +1,16 @@
 import { Router } from "express";
 
-import {
-    getCVs,
-    createCV,
-    updateCV,
-    deleteCV,
-} from "../../controllers/cvtheque.js";
+import auth from "../../middleware/auth.js";
+import { getCVs, createCV, updateCV, deleteCV } from "../../controllers/cvtheque.js";
 
 const router = Router();
 
-router.get("/", getCVs);
+router.get("/", auth, getCVs);
 
-router.post("/create", createCV);
+router.post("/create", auth, createCV);
 
-router.post("/update", updateCV);
+router.post("/update", auth, updateCV);
 
-router.post("/delete", deleteCV);
+router.post("/delete", auth, deleteCV);
 
 export default router;

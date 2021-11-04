@@ -1,11 +1,13 @@
 import { Router } from "express";
-import path from 'path';
+import path from "path";
+
+import auth from "../middleware/auth.js";
 
 const router = Router();
 const __dirname = path.resolve("./");
 
-router.get("/", (req, res) => {
-    res.sendFile(__dirname + "/frontend/recuperation.html");
+router.get("/", auth, (req, res) => {
+  res.sendFile(__dirname + "/frontend/recuperation.html");
 });
 
 export default router;

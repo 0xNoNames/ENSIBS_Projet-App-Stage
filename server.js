@@ -9,9 +9,6 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 
 // -- -- -- -- -- -- -- -- --  -- ROUTES -- -- -- -- -- -- -- -- --  -- \\
-
-// -- -- -- API -- -- -- \\
-import authRoutesAPI from "./backend/routes/api/auth.js";
 import itemsRoutesAPI from "./backend/routes/api/items.js";
 import usersRoutesAPI from "./backend/routes/api/users.js";
 import cvsRoutesAPI from "./backend/routes/api/cvs.js";
@@ -48,7 +45,9 @@ app.use(cors());
 // Logger Middleware
 app.use(morgan("dev"));
 // Bodyparser Middleware
-app.use(express.json());
+app.use(express.json({
+  type: "*/*"
+}))
 
 // -- -- -- -- -- -- -- -- --  -- DATABASE -- -- -- -- -- -- -- -- --  -- \\
 
@@ -68,7 +67,6 @@ mongoose
 // Use Routes
 app.use("/api/items", itemsRoutesAPI);
 app.use("/api/users", usersRoutesAPI);
-app.use("/api/auth", authRoutesAPI);
 app.use("/api/cvs", cvsRoutesAPI);
 app.use("/api/soutenances", soutenancesRoutesAPI);
 
@@ -119,6 +117,4 @@ app.get("*", function (req, res) {
 
 // -- -- -- -- -- -- -- -- --  -- DEMARRAGE SERVEUR -- -- -- -- -- -- -- -- --  -- \\
 
-app.listen(process.env.PORT, () =>
-  console.log(`Server started on http://localhost:${process.env.PORT}`)
-);
+app.listen(process.env.PORT, () => console.log(`Server started on http://localhost:${process.env.PORT}`));

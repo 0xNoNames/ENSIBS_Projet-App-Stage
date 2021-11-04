@@ -1,7 +1,8 @@
 import { Router } from "express";
 import path from "path";
 
-import {connexion, inscription} from "../controllers/utilisateur.js"
+import auth from "../middleware/auth.js";
+import { connexion, inscription, deconnexion } from "../controllers/utilisateur.js";
 
 const router = Router();
 const __dirname = path.resolve("./");
@@ -14,12 +15,19 @@ router.get("/connexion", (req, res) => {
   res.sendFile(__dirname + "/frontend/connexion.html");
 });
 
-router.get("/", isSignedIn, (req, res) => {
-  res.sendFile(__dirname + "/frontend/profil.html");
-});
+router.get(
+  "/",
+  auth,
+  (req, res) => {
+    res.sendFile(__dirname + "/frontend/profil.html");
+  },
+  (req, res) => {
+    windows.location = "/connexion";
+  }
+);
 
 router.post("/connexion", connexion);
 router.post("/inscrption", inscription);
-router.post("/deconnexion", deconnexion);
+router.post("/deconnexion", auth, deconnexion);
 
 export default router;

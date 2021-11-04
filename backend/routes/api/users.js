@@ -1,6 +1,7 @@
-import { Router } from 'express';
-// User Model
-import User from '../../models/user.js';
+import { Router } from "express";
+
+import auth from "../../middleware/auth.js";
+import User from "../../models/utilisateur.js";
 
 const router = Router();
 
@@ -10,10 +11,10 @@ const router = Router();
  * @access  Private
  */
 
-router.get('/', async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const users = await User.find();
-    if (!users) throw Error('No users exist');
+    if (!users) throw Error("No users exist");
     res.json(users);
   } catch (e) {
     res.status(400).json({ msg: e.message });

@@ -1,20 +1,16 @@
 import { Router } from "express";
 
-import {
-    getSoutenances,
-    createSoutenance,
-    deleteSoutenance,
-    updateSoutenance,
-} from "../../controllers/soutenance.js";
+import auth from "../../middleware/auth.js";
+import { getSoutenances, createSoutenance, deleteSoutenance, updateSoutenance } from "../../controllers/soutenance.js";
 
 const router = Router();
 
-router.get("/", getSoutenances);
+router.get("/", auth, getSoutenances);
 
-router.post("/create", createSoutenance);
+router.post("/create", auth, createSoutenance);
 
-router.post("/update", updateSoutenance);
+router.post("/update", auth, updateSoutenance);
 
-router.post("/delete", deleteSoutenance);
+router.post("/delete", auth, deleteSoutenance);
 
 export default router;

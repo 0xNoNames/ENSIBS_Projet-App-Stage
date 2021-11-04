@@ -1,13 +1,13 @@
 export const getSoutenances = (req, res) => {
-    // var base_dir = path.resolve("./");
-    // res.sendFile(base_dir + "/frontend/soutenances.html");
+  // var base_dir = path.resolve("./");
+  // res.sendFile(base_dir + "/frontend/soutenances.html");
 };
 
 export const createSoutenance = (req, res) => {
-    // Get the value on name in the headers
-    var name = req.header("name");
+  // Get the value on name in the headers
+  var name = req.header("name");
 
-    /*
+  /*
       const newSoutenance = new Soutenance({
           name,
           email,
@@ -27,13 +27,13 @@ export const createSoutenance = (req, res) => {
           }
         }); */
 
-    res.status(200);
+  res.status(200);
 };
 
 export const updateSoutenance = (req, res) => {
-    res.status(200);
+  res.status(200);
 };
 
 export const deleteSoutenance = (req, res) => {
-    res.status(200);
+  res.status(200);
 };
