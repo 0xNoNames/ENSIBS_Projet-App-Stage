@@ -6,9 +6,8 @@ import UtilisateurModel from "../models/utilisateur.js";
 
 const auth = async (req, res, next) => {
   try {
-    const { headers } = req;
-
     try {
+      const { headers } = req;
       var cookies = headers.cookie.split(";")[0];
       var parts = cookies.split("=");
     } catch (error) {
@@ -22,22 +21,10 @@ const auth = async (req, res, next) => {
       return res.status(401).json({ message: "Pas de token dans les cookies." });
     }
 
-    const accessToken = cookie.token;
-
-    /* On vérifie que le token CSRF est présent dans les en-têtes de la requête */
-    if (!headers || !headers["x-xsrf-token"]) {
-      return res.status(401).json({ message: "Pas de token XSRF token dans les en-têtes." });
-    }
-
-    const xsrfToken = headers["x-xsrf-token"];
+    const token = cookie.token;
 
     /* On vérifie et décode le JWT à l'aide du secret et de l'algorithme utilisé pour le générer */
-    const decodedToken = jwt.verify(accessToken, process.env.JWT_SECRET);
-
-    /* On vérifie que le token CSRF correspond à celui présent dans le JWT  */
-    if (xsrfToken !== decodedToken.xsrfToken) {
-      return res.status(401).json({ message: "Mauvais token XSRF." });
-    }
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
     /* On vérifie que l'utilisateur existe bien dans notre base de données */
     const userId = decodedToken.sub;
@@ -49,8 +36,8 @@ const auth = async (req, res, next) => {
     /* On passe l'utilisateur dans notre requête afin que celui-ci soit disponible pour les prochains middlewares */
     req.user = user;
 
-    /* On appelle le prochain middleware */
-    return next();
+    // /* On appelle le prochain middleware */
+    next();
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Erreur interne." });

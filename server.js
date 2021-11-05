@@ -62,7 +62,7 @@ mongoose
   .connect(db, {
     useNewUrlParser: true,
   }) // Adding new mongo url parser
-  .then(() => console.log("MongoDB Connected..."))
+  .then(() => console.log("Connecté à la base de données MongoDB..."))
   .catch((err) => console.log(err));
 
 // -- -- -- -- -- -- -- -- --  -- ROUTING API -- -- -- -- -- -- -- -- --  -- \\
@@ -72,8 +72,9 @@ app.use("/api/items", auth, itemsRoutesAPI);
 app.use("/api/users", auth, usersRoutesAPI);
 app.use("/api/cvs", auth, cvsRoutesAPI);
 app.use("/api/soutenances", auth, soutenancesRoutesAPI);
-app.use("api/estconnecte", auth, (req, res) => {
-  res.status(200).json({ message: "connected" });
+app.get("/api/estconnecte", auth, (req, res) => {
+  res.status(200);
+  res.send("");
 });
 
 // Serve static assets if in production

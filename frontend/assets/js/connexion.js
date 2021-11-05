@@ -1,3 +1,8 @@
+import { auth } from "/static/assets/js/auth.js";
+
+if (auth()) { window.location.href = "/"; }
+
+
 window.addEventListener("load", function () {
   function sendData() {
     fetch("/utilisateur/connexion", {
@@ -7,15 +12,7 @@ window.addEventListener("load", function () {
       .then((res) => res.json().then((data) => ({ status: res.status, body: data })))
       .then((data) => {
         if (data.status == 400) document.getElementById("messageErreur").innerHTML = data.body.message;
-        else {
-          const { xsrfToken } = data.body;
-
-          console.log(xsrfToken);
-
-          /* Le localStorage ne stocke que des chaines de caractères nous devons donc faire appel à la méthode "JSON.stringify" */
-          localStorage.setItem("xsrfToken", JSON.stringify(xsrfToken));
-          // window.location = "/utilisateur";
-        }
+        else { window.location.href = "/utilisateur"; }
       })
       .catch((err) => {
         document.getElementById("messageErreur").innerHTML = err;
