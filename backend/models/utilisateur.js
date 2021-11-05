@@ -8,7 +8,6 @@ const UtilisateurSchema = new Schema({
   email: { type: String, required: true, unique: true },
   mot_de_passe: { type: String, required: true },
   date_inscription: { type: Date, default: Date.now },
-  id: { type: String },
 });
 
 const Utilisateur = model("utilisateur", UtilisateurSchema);

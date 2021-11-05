@@ -27,7 +27,7 @@ router.get(
 );
 
 router.post("/connexion", connexion);
-router.post("/inscrption", inscription);
-router.post("/deconnexion", auth, deconnexion);
+router.post("/inscription", inscription);
+router.post("/deconnexion", deconnexion);
 
 export default router;

@@ -2,13 +2,14 @@
 
 import express from "express";
 import mongoose from "mongoose";
-import path from "path";
 import cors from "cors";
-// import bodyParser from 'body-parser';
 import morgan from "morgan";
 import dotenv from "dotenv";
 
+import auth from "./backend/middleware/auth.js";
+
 // -- -- -- -- -- -- -- -- --  -- ROUTES -- -- -- -- -- -- -- -- --  -- \\
+
 import itemsRoutesAPI from "./backend/routes/api/items.js";
 import usersRoutesAPI from "./backend/routes/api/users.js";
 import cvsRoutesAPI from "./backend/routes/api/cvs.js";
@@ -45,9 +46,11 @@ app.use(cors());
 // Logger Middleware
 app.use(morgan("dev"));
 // Bodyparser Middleware
-app.use(express.json({
-  type: "*/*"
-}))
+app.use(
+  express.json({
+    type: "*/*",
+  })
+);
 
 // -- -- -- -- -- -- -- -- --  -- DATABASE -- -- -- -- -- -- -- -- --  -- \\
 
@@ -65,10 +68,13 @@ mongoose
 // -- -- -- -- -- -- -- -- --  -- ROUTING API -- -- -- -- -- -- -- -- --  -- \\
 
 // Use Routes
-app.use("/api/items", itemsRoutesAPI);
-app.use("/api/users", usersRoutesAPI);
-app.use("/api/cvs", cvsRoutesAPI);
-app.use("/api/soutenances", soutenancesRoutesAPI);
+app.use("/api/items", auth, itemsRoutesAPI);
+app.use("/api/users", auth, usersRoutesAPI);
+app.use("/api/cvs", auth, cvsRoutesAPI);
+app.use("/api/soutenances", auth, soutenancesRoutesAPI);
+app.use("api/estconnecte", auth, (req, res) => {
+  res.status(200).json({ message: "connected" });
+});
 
 // Serve static assets if in production
 // if (process.env.NODE_ENV === "production") {
