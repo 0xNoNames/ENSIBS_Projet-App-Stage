@@ -1,0 +1,98 @@
+<!-- Background -->
+<div class="fixed h-full w-full bg-cover" style="background-image: url('/static/img/bg.jpg'); z-index: -99"></div>
+
+<nav class="sticky top-0 z-10 backdrop-blur-md border-b border-gray-200 border-opacity-50 bg-black bg-opacity-20 backdrop-saturate-125">
+  <div class="w-full flex justify-around">
+    <div class="flex space-x-2">
+      <!-- Logo -->
+      <div>
+        <a href="/" class="p-4 flex items-center">
+          <img src="/static/img/ensibs-logo.png" class="h-10 mr-2" />
+        </a>
+      </div>
+
+      <!-- Pages -->
+      <div id="navBar" class="hidden mr-8 md:flex items-center space-x-1">
+        <%if (estConnecte) { %> <% switch (page) { case "acceuil" : %>
+        <a href="/" class="py-4 px-2 text-lg text-green-ensibs-light font-medium hover:text-white">ACCUEIL</a>
+        <a href="/cvtheque" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CVTHÈQUE</a>
+        <a href="/offres" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">OFFRES</a>
+        <a href="/soutenances" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">SOUTENANCES</a>
+        <a href="/contact" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CONTACT</a>
+        <% break; case "cvtheque" : %>
+        <a href="/" class="py-4 px-2 text-lg text-gray-300 font-medium hover:text-white">ACCUEIL</a>
+        <a href="/cvtheque" class="py-4 px-3 text-lg text-green-ensibs-light font-medium hover:text-white">CVTHÈQUE</a>
+        <a href="/offres" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">OFFRES</a>
+        <a href="/soutenances" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">SOUTENANCES</a>
+        <a href="/contact" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CONTACT</a>
+        <% break; case "offres" : %>
+        <a href="/" class="py-4 px-2 text-lg text-gray-300 font-medium hover:text-white">ACCUEIL</a>
+        <a href="/cvtheque" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CVTHÈQUE</a>
+        <a href="/offres" class="py-4 px-3 text-lg text-green-ensibs-light font-medium hover:text-white">OFFRES</a>
+        <a href="/soutenances" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">SOUTENANCES</a>
+        <a href="/contact" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CONTACT</a>
+        <% break; case "soutenances" : %>
+        <a href="/" class="py-4 px-2 text-lg text-gray-300 font-medium hover:text-white">ACCUEIL</a>
+        <a href="/cvtheque" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CVTHÈQUE</a>
+        <a href="/offres" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">OFFRES</a>
+        <a href="/soutenances" class="py-4 px-3 text-lg text-green-ensibs-light font-medium hover:text-white">SOUTENANCES</a>
+        <a href="/contact" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CONTACT</a>
+        <% break; case "contact" : %>
+        <a href="/" class="py-4 px-2 text-lg text-gray-300 font-medium hover:text-white">ACCUEIL</a>
+        <a href="/cvtheque" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CVTHÈQUE</a>
+        <a href="/offres" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">OFFRES</a>
+        <a href="/soutenances" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">SOUTENANCES</a>
+        <a href="/contact" class="py-4 px-3 text-lg text-green-ensibs-light font-medium hover:text-white">CONTACT</a>
+        <% break; case "" : %>
+        <a href="/" class="py-4 px-2 text-lg text-gray-300 font-medium hover:text-white">ACCUEIL</a>
+        <a href="/cvtheque" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CVTHÈQUE</a>
+        <a href="/offres" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">OFFRES</a>
+        <a href="/soutenances" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">SOUTENANCES</a>
+        <a href="/contact" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CONTACT</a>
+        <% break; } %> <% } else { %> <% switch (page) { case "acceuil" : %>
+        <a href="/" class="py-4 px-3 text-lg text-green-ensibs-light font-medium hover:text-white">ACCUEIL</a>
+        <a href="/contact" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CONTACT</a>
+        <% break; case "contact" : %>
+        <a href="/" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">ACCUEIL</a>
+        <a href="/contact" class="py-4 px-3 text-lg text-green-ensibs-light font-medium hover:text-white">CONTACT</a>
+        <% break; case "" : %>
+        <a href="/" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">ACCUEIL</a>
+        <a href="/contact" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CONTACT</a>
+        <% break; } %> <% } %>
+      </div>
+    </div>
+
+    <!-- Boutton connexion/déconnexion -->
+    <%if (estConnecte) { %>
+    <div class="hidden md:flex items-center space-x-1">
+      <a href="/compte" class="py-2 px-3 bg-gray-900 bg-opacity-40 hover:bg-opacity-50 text-white border-2 border-opacity-70 hover:border-opacity-90 rounded-full transition duration-150">Mon compte</a>
+      <div class="hidden md:flex items-center space-x-1">
+        <button onClick="deconnexion()" class="py-2 px-3 ml-2 bg-red-800 bg-opacity-70 hover:bg-opacity-100 text-white border-2 border-opacity-70 hover:border-opacity-90 rounded-full transition duration-150">Se déconnecter</button>
+      </div>
+
+      <% } else { %>
+      <div class="hidden md:flex items-center space-x-1">
+        <a href="/compte/connexion" class="py-2 px-3 bg-gray-900 bg-opacity-40 hover:bg-opacity-50 text-white border-2 border-opacity-70 hover:border-opacity-90 rounded-full transition duration-150">Connexion</a>
+        <% } %>
+      </div>
+
+      <!-- Boutton hamburger mobile -->
+      <div class="md:hidden flex items-center">
+        <button class="mobile-menu-button">
+          <svg class="w-6 h-6 mx-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu mobile -->
+  <div class="mobile-menu hidden md:hidden">
+    <a href="/" class="block py-2 px-4 text-sm text-green-ensibs-light">ACCUEIL</a>
+    <!-- <a href="/cvtheque" class="block py-2 px-4 text-sm text-gray-300">CVTHÈQUE</a>
+        <a href="/offres" class="block py-2 px-4 text-sm text-gray-300">OFFRES</a>
+        <a href="/offres" class="block py-2 px-4 text-sm text-gray-300">SOUTENANCES</a> -->
+    <a href="/contact" class="block py-2 px-4 text-sm text-gray-300">CONTACT</a>
+  </div>
+</nav>

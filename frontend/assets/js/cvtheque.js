@@ -1,15 +1,13 @@
-// import { auth } from "/static/assets/js/auth.js";
+window.addEventListener("load", () => {
+  getCV().then((data) => {
+    console.log(data);
+  });
+});
 
-// auth(false).then((status) => {
-//   console.log(status);
-//   if (status) { window.location.href = "/"; }
-// });
-
-window.addEventListener("load", function () {
+const getCV = async () => {
   const options = {
     method: "GET",
     mode: "cors",
-    headers,
     credentials: "include",
   };
 
@@ -19,6 +17,13 @@ window.addEventListener("load", function () {
     const data = await response.json();
     console.log(data);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
+};
+
+const btn = document.querySelector("button.mobile-menu-button");
+const menu = document.querySelector(".mobile-menu");
+
+btn.addEventListener("click", () => {
+  menu.classList.toggle("hidden");
 });

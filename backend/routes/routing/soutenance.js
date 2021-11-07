@@ -1,16 +1,13 @@
-import { Router } from "express";
-import path from "path";
-
 import auth from "../../middleware/auth.js";
+import { Router } from "express";
 
 const router = Router();
-const __dirname = path.resolve("./");
 
 router.get("/", auth, (req, res) => {
-  res.sendFile(__dirname + "/frontend/soutenance.html");
-}),
-  (req, res) => {
-    windows.location = "/connexion";
-  };
+  res.render("pages/soutenances", {
+    estConnecte: true,
+    page: "soutenances",
+  });
+});
 
 export default router;

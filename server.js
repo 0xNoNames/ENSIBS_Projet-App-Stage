@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
+import path from "path";
+import estConnecte from "./backend/middleware/estConnecte.js";
 
 // -- -- -- -- -- -- -- -- --  -- ROUTES -- -- -- -- -- -- -- -- --  -- \\
 
@@ -33,15 +35,19 @@ import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-app.set("view engine", "html");
+console.log(__dirname);
 
-app.use("/static", express.static(__dirname + "/frontend"));
+app.set("view engine", "ejs");
+// app.set('views', path.join(__dirname, '/fontend/views'));
+app.set("views", "./frontend/views");
+
+app.use("/static", express.static(path.join(__dirname, "/frontend/assets")));
 
 // -- -- -- -- -- -- -- -- --  -- MIDDLEWARES -- -- -- -- -- -- -- -- --  -- \\
 
 app.use(cors());
 app.use(morgan("dev"));
-app.use(express.json({ type: "*/*", }));
+app.use(express.json({ type: "*/*" }));
 
 // -- -- -- -- -- -- -- -- --  -- DATABASE -- -- -- -- -- -- -- -- --  -- \\
 
@@ -49,7 +55,8 @@ app.use(express.json({ type: "*/*", }));
 const mongo = `${process.env.MONGO_URI}/${process.env.MONGO_DB_NAME}`;
 
 // Connexion à Mongo
-mongoose.connect(mongo, { useNewUrlParser: true, })
+mongoose
+  .connect(mongo, { useNewUrlParser: true })
   .then(() => console.log("Connecté à la base de données MongoDB..."))
   .catch((err) => console.log(err));
 
@@ -76,11 +83,13 @@ app.use("/api/soutenances", soutenancesRoutesAPI);
 
 // Page d'accueil
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/frontend/accueil.html");
+  estConnecte(req, res).then((data) => {
+    res.render("pages/accueil", {
+      estConnecte: data,
+      page: "acceuil",
+    });
+  });
 });
-// }, () => {
-//   res.sendFile(__dirname + "/frontend/accueil_co.html");
-// });
 
 // Page de la CVthèque
 app.use("/cvtheque", cvthequeRoutes);
@@ -100,14 +109,20 @@ app.use("/recuperation", recuperationRoutes);
 // Page des offres
 app.use("/offres", offresRoutes);
 
-// // Send a mail
+// Send a mail
 // app.post("/mail", function(req, res) {
 //     res.send("mail page");
 // });
 
 // Page d 'erreur 404 (mettre en dernière route)
 app.get("*", function (req, res) {
-  res.sendFile(__dirname + "/frontend/error404.html", 404);
+  estConnecte(req, res).then((data) => {
+    res.status(404);
+    res.render("pages/erreur404", {
+      estConnecte: data,
+      page: "",
+    });
+  });
 });
 
 // -- -- -- -- -- -- -- -- --  -- DEMARRAGE SERVEUR -- -- -- -- -- -- -- -- --  -- \\

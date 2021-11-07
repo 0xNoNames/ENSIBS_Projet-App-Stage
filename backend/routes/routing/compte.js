@@ -1,11 +1,8 @@
-import { Router } from "express";
-import path from "path";
-
-import auth from "../../middleware/auth.js";
 import { getInscriptionPage, getConnexionPage, getComptePage, useConnexion, useInscription, useDeconnexion } from "../../controllers/routing/compte.js";
+import auth from "../../middleware/auth.js";
+import { Router } from "express";
 
 const router = Router();
-const __dirname = path.resolve("./");
 
 router.get("/inscription", getInscriptionPage);
 

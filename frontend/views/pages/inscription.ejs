@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <%- include('../partials/head'); %>
+    <title>STAGE-APP | Inscription</title>
+  </head>
+
+  <body class="h-screen">
+    <!-- <header> -->
+    <%- include('../partials/navbar'); %>
+    <!-- </header> -->
+
+    <div class="mt-12 flex justify-center items-center">
+      <form id="form" class="flex flex-col py-8 px-8 text-left text-white rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+        <h3 class="flex flex-col mx-28 text-white text-4xl font-medium text-center">
+          Inscription
+          <span class="pt-2 text-gray-200 text-lg font-light">Votre compte sera vérifié manuellement.</span>
+        </h3>
+
+        <label for="prenom" class="mt-6 text-lg">Prénom</label>
+        <input type="text" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Alan" id="prenom" required />
+
+        <label for="nom" class="mt-6 text-lg">Nom</label>
+        <input type="text" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Perron" id="nom" required />
+
+        <label for="email" class="mt-6 text-lg">E-mail</label>
+        <input type="email" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="mail@domain.net" id="email" required />
+
+        <label for="password" class="mt-6 text-lg">Mot de passe</label>
+        <input type="password" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Minimum 8 caractères" id="password" required min="8" />
+
+        <label for="passwordConfirm" class="mt-6 text-lg">Confirmation mot de passe</label>
+        <input type="password" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Minimum 8 caractères" id="passwordConfirm" required min="8" />
+
+        <span id="messageErreur" class="pt-4 w-104 self-center text-red-300 font-bold text-base text-center"></span>
+
+        <button class="p-3 mx-10 my-8 text-lg font-semibold bg-white text-gray-800 rounded shadow-2xl bg-opacity-75 hover:bg-opacity-100">S'incrire</button>
+      </form>
+    </div>
+
+    <!-- <footer>
+        <%- include('../partials/footer'); %>
+    </footer> -->
+
+    <script src="/static/js/inscription.js"></script>
+  </body>
+</html>

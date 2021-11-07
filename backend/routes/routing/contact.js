@@ -1,11 +1,15 @@
 import { Router } from "express";
-import path from "path";
+import estConnecte from "../../middleware/estConnecte.js";
 
 const router = Router();
-const __dirname = path.resolve("./");
 
 router.get("/", (req, res) => {
-  res.sendFile(__dirname + "/frontend/contact.html");
+  estConnecte(req, res).then((data) => {
+    res.render("pages/contact", {
+      estConnecte: data,
+      page: "contact",
+    });
+  });
 });
 
 export default router;
