@@ -14,10 +14,6 @@ document.getElementById("deco").onclick = async () => {
   }
 };
 
-document.getElementById("conBouton").onclick = async () => {
-  window.location.href = "/utilisateur/connexion";
-};
-
 // auth(true).then((data) => {
 //   console.log(data)
 // });
