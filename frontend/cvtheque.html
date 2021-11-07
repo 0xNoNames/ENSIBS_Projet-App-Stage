@@ -10,10 +10,12 @@
 </head>
 
 <body>
-    <div class="fixed h-full w-full bg-cover" style="background-image: url('/static/assets/img/bg.jpg'); z-index: -99;"> </div>
+    <div class="fixed h-full w-full bg-cover" style="background-image: url('/static/assets/img/bg.jpg'); z-index: -99;">
+    </div>
 
     <!-- navbar goes here -->
-    <nav class="sticky top-0 px-12 z-10 backdrop-blur-md border-b border-gray-200 border-opacity-50 bg-black bg-opacity-20 backdrop-saturate-125">
+    <nav
+        class="sticky top-0 px-12 z-10 backdrop-blur-md border-b border-gray-200 border-opacity-50 bg-black bg-opacity-20 backdrop-saturate-125">
         <div class="max-w-6xl mx-auto">
             <div class="flex justify-between">
 
@@ -28,15 +30,20 @@
                     <!-- primary nav -->
                     <div class="hidden md:flex items-center space-x-1">
                         <a href="/" class="py-4 px-3 text-lg text-gray-300  font-medium hover:text-white">ACCUEIL</a>
-                        <a href="/cvtheque" class="py-4 px-3 text-lg text-green-ensibs-light  font-medium hover:text-white">CVTHÈQUE</a>
-                        <a href="/offres" class="py-4 px-3 text-lg text-gray-300  font-medium hover:text-white">OFFRES</a>
-                        <a href="/contact" class="py-4 px-3 text-lg text-gray-300  font-medium hover:text-white">CONTACT</a>
+                        <a href="/cvtheque"
+                            class="py-4 px-3 text-lg text-green-ensibs-light  font-medium hover:text-white">CVTHÈQUE</a>
+                        <a href="/offres"
+                            class="py-4 px-3 text-lg text-gray-300  font-medium hover:text-white">OFFRES</a>
+                        <a href="/contact"
+                            class="py-4 px-3 text-lg text-gray-300  font-medium hover:text-white">CONTACT</a>
                     </div>
                 </div>
 
                 <!-- connection button -->
                 <div class="hidden md:flex items-center space-x-1">
-                    <a id="conBouton" href="/utilisateur/connexion" class="py-2 px-3 bg-white bg-opacity-10 hover:bg-opacity-30 text-white rounded-full transition duration-150">Connexion</a>
+                    <a id="conBouton" href="/utilisateur/deconnexion"
+                        class="py-2 px-3 bg-red-600 bg-opacity-20 hover:bg-opacity-30 text-white rounded-full transition duration-150">Se
+                        déconnecter</a>
                 </div>
 
                 <!-- mobile button -->
@@ -65,14 +72,14 @@
 
     <div class="my-32 flex justify-center items-center">
         <!-- content goes here -->
-        <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20  border border-white border-opacity-50">
+        <div
+            class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20  border border-white border-opacity-50">
             <p class="text-4xl text-white">Page CVTHÈQUE</p>
         </div>
     </div>
 
-    
-    <script src="/static/assets/js/auth.js"></script>
-    <script src="/static/assets/js/cvtheque.js"></script>
+    <scrip type="module" src="/static/assets/js/cvtheque.js">
+        </script>
 </body>
 
 </html>

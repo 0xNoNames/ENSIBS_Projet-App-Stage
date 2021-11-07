@@ -1,3 +1,5 @@
+import SoutenanceModel from "../../models/soutenance.js";
+
 export const getSoutenances = (req, res) => {
   // var base_dir = path.resolve("./");
   // res.sendFile(base_dir + "/frontend/soutenances.html");
@@ -6,7 +8,6 @@ export const getSoutenances = (req, res) => {
 export const createSoutenance = (req, res) => {
   // Get the value on name in the headers
   var name = req.header("name");
-
   /*
       const newSoutenance = new Soutenance({
           name,

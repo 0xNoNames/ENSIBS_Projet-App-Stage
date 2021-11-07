@@ -1,10 +1,10 @@
-import { auth } from "/static/assets/js/auth.js";
+// import { auth } from "/static/assets/js/auth.js";
 
 
-auth().then((data) => {
-  console.log(data)
-  if (data) { window.location.href = "/"; }
-});
+// auth(false).then((data) => {
+//   console.log(data)
+//   if (data) { window.location.href = "/"; }
+// });
 
 
 window.addEventListener("load", function () {

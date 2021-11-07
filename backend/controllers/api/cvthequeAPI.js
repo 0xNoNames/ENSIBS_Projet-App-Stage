@@ -1,4 +1,4 @@
-import CVModel from "../models/cv.js";
+import CVModel from "../../models/cv.js";
 
 export const getCVs = async (req, res) => {
   try {

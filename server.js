@@ -10,18 +10,18 @@ import auth from "./backend/middleware/auth.js";
 
 // -- -- -- -- -- -- -- -- --  -- ROUTES -- -- -- -- -- -- -- -- --  -- \\
 
-import itemsRoutesAPI from "./backend/routes/api/items.js";
+import offresRoutesAPI from "./backend/routes/api/offres.js";
 import usersRoutesAPI from "./backend/routes/api/users.js";
 import cvsRoutesAPI from "./backend/routes/api/cvs.js";
 import soutenancesRoutesAPI from "./backend/routes/api/soutenances.js";
 
 // -- -- -- non-API -- -- -- \\
-import contactRoutes from "./backend/routes/contact.js";
-import cvthequeRoutes from "./backend/routes/cvtheque.js";
-import utilisateurRoutes from "./backend/routes/utilisateur.js";
-import offresRoutes from "./backend/routes/offres.js";
-import recuperationRoutes from "./backend/routes/recuperation.js";
-import soutenancesRoutes from "./backend/routes/soutenance.js";
+import contactRoutes from "./backend/routes/routing/contact.js";
+import cvthequeRoutes from "./backend/routes/routing/cvtheque.js";
+import utilisateurRoutes from "./backend/routes/routing/utilisateur.js";
+import offresRoutes from "./backend/routes/routing/offres.js";
+import recuperationRoutes from "./backend/routes/routing/recuperation.js";
+import soutenancesRoutes from "./backend/routes/routing/soutenance.js";
 
 // -- -- -- -- -- -- -- -- --  -- CONFIG -- -- -- -- -- -- -- -- --  -- \\
 
@@ -68,14 +68,11 @@ mongoose
 // -- -- -- -- -- -- -- -- --  -- ROUTING API -- -- -- -- -- -- -- -- --  -- \\
 
 // Use Routes
-app.use("/api/items", auth, itemsRoutesAPI);
+app.use("/api/offres", auth, offresRoutesAPI);
 app.use("/api/users", auth, usersRoutesAPI);
 app.use("/api/cvs", auth, cvsRoutesAPI);
 app.use("/api/soutenances", auth, soutenancesRoutesAPI);
-app.get("/api/estconnecte", auth, (req, res) => {
-  res.status(200);
-  res.send("");
-});
+// app.update("/api/estconnecte", auth, (req, res) => { res.sendStatus(200) });
 
 // Serve static assets if in production
 // if (process.env.NODE_ENV === "production") {
@@ -90,9 +87,12 @@ app.get("/api/estconnecte", auth, (req, res) => {
 // -- -- -- -- -- -- -- -- --  -- ROUTING -- -- -- -- -- -- -- -- --  -- \\
 
 // Page d'accueil
-app.get("/", function (req, res) {
+app.get("/", (req, res) => {
   res.sendFile(__dirname + "/frontend/accueil.html");
 });
+// }, () => {
+//   res.sendFile(__dirname + "/frontend/accueil_co.html");
+// });
 
 // Page de la CVthèque
 app.use("/cvtheque", cvthequeRoutes);

@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import auth from "../../middleware/auth.js";
-import { getSoutenances, createSoutenance, deleteSoutenance, updateSoutenance } from "../../controllers/soutenance.js";
+import { getSoutenances, createSoutenance, deleteSoutenance, updateSoutenance } from "../../controllers/api/soutenanceAPI.js";
 
 const router = Router();
 
