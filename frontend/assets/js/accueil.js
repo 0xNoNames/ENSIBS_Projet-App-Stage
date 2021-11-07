@@ -1,5 +1,19 @@
 // import { auth } from "/static/assets/js/auth.js";
 
+document.getElementById("deco").onclick = async () => {
+  try {
+    fetch("/compte/deconnexion", {
+      method: "DELETE",
+      mode: "cors",
+      credentials: "include",
+    }).then((data) => {
+      console.log(data);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 document.getElementById("conBouton").onclick = async () => {
   window.location.href = "/utilisateur/connexion";
 };

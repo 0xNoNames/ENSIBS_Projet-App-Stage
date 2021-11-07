@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getOffres, createOffre, updateOffre, deleteOffre } from "../../controllers/api/offreAPI.js";
+import { getOffres, createOffre, updateOffre, deleteOffre } from "../../controllers/api/offres.js";
 import auth from '../../middleware/auth.js';
 
 

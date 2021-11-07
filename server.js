@@ -6,19 +6,18 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 
-import auth from "./backend/middleware/auth.js";
-
 // -- -- -- -- -- -- -- -- --  -- ROUTES -- -- -- -- -- -- -- -- --  -- \\
 
+// -- -- -- API -- -- -- \\
 import offresRoutesAPI from "./backend/routes/api/offres.js";
-import usersRoutesAPI from "./backend/routes/api/users.js";
+import utilisateursRoutesAPI from "./backend/routes/api/utilisateurs.js";
 import cvsRoutesAPI from "./backend/routes/api/cvs.js";
 import soutenancesRoutesAPI from "./backend/routes/api/soutenances.js";
 
 // -- -- -- non-API -- -- -- \\
 import contactRoutes from "./backend/routes/routing/contact.js";
 import cvthequeRoutes from "./backend/routes/routing/cvtheque.js";
-import utilisateurRoutes from "./backend/routes/routing/utilisateur.js";
+import compteRoutes from "./backend/routes/routing/compte.js";
 import offresRoutes from "./backend/routes/routing/offres.js";
 import recuperationRoutes from "./backend/routes/routing/recuperation.js";
 import soutenancesRoutes from "./backend/routes/routing/soutenance.js";
@@ -36,42 +35,31 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.set("view engine", "html");
 
-// Static folder
 app.use("/static", express.static(__dirname + "/frontend"));
 
 // -- -- -- -- -- -- -- -- --  -- MIDDLEWARES -- -- -- -- -- -- -- -- --  -- \\
 
-// CORS Middleware
 app.use(cors());
-// Logger Middleware
 app.use(morgan("dev"));
-// Bodyparser Middleware
-app.use(
-  express.json({
-    type: "*/*",
-  })
-);
+app.use(express.json({ type: "*/*", }));
 
 // -- -- -- -- -- -- -- -- --  -- DATABASE -- -- -- -- -- -- -- -- --  -- \\
 
-// DB Config
-const db = `${process.env.MONGO_URI}/${process.env.MONGO_DB_NAME}`;
+// Configuration de Mongo
+const mongo = `${process.env.MONGO_URI}/${process.env.MONGO_DB_NAME}`;
 
-// Connect to Mongo
-mongoose
-  .connect(db, {
-    useNewUrlParser: true,
-  }) // Adding new mongo url parser
+// Connexion à Mongo
+mongoose.connect(mongo, { useNewUrlParser: true, })
   .then(() => console.log("Connecté à la base de données MongoDB..."))
   .catch((err) => console.log(err));
 
 // -- -- -- -- -- -- -- -- --  -- ROUTING API -- -- -- -- -- -- -- -- --  -- \\
 
 // Use Routes
-app.use("/api/offres", auth, offresRoutesAPI);
-app.use("/api/users", auth, usersRoutesAPI);
-app.use("/api/cvs", auth, cvsRoutesAPI);
-app.use("/api/soutenances", auth, soutenancesRoutesAPI);
+app.use("/api/offres", offresRoutesAPI);
+app.use("/api/utilisateurs", utilisateursRoutesAPI);
+app.use("/api/cvs", cvsRoutesAPI);
+app.use("/api/soutenances", soutenancesRoutesAPI);
 // app.update("/api/estconnecte", auth, (req, res) => { res.sendStatus(200) });
 
 // Serve static assets if in production
@@ -103,8 +91,8 @@ app.use("/soutenances", soutenancesRoutes);
 // Page de contact
 app.use("/contact", contactRoutes);
 
-// Page de connexion, inscription et profile
-app.use("/utilisateur", utilisateurRoutes);
+// Page de connexion, inscription et profil
+app.use("/compte", compteRoutes);
 
 // Page de récupération
 app.use("/recuperation", recuperationRoutes);

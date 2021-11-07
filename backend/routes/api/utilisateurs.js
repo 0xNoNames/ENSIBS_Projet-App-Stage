@@ -1,13 +1,13 @@
 import { Router } from "express";
 import path from "path";
 
-import auth from "../middleware/auth.js";
-import authAdmin from "../middleware/authAdmin.js";
-import { getUtilisateurs } from "../controllers/utilisateurAPI.js";
+import authAdmin from "../../middleware/authAdmin.js";
+import { getUtilisateurs } from "../../controllers/api/utilisateurs.js";
 
 const router = Router();
-const __dirname = path.resolve("./");
 
-router.get("/users", authAdmin, getUtilisateurs);
+router.get("/", authAdmin, getUtilisateurs);
+
+router.get("/XD", getUtilisateurs);
 
 export default router;

@@ -2,16 +2,16 @@ import { Router } from "express";
 import path from "path";
 
 import auth from "../../middleware/auth.js";
-import { getInscription, getConnexion, getProfile, useConnexion, useInscription, useDeconnexion } from "../../controllers/routing/utilisateurRoute.js";
+import { getInscriptionPage, getConnexionPage, getComptePage, useConnexion, useInscription, useDeconnexion } from "../../controllers/routing/compte.js";
 
 const router = Router();
 const __dirname = path.resolve("./");
 
-router.get("/inscription", getInscription);
+router.get("/inscription", getInscriptionPage);
 
-router.get("/connexion", getConnexion);
+router.get("/connexion", getConnexionPage);
 
-router.get("/", auth, getProfile);
+router.get("/", auth, getComptePage);
 
 router.post("/connexion", useConnexion);
 
