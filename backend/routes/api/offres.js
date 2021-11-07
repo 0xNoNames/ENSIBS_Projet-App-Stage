@@ -1,36 +1,35 @@
 import { Router } from 'express';
 import { getOffres, createOffre, updateOffre, deleteOffre } from "../../controllers/api/offres.js";
-import auth from '../../middleware/auth.js';
-
+import authAdmin from "../../middleware/authAdmin.js";
 
 const router = Router();
 
 /**
- * @route   GET api/offres
- * @desc    Get All Offers
+ * @route   GET /api/offres
+ * @desc    Récupérer toutes les offres de stage
  * @access  Private
  */
-router.get('/', auth, getOffres);
+router.get('/', authAdmin, getOffres);
 
 /**
- * @route   POST api/offres
- * @desc    Create An Offer
- * @access  Private
+ * @route   POST /api/offres
+ * @desc    Créer une offre de stage
+ * @access  Administrateur
  */
-router.post('/', auth, createOffre);
+router.post('/', authAdmin, createOffre);
 
 /**
- * @route   PUT api/offres
- * @desc    Update An Offer
- * @access  Private
+ * @route   PUT /api/offres
+ * @desc    Mettre à jour une offre de stage
+ * @access  Administrateur
  */
-router.put('/', auth, updateOffre);
+router.put('/', authAdmin, updateOffre);
 
 /**
- * @route   DELETE api/offres/:id
- * @desc    Delete An Offer
- * @access  Private
+ * @route   DELETE /api/offres/:id
+ * @desc    Supprimer une offre de stage
+ * @access  Administrateur
  */
-router.delete('/:id', auth, deleteOffre);
+router.delete('/:id', authAdmin, deleteOffre);
 
 export default router;

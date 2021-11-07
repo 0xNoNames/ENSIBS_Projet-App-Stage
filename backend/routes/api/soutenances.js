@@ -1,16 +1,36 @@
 import { Router } from "express";
 
-import auth from "../../middleware/auth.js";
+import authAdmin from "../../middleware/authAdmin.js";
 import { getSoutenances, createSoutenance, deleteSoutenance, updateSoutenance } from "../../controllers/api/soutenances.js";
 
 const router = Router();
 
-router.get("/", auth, getSoutenances);
+/**
+ * @route   GET /api/soutenances
+ * @desc    Récupérer toutes les soutenances de stage
+ * @access  Private
+ */
+router.get("/", authAdmin, getSoutenances);
 
-router.post("/create", auth, createSoutenance);
+/**
+ * @route   POST /api/soutenances
+ * @desc    Créer une soutenances de stage
+ * @access  Administrateur
+ */
+router.post("/", authAdmin, createSoutenance);
 
-router.post("/update", auth, updateSoutenance);
+/**
+ * @route   PUT /api/soutenances
+ * @desc    Mettre à jour une soutenances de stage
+ * @access  Administrateur
+ */
+router.put("/", authAdmin, updateSoutenance);
 
-router.post("/delete", auth, deleteSoutenance);
+/**
+ * @route   DELETE /api/soutenances/:id
+ * @desc    Supprimer une soutenances de stage
+ * @access  Administrateur
+ */
+router.delete("/:id", authAdmin, deleteSoutenance);
 
 export default router;

@@ -20,3 +20,7 @@ export const updateCV = (req, res) => {
 export const deleteCV = (req, res) => {
   res.status(200);
 };
+
+export const deleteMultipleCVs = (req, res) => {
+  res.status(200);
+};

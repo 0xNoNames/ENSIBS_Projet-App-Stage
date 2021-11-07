@@ -13,14 +13,14 @@ export const getUtilisateurs = async (req, res) => {
   }
 };
 
-// export const createUtilisateur = (req, res) => {
-//   res.status(200);
-// };
+export const createUtilisateur = (req, res) => {
+  res.status(200);
+};
 
-// export const updateUtilisateur = (req, res) => {
-//   res.status(200);
-// };
+export const updateUtilisateur = (req, res) => {
+  res.status(200);
+};
 
-// export const deleteUtilisateur = (req, res) => {
-//   res.status(200);
-// };
+export const deleteUtilisateur = (req, res) => {
+  res.status(200);
+};

@@ -1,16 +1,43 @@
 import { Router } from "express";
-
+import { getCVs, createCV, updateCV, deleteCV, deleteMultipleCVs } from "../../controllers/api/cvtheque.js";
 import auth from "../../middleware/auth.js";
-import { getCVs, createCV, updateCV, deleteCV } from "../../controllers/api/cvtheque.js";
+import authAdmin from "../../middleware/authAdmin.js";
 
 const router = Router();
 
+/**
+ * @route   GET /api/cvs
+ * @desc    Récupérer tous les CVs
+ * @access  Private
+ */
 router.get("/", auth, getCVs);
 
-router.post("/create", auth, createCV);
+/**
+ * @route   POST /api/cvs
+ * @desc    Créer un CV
+ * @access  Private
+ */
+router.post("/", auth, createCV);
 
-router.post("/update", auth, updateCV);
+/**
+ * @route   PUT /api/cvs
+ * @desc    Mettre à jour un CV
+ * @access  Private
+ */
+router.put("/", auth, updateCV);
 
-router.post("/delete", auth, deleteCV);
+/**
+ * @route   DELETE /api/cvs
+ * @desc    Supprimer son CV
+ * @access  Private
+ */
+router.delete("/supprimer", auth, deleteCV);
+
+/**
+ * @route   DELETE /api/cvs/:id
+ * @desc    Supprimer son CV
+ * @access  Administrateur
+ */
+router.delete('/:id', authAdmin, deleteMultipleCVs);
 
 export default router;
