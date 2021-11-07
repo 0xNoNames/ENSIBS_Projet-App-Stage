@@ -3,3 +3,4 @@ package-lock.json
 # .env
 .DS_Store
 frontend/assets/css/tailwind.css
+*.log
