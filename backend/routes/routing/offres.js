@@ -6,7 +6,7 @@ const router = Router();
 router.get("/", verifierToken, estValide, (req, res) => {
   res.render("pages/offres", {
     estConnecte: true,
-    page: "offres",
+    page: "Offres de stage",
     prenom: req.utilisateur.prenom,
   });
 });

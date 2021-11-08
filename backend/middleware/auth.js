@@ -39,11 +39,8 @@ export const verifierToken = async (req, res, next) => {
       return next();
     }
 
-    console.log("DECODE:", decodedToken.id);
-
     /* On vérifie que l'utilisateur existe bien dans notre base de données */
     const utilisateur = await UtilisateurModel.findOne({ _id: decodedToken.id });
-    console.log(utilisateur);
     if (!utilisateur) {
       req.estConnecte = false;
       req.utilisateur = "";
@@ -52,8 +49,6 @@ export const verifierToken = async (req, res, next) => {
 
     req.utilisateur = utilisateur;
     req.estConnecte = true;
-
-    console.log(req.utilisateur);
 
     return next();
   } catch (err) {
@@ -66,7 +61,7 @@ export const estValide = (req, res, next) => {
   if (req.estConnecte === false || req.user === "") {
     return res.render("pages/erreur401", {
       estConnecte: false,
-      page: "",
+      page: "Erreur 401",
       prenom: "",
     });
   }
@@ -77,7 +72,7 @@ export const estVerifie = (req, res, next) => {
   if (req.utilisateur.role == "verification") {
     return res.render("pages/erreurVerif", {
       estConnecte: false,
-      page: "",
+      page: "Erreur",
       prenom: req.utilisateur.prenom,
     });
   }
@@ -86,9 +81,12 @@ export const estVerifie = (req, res, next) => {
 
 export const estAdministrateur = (req, res, next) => {
   if (req.utilisateur != "administrateur") {
-    return res.status(400).render("pages/erreur401");
+    return res.render("pages/erreur401", {
+      estConnecte: false,
+      page: "Erreur 401",
+      prenom: req.utilisateur.prenom,
+    });
   }
-  console.log(req.user);
   return next();
 };
 

@@ -86,7 +86,7 @@ app.get("/", verifierToken, (req, res) => {
   console.log(req.utilisateur.prenom);
   res.render("pages/accueil", {
     estConnecte: req.estConnecte,
-    page: "accueil",
+    page: "Accueil",
     prenom: req.utilisateur.prenom,
   });
 });
@@ -118,7 +118,7 @@ app.use("/offres", offresRoutes);
 app.get("*", verifierToken, (req, res) => {
   res.status(404).render("pages/erreur404", {
     estConnecte: req.estConnecte,
-    page: "",
+    page: "Erreur 404",
     prenom: req.utilisateur.prenom,
   });
 });

@@ -25,7 +25,7 @@ export const getInscriptionPage = (req, res) => {
   } else {
     res.render("pages/inscription", {
       estConnecte: false,
-      page: "",
+      page: "Inscription",
       prenom: req.utilisateur.prenom,
     });
   }
@@ -34,7 +34,7 @@ export const getInscriptionPage = (req, res) => {
 export const getComptePage = (req, res) => {
   res.render("pages/compte", {
     estConnecte: true,
-    page: "",
+    page: "Compte",
     prenom: req.utilisateur.prenom,
   });
 };
