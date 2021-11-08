@@ -18,7 +18,7 @@ dans la variable d'environnement PATH de Windows.
 
 # Création de la database app_stage
 use app_stage
-db.utilisateurs.insert({nom: "nom", prenom: "prenom", email: "email", mot_de_passe: "toto", date_inscription: "", role: "admin"})
+db.utilisateurs.insert({nom: "nom", prenom: "prenom", email: "email@mail.fr", mot_de_passe: "toto", role: "admin", date_inscription: "", __v: 0})
 
 # Création d'un user de test
 db.createUser({user:"admin", pwd:"admin", roles: [ "readWrite", "dbAdmin" ]});
