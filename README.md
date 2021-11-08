@@ -3,6 +3,7 @@
 > Projet de site web pour le semestre 7.
 
 ## Création d'une base de données locale
+
 Les commandes suivantes sont effectués sur le shell mongo.
 Pour l'activer il faut utiliser : 
 ```bash
@@ -18,8 +19,6 @@ db.createUser({user:"admin", pwd:"admin", roles: [ "readWrite", "dbAdmin" ]});
 ```
 
 ## Démarrage rapide
-
-Ajouter "MONGOURI", "MONGO_DB_NAME" et "JWTSECRET" au fichier "backend/.env".
 
 ```bash
 # Installer les dépendances de l'application.
