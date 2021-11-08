@@ -11,6 +11,7 @@ const __dirname = path.resolve("./");
 
 export const getConnexionPage = (req, res) => {
   estConnecte(req, res).then((data) => {
+    console.log(data);
     if (data) {
       res.redirect("/compte");
     } else {
@@ -43,7 +44,7 @@ export const getComptePage = (req, res) => {
 };
 
 export const useDeconnexion = async (req, res) => {
-  res.cookie("access_token", "", {
+  res.cookie("token", "", {
     httpOnly: true,
     secure: true,
     expires: new Date(0),
@@ -72,7 +73,7 @@ export const useConnexion = async (req, res) => {
     if (!token) return res.status(400).json({ message: "Impossible de signer le token." });
 
     /* On créer le cookie contenant le JWT */
-    res.cookie("access_token", token, {
+    res.cookie("token", token, {
       httpOnly: true,
       secure: true,
       maxAge: parseInt(process.env.jwtExpiresIn),
@@ -107,7 +108,7 @@ export const useInscription = async (req, res) => {
     const token = jwt.sign({ email: result.email, id: result._id }, process.env.JWT_SECRET, { expiresIn: process.env.jwtExpiresIn });
 
     /* On créer le cookie contenant le JWT */
-    res.cookie("access_token", token, {
+    res.cookie("token", token, {
       httpOnly: true,
       secure: true,
       maxAge: parseInt(process.env.jwtExpiresIn),

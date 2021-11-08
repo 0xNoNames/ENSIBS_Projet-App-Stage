@@ -65,14 +65,14 @@
     <!-- Boutton connexion/déconnexion -->
     <%if (estConnecte) { %>
     <div class="hidden md:flex items-center space-x-1">
-      <a href="/compte" class="py-2 px-3 bg-gray-900 bg-opacity-40 hover:bg-opacity-50 text-white border-2 border-opacity-70 hover:border-opacity-90 rounded-full transition duration-150">Mon compte</a>
+      <a href="/compte" class="py-2 px-3 bg-gray-900 bg-opacity-40 hover:bg-opacity-50 text-white border-white rounded-full transition duration-150">Mon compte</a>
       <div class="hidden md:flex items-center space-x-1">
-        <button onClick="deconnexion()" class="py-2 px-3 ml-2 bg-red-800 bg-opacity-70 hover:bg-opacity-100 text-white border-2 border-opacity-70 hover:border-opacity-90 rounded-full transition duration-150">Se déconnecter</button>
+        <button onClick="deconnexion()" class="py-2 px-3 ml-2 bg-red-800 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full transition duration-150">Se déconnecter</button>
       </div>
 
       <% } else { %>
       <div class="hidden md:flex items-center space-x-1">
-        <a href="/compte/connexion" class="py-2 px-3 bg-gray-900 bg-opacity-40 hover:bg-opacity-50 text-white border-2 border-opacity-70 hover:border-opacity-90 rounded-full transition duration-150">Connexion</a>
+        <a href="/compte/connexion" class="py-2 px-3 bg-gray-900 bg-opacity-40 hover:bg-opacity-50 text-white rounded-full transition duration-150">Connexion</a>
         <% } %>
       </div>
 

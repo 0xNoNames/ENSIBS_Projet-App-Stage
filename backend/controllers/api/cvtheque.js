@@ -21,6 +21,6 @@ export const deleteCV = (req, res) => {
   res.status(200);
 };
 
-export const deleteMultipleCVs = (req, res) => {
+export const deleteAnyCV = (req, res) => {
   res.status(200);
 };

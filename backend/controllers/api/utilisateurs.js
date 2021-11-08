@@ -1,4 +1,3 @@
-
 import dotenv from "dotenv";
 import UtilisateurModel from "../../models/utilisateur.js";
 
@@ -22,5 +21,9 @@ export const updateUtilisateur = (req, res) => {
 };
 
 export const deleteUtilisateur = (req, res) => {
+  res.status(200);
+};
+
+export const deleteAnyUtilisateur = (req, res) => {
   res.status(200);
 };
