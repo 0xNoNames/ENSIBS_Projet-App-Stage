@@ -19,20 +19,31 @@ Utilisez la commande `use app_stage` pour créer la collection.
 
 Puis rajoutez des utilisateurs pour l'environnement de dev :
 
-- Ajout Etudiant de test (email : etudiant@dev.fr, mdp : test)
+- Ajout utilisateur étudiant (email : etudiant@dev.fr, mdp : test)
 ```bash 
-db.utilisateurs.insert({nom: "Etudiant", prenom: "Prénom", email: "etudiant@dev.fr", mot_de_passe: "$2a$12$oQixXLPKOQWpnxyEuUWujOQA9oKbVsnQflgKb3Wzm0zcTzcijtrpO", role: "etudiant", date_inscription:  ISODate("2021-11-07T02:37:57.529Z"), __v: 0})
+db.utilisateurs.insert({nom: "Nom", prenom: "Etudiant", email: "etudiant@dev.fr", mot_de_passe: "$2a$12$oQixXLPKOQWpnxyEuUWujOQA9oKbVsnQflgKb3Wzm0zcTzcijtrpO", role: "etudiant", date_inscription:  ISODate("2021-11-07T02:37:57.529Z"), __v: 0})
 ```
 
-- Ajout Entreprise de test (email : entreprise@dev.fr, mdp : test)
+- Ajout utilisateur entreprise (email : entreprise@dev.fr, mdp : test)
 ```bash 
-db.utilisateurs.insert({nom: "Entreprise", prenom: "Prénom", email: "entreprise@dev.fr", mot_de_passe: "$2a$12$oQixXLPKOQWpnxyEuUWujOQA9oKbVsnQflgKb3Wzm0zcTzcijtrpO", role: "entreprise", date_inscription:  ISODate("2021-11-07T02:37:57.529Z"), __v: 0})
+db.utilisateurs.insert({nom: "Nom", prenom: "Entreprise", email: "entreprise@dev.fr", mot_de_passe: "$2a$12$oQixXLPKOQWpnxyEuUWujOQA9oKbVsnQflgKb3Wzm0zcTzcijtrpO", role: "entreprise", date_inscription:  ISODate("2021-11-07T02:37:57.529Z"), __v: 0})
 ```
 
-- Ajout Admin de test (email : admin@dev.fr, mdp : test)
+- Ajout utilisateur administrateur (email : admin@dev.fr, mdp : test)
 ```bash 
-db.utilisateurs.insert({nom: "Admin", prenom: "Prénom", email: "admin@dev.fr", mot_de_passe: "$2a$12$oQixXLPKOQWpnxyEuUWujOQA9oKbVsnQflgKb3Wzm0zcTzcijtrpO", role: "administrateur", date_inscription:  ISODate("2021-11-07T02:37:57.529Z"), __v: 0})
+db.utilisateurs.insert({nom: "Nom", prenom: "Administrateur", email: "admin@dev.fr", mot_de_passe: "$2a$12$oQixXLPKOQWpnxyEuUWujOQA9oKbVsnQflgKb3Wzm0zcTzcijtrpO", role: "administrateur", date_inscription:  ISODate("2021-11-07T02:37:57.529Z"), __v: 0})
 ```
+
+- Ajout utilisateur en attente de vérification de compte (email : verif@dev.fr, mdp : test)
+```bash 
+db.utilisateurs.insert({nom: "Nom", prenom: "Vérification", email: "verif@dev.fr", mot_de_passe: "$2a$12$oQixXLPKOQWpnxyEuUWujOQA9oKbVsnQflgKb3Wzm0zcTzcijtrpO", role: "verification", date_inscription:  ISODate("2021-11-07T02:37:57.529Z"), __v: 0})
+```
+
+- Ajout utilisateur en attente de validation par un administrateur (email : valide@dev.fr, mdp : test)
+```bash 
+db.utilisateurs.insert({nom: "Nom", prenom: "Validation", email: "valide@dev.fr", mot_de_passe: "$2a$12$oQixXLPKOQWpnxyEuUWujOQA9oKbVsnQflgKb3Wzm0zcTzcijtrpO", role: "validation", date_inscription:  ISODate("2021-11-07T02:37:57.529Z"), __v: 0})
+```
+
 ## Démarrage rapide
 
 ```bash
