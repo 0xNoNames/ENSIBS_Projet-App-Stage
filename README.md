@@ -13,10 +13,12 @@ mongo
 ```bash
 # Installation 
 https://www.mongodb.com/try/download/community
-Après l'installation, rajouter le chemin d'accès aux binaires "CHEMIN\MongoDB\Server\5.0\bin" dans la variable d'environnement PATH de Windows. 
+Après l'installation, rajouter le chemin d'accès aux binaires "CHEMIN\MongoDB\Server\5.0\bin" 
+dans la variable d'environnement PATH de Windows. 
 
 # Création de la database app_stage
 use app_stage
+db.utilisateurs.insert({nom: "nom", prenom: "prenom", email: "email", mot_de_passe: "toto", date_inscription: "", role: "admin"})
 
 # Création d'un user de test
 db.createUser({user:"admin", pwd:"admin", roles: [ "readWrite", "dbAdmin" ]});
