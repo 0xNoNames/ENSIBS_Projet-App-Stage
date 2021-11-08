@@ -1,19 +1,20 @@
 import { getInscriptionPage, getConnexionPage, getComptePage, useConnexion, useInscription, useDeconnexion } from "../../controllers/routing/compte.js";
-import auth from "../../middleware/auth.js";
+import estConnecte from "../../middleware/estConnecte.js";
+import estValide from "../../middleware/estValide.js";
 import { Router } from "express";
 
 const router = Router();
 
-router.get("/inscription", getInscriptionPage);
+router.get("/inscription", estConnecte, getInscriptionPage);
 
-router.get("/connexion", getConnexionPage);
+router.get("/connexion", estConnecte, getConnexionPage);
 
-router.get("/", auth, getComptePage);
+router.get("/", estConnecte, estValide, getComptePage);
 
-router.post("/connexion", useConnexion);
+router.post("/connexion", estConnecte, useConnexion);
 
-router.post("/inscription", useInscription);
+router.post("/inscription", estConnecte, useInscription);
 
-router.delete("/deconnexion", useDeconnexion);
+router.delete("/deconnexion", estConnecte, useDeconnexion);
 
 export default router;

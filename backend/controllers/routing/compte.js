@@ -3,54 +3,54 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import path from "path";
 import UtilisateurModel from "../../models/utilisateur.js";
-import estConnecte from "../../middleware/estConnecte.js";
 
 dotenv.config({ path: "../.env" });
 
 const __dirname = path.resolve("./");
 
 export const getConnexionPage = (req, res) => {
-  estConnecte(req, res).then((data) => {
-    console.log(data);
-    if (data) {
-      res.redirect("/compte");
-    } else {
-      res.render("pages/connexion", {
-        estConnecte: false,
-        page: "",
-      });
-    }
-  });
+  if (req.estConnecte) {
+    res.redirect("/compte");
+  } else {
+    res.render("pages/connexion", {
+      estConnecte: false,
+      page: "",
+    });
+  }
 };
 
 export const getInscriptionPage = (req, res) => {
-  estConnecte(req, res).then((data) => {
-    if (data) {
-      res.redirect("/compte");
-    } else {
-      res.render("pages/inscription", {
-        estConnecte: false,
-        page: "",
-      });
-    }
-  });
+  if (req.estConnecte) {
+    res.redirect("/compte");
+  } else {
+    res.render("pages/inscription", {
+      estConnecte: false,
+      page: "",
+      prenom: req.utilisateur.prenom,
+    });
+  }
 };
 
 export const getComptePage = (req, res) => {
   res.render("pages/compte", {
     estConnecte: true,
     page: "",
+    prenom: req.utilisateur.prenom,
   });
 };
 
 export const useDeconnexion = async (req, res) => {
-  res.cookie("token", "", {
-    httpOnly: true,
-    secure: true,
-    expires: new Date(0),
-    maxAge: parseInt(process.env.jwtExpiresIn),
-  });
-  res.sendStatus(201);
+  if (req.estConnecte) {
+    res.cookie("token", "", {
+      httpOnly: true,
+      secure: true,
+      expires: new Date(0),
+      maxAge: parseInt(process.env.jwtExpiresIn),
+    });
+    res.sendStatus(201);
+  } else {
+    res.sendStatus(400);
+  }
 };
 
 export const useConnexion = async (req, res) => {

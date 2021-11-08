@@ -3,12 +3,11 @@ import estConnecte from "../../middleware/estConnecte.js";
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  estConnecte(req, res).then((data) => {
-    res.render("pages/contact", {
-      estConnecte: data,
-      page: "contact",
-    });
+router.get("/", estConnecte, (req, res) => {
+  res.render("pages/contact", {
+    estConnecte: req.estConnecte,
+    page: "contact",
+    prenom: req.utilisateur.prenom
   });
 });
 

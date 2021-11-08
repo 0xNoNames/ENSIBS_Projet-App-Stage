@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getUtilisateurs, createUtilisateur, updateUtilisateur, deleteUtilisateur, deleteAnyUtilisateur } from "../../controllers/api/utilisateurs.js";
-import auth from "../../middleware/auth.js";
 import estAdministrateur from "../../middleware/estAdministrateur.js";
+import estConnecte from "../../middleware/estConnecte.js";
 import estVerifie from "../../middleware/estVerifie.js";
 
 const router = Router();
@@ -16,7 +16,7 @@ router.get("/XD", getUtilisateurs);
  * @desc    Récupérer tous les utilisateurs
  * @access  Administrateur
  */
-router.get("/", auth, estAdministrateur, getUtilisateurs);
+router.get("/", estConnecte, estAdministrateur, getUtilisateurs);
 
 /**
  * @route   POST /api/utilisateurs
@@ -30,20 +30,20 @@ router.post("/", createUtilisateur);
  * @desc    Mettre à jour un utilisateur
  * @access  Private
  */
-router.put("/", auth, estVerifie, updateUtilisateur);
+router.put("/", estConnecte, estVerifie, updateUtilisateur);
 
 /**
  * @route   DELETE /api/utilisateurs
  * @desc    Supprimer son compte
  * @access  Private
  */
-router.delete("/supprimer", auth, estVerifie, deleteUtilisateur);
+router.delete("/supprimer", estConnecte, estVerifie, deleteUtilisateur);
 
 /**
  * @route   DELETE /api/utilisateurs/:id
  * @desc    Supprimer un utilisateur
  * @access  Administrateur
  */
-router.delete("/:id", auth, estAdministrateur, deleteAnyUtilisateur);
+router.delete("/:id", estConnecte, estAdministrateur, deleteAnyUtilisateur);
 
 export default router;

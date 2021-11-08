@@ -82,12 +82,12 @@ app.use("/api/soutenances", soutenancesRoutesAPI);
 // -- -- -- -- -- -- -- -- --  -- ROUTING -- -- -- -- -- -- -- -- --  -- \\
 
 // Page d'accueil
-app.get("/", (req, res) => {
-  estConnecte(req, res).then((data) => {
-    res.render("pages/accueil", {
-      estConnecte: data,
-      page: "acceuil",
-    });
+app.get("/", estConnecte, (req, res) => {
+  console.log(req.utilisateur.prenom);
+  res.render("pages/accueil", {
+    estConnecte: req.estConnecte,
+    page: "accueil",
+    prenom: req.utilisateur.prenom,
   });
 });
 
@@ -115,13 +115,11 @@ app.use("/offres", offresRoutes);
 // });
 
 // Page d 'erreur 404 (mettre en dernière route)
-app.get("*", function (req, res) {
-  estConnecte(req, res).then((data) => {
-    res.status(404);
-    res.render("pages/erreur404", {
-      estConnecte: data,
-      page: "",
-    });
+app.get("*", estConnecte, (req, res) => {
+  res.status(404).render("pages/erreur404", {
+    estConnecte: req.estConnecte,
+    page: "",
+    prenom: req.utilisateur.prenom,
   });
 });
 

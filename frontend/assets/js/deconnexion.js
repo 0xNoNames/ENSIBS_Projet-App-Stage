@@ -5,7 +5,7 @@ const deconnexion = async () => {
       mode: "cors",
       credentials: "include",
     }).then((data) => {
-      window.location.href = "/";
+      window.location.href = "/compte/connexion";
     });
   } catch (error) {
     console.log(error);

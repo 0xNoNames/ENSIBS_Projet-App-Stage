@@ -13,67 +13,30 @@
 
       <!-- Pages -->
       <div id="navBar" class="hidden mr-8 md:flex items-center space-x-1">
-        <%if (estConnecte) { %> <% switch (page) { case "acceuil" : %>
-        <a href="/" class="py-4 px-2 text-lg text-green-ensibs-light font-medium hover:text-white">ACCUEIL</a>
-        <a href="/cvtheque" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CVTHÈQUE</a>
-        <a href="/offres" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">OFFRES</a>
-        <a href="/soutenances" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">SOUTENANCES</a>
-        <a href="/contact" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CONTACT</a>
-        <% break; case "cvtheque" : %>
-        <a href="/" class="py-4 px-2 text-lg text-gray-300 font-medium hover:text-white">ACCUEIL</a>
-        <a href="/cvtheque" class="py-4 px-3 text-lg text-green-ensibs-light font-medium hover:text-white">CVTHÈQUE</a>
-        <a href="/offres" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">OFFRES</a>
-        <a href="/soutenances" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">SOUTENANCES</a>
-        <a href="/contact" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CONTACT</a>
-        <% break; case "offres" : %>
-        <a href="/" class="py-4 px-2 text-lg text-gray-300 font-medium hover:text-white">ACCUEIL</a>
-        <a href="/cvtheque" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CVTHÈQUE</a>
-        <a href="/offres" class="py-4 px-3 text-lg text-green-ensibs-light font-medium hover:text-white">OFFRES</a>
-        <a href="/soutenances" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">SOUTENANCES</a>
-        <a href="/contact" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CONTACT</a>
-        <% break; case "soutenances" : %>
-        <a href="/" class="py-4 px-2 text-lg text-gray-300 font-medium hover:text-white">ACCUEIL</a>
-        <a href="/cvtheque" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CVTHÈQUE</a>
-        <a href="/offres" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">OFFRES</a>
-        <a href="/soutenances" class="py-4 px-3 text-lg text-green-ensibs-light font-medium hover:text-white">SOUTENANCES</a>
-        <a href="/contact" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CONTACT</a>
-        <% break; case "contact" : %>
-        <a href="/" class="py-4 px-2 text-lg text-gray-300 font-medium hover:text-white">ACCUEIL</a>
-        <a href="/cvtheque" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CVTHÈQUE</a>
-        <a href="/offres" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">OFFRES</a>
-        <a href="/soutenances" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">SOUTENANCES</a>
-        <a href="/contact" class="py-4 px-3 text-lg text-green-ensibs-light font-medium hover:text-white">CONTACT</a>
-        <% break; case "" : %>
-        <a href="/" class="py-4 px-2 text-lg text-gray-300 font-medium hover:text-white">ACCUEIL</a>
-        <a href="/cvtheque" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CVTHÈQUE</a>
-        <a href="/offres" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">OFFRES</a>
-        <a href="/soutenances" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">SOUTENANCES</a>
-        <a href="/contact" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CONTACT</a>
-        <% break; } %> <% } else { %> <% switch (page) { case "acceuil" : %>
-        <a href="/" class="py-4 px-3 text-lg text-green-ensibs-light font-medium hover:text-white">ACCUEIL</a>
-        <a href="/contact" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CONTACT</a>
-        <% break; case "contact" : %>
-        <a href="/" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">ACCUEIL</a>
-        <a href="/contact" class="py-4 px-3 text-lg text-green-ensibs-light font-medium hover:text-white">CONTACT</a>
-        <% break; case "" : %>
-        <a href="/" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">ACCUEIL</a>
-        <a href="/contact" class="py-4 px-3 text-lg text-gray-300 font-medium hover:text-white">CONTACT</a>
-        <% break; } %> <% } %>
+        <%if (estConnecte) { %>
+          <a href="/" class="py-4 px-2 text-lg <% if (page == "accueil") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">ACCUEIL</a>
+          <a href="/cvtheque" class="py-4 px-3 text-lg <% if (page == "cvtheque") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">CVTHÈQUE</a>
+          <a href="/offres" class="py-4 px-3 text-lg <% if (page == "offres") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">OFFRES</a>
+          <a href="/soutenances" class="py-4 px-3 text-lg <% if (page == "soutenances") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">SOUTENANCES</a>
+          <a href="/contact" class="py-4 px-3 text-lg <% if (page == "contact") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">CONTACT</a>
+        <% } else { %>
+          <a href="/" class="py-4 px-2 text-lg <% if (page == "accueil") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">ACCUEIL</a>
+          <a href="/contact" class="py-4 px-3 text-lg <% if (page == "contact") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">CONTACT</a>
+        <% } %>
       </div>
     </div>
 
     <!-- Boutton connexion/déconnexion -->
-    <%if (estConnecte) { %>
     <div class="hidden md:flex items-center space-x-1">
-      <a href="/compte" class="py-2 px-3 bg-gray-900 bg-opacity-40 hover:bg-opacity-50 text-white border-white rounded-full transition duration-150">Mon compte</a>
-      <div class="hidden md:flex items-center space-x-1">
-        <button onClick="deconnexion()" class="py-2 px-3 ml-2 bg-red-800 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full transition duration-150">Se déconnecter</button>
-      </div>
-
+    <%if (estConnecte) { %>
+        <span class="text-white pr-4">Bonjour, <%=prenom%> </span>
+        <a href="/compte" class="py-2 px-3 bg-gray-900 bg-opacity-40 hover:bg-opacity-50 text-white border-white rounded-full transition duration-150">Mon compte</a>
+        <div class="hidden md:flex items-center space-x-1">
+          <button onClick="deconnexion()" class="py-2 px-3 ml-2 bg-red-800 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full transition duration-150">Se déconnecter</button>
+        </div>
       <% } else { %>
-      <div class="hidden md:flex items-center space-x-1">
-        <a href="/compte/connexion" class="py-2 px-3 bg-gray-900 bg-opacity-40 hover:bg-opacity-50 text-white rounded-full transition duration-150">Connexion</a>
-        <% } %>
+          <a href="/compte/connexion" class="py-2 px-3 bg-gray-900 bg-opacity-40 hover:bg-opacity-50 text-white rounded-full transition duration-150">Connexion</a>
+      <% } %>
       </div>
 
       <!-- Boutton hamburger mobile -->

@@ -1,6 +1,11 @@
 const estVerifie = async (req, res, next) => {
-  console.log(req.user);
-  // req.user
+  if (req.user.role == "verification") {
+    return res.render("pages/erreurVerif", {
+      estConnecte: false,
+      page: "",
+      prenom: req.utilisateur.prenom,
+    });
+  }
   return next();
 };
 
