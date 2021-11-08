@@ -1,29 +1,38 @@
 # PROJET S7 METN
 
 > Projet de site web pour le semestre 7.
-
+> 
 ## Création d'une base de données locale
-
 Les commandes suivantes sont effectués sur le shell mongo.
+
 Pour l'activer il faut utiliser : 
-```bash
-mongo
-```
+`mongo`
 
-```bash
-# Installation 
+# Installation de MongoDB
 https://www.mongodb.com/try/download/community
+
 Après l'installation, rajouter le chemin d'accès aux binaires "CHEMIN\MongoDB\Server\5.0\bin" 
-dans la variable d'environnement PATH de Windows. 
+dans la variable d'environnement "PATH" de Windows. 
 
-# Création de la database app_stage
-use app_stage
-db.utilisateurs.insert({nom: "nom", prenom: "prenom", email: "email@mail.fr", mot_de_passe: "toto", role: "admin", date_inscription: "", __v: 0})
+# Création de la collection "app_stage"
+Utilisez la commande `use app_stage` pour créer la collection.
 
-# Création d'un user de test
-db.createUser({user:"admin", pwd:"admin", roles: [ "readWrite", "dbAdmin" ]});
+Puis rajoutez des utilisateurs pour l'environnement de dev :
+
+- Ajout Etudiant de test (email : etudiant@dev.fr, mdp : test)
+```bash 
+db.utilisateurs.insert({nom: "Etudiant", prenom: "Prénom", email: "etudiant@dev.fr", mot_de_passe: "$2a$12$oQixXLPKOQWpnxyEuUWujOQA9oKbVsnQflgKb3Wzm0zcTzcijtrpO", role: "etudiant", date_inscription:  ISODate("2021-11-07T02:37:57.529Z"), __v: 0})
 ```
 
+- Ajout Entreprise de test (email : entreprise@dev.fr, mdp : test)
+```bash 
+db.utilisateurs.insert({nom: "Entreprise", prenom: "Prénom", email: "entreprise@dev.fr", mot_de_passe: "$2a$12$oQixXLPKOQWpnxyEuUWujOQA9oKbVsnQflgKb3Wzm0zcTzcijtrpO", role: "entreprise", date_inscription:  ISODate("2021-11-07T02:37:57.529Z"), __v: 0})
+```
+
+- Ajout Admin de test (email : admin@dev.fr, mdp : test)
+```bash 
+db.utilisateurs.insert({nom: "Admin", prenom: "Prénom", email: "admin@dev.fr", mot_de_passe: "$2a$12$oQixXLPKOQWpnxyEuUWujOQA9oKbVsnQflgKb3Wzm0zcTzcijtrpO", role: "administrateur", date_inscription:  ISODate("2021-11-07T02:37:57.529Z"), __v: 0})
+```
 ## Démarrage rapide
 
 ```bash
