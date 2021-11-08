@@ -14,13 +14,21 @@ const auth = async (req, res, next) => {
             var cookies = headers.cookie.split(";")[0];
             var parts = cookies.split("=");
         } catch (error) {
-            return res.sendFile(__dirname + "/frontend/error401.html", 401);
+            return res.render("pages/erreur401", {
+                estConnecte: false,
+                page: "",
+            });
         }
 
         const cookie = { name: parts[0], token: parts[1] };
 
         /* On vérifie que le JWT est présent dans les cookies de la requête */
-        if (!cookie || !cookie.name || !cookie.token) { return res.sendFile(__dirname + "/frontend/error401.html", 401); }
+        if (!cookie || !cookie.name || !cookie.token) {
+            return res.render("pages/erreur401", {
+                estConnecte: false,
+                page: "",
+            });
+        };
 
         const token = cookie.token;
 
@@ -30,7 +38,12 @@ const auth = async (req, res, next) => {
         /* On vérifie que l'utilisateur existe bien dans notre base de données */
         const userId = decodedToken.sub;
         const user = await UtilisateurModel.findOne({ where: { id: userId } });
-        if (!user || user.admin) { return res.sendFile(__dirname + "/frontend/error401.html", 401); }
+        if (!user || user.admin) {
+            return res.render("pages/erreur401", {
+                estConnecte: false,
+                page: "",
+            });
+        }
 
         /* On passe l'utilisateur dans notre requête afin que celui-ci soit disponible pour les prochains middlewares */
         // req.user = user;

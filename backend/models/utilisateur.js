@@ -8,7 +8,7 @@ const UtilisateurSchema = new Schema({
   email: { type: String, required: true, unique: true },
   mot_de_passe: { type: String, required: true },
   date_inscription: { type: Date, default: Date.now },
-  admin: { type: Boolean, default: false },
+  role: { type: String, default: "waiting" },
 });
 
 const Utilisateur = model("utilisateur", UtilisateurSchema);
