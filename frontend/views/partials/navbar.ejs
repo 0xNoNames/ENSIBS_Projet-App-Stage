@@ -30,9 +30,9 @@
     <div class="hidden md:flex items-center space-x-1">
     <%if (estConnecte) { %>
         <span class="text-white pr-4">Bonjour, <%=prenom%> </span>
-        <a href="/compte" class="py-2 px-3 bg-gray-900 bg-opacity-40 hover:bg-opacity-50 text-white border-white rounded-full transition duration-150">Mon compte</a>
+        <a href="/compte" class="py-2 px-3 bg-gray-900 bg-opacity-30 hover:bg-opacity-40 text-white border-white rounded-full transition duration-150">Mon compte</a>
         <div class="hidden md:flex items-center space-x-1">
-          <button onClick="deconnexion()" class="py-2 px-3 ml-2 bg-red-800 bg-opacity-70 hover:bg-opacity-100 text-white rounded-full transition duration-150">Se déconnecter</button>
+          <button onClick="deconnexion()" class="py-2 px-3 ml-2 bg-red-800 bg-opacity-50 hover:bg-opacity-70 text-white rounded-full transition duration-150">Se déconnecter</button>
         </div>
       <% } else { %>
           <a href="/compte/connexion" class="py-2 px-3 bg-gray-900 bg-opacity-40 hover:bg-opacity-50 text-white rounded-full transition duration-150">Connexion</a>

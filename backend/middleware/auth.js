@@ -4,7 +4,7 @@ import UtilisateurModel from "../models/utilisateur.js";
 
 dotenv.config({ path: "backend/.env" });
 
-const estConnecte = async (req, res, next) => {
+export const verifierToken = async (req, res, next) => {
   var cookieToken;
   var decodedToken;
 
@@ -30,10 +30,8 @@ const estConnecte = async (req, res, next) => {
       return next();
     }
 
-    console.log(cookieToken);
-
+    /* On vérifie et décode le JWT à l'aide du secret et de l'algorithme utilisé pour le générer */
     try {
-      /* On vérifie et décode le JWT à l'aide du secret et de l'algorithme utilisé pour le générer */
       decodedToken = jwt.verify(cookieToken.token, process.env.JWT_SECRET);
     } catch (error) {
       req.estConnecte = false;
@@ -41,9 +39,11 @@ const estConnecte = async (req, res, next) => {
       return next();
     }
 
+    console.log("DECODE:", decodedToken.id);
+
     /* On vérifie que l'utilisateur existe bien dans notre base de données */
-    const userId = decodedToken.sub;
-    const utilisateur = await UtilisateurModel.findOne({ where: { id: userId } });
+    const utilisateur = await UtilisateurModel.findOne({ _id: decodedToken.id });
+    console.log(utilisateur);
     if (!utilisateur) {
       req.estConnecte = false;
       req.utilisateur = "";
@@ -53,6 +53,8 @@ const estConnecte = async (req, res, next) => {
     req.utilisateur = utilisateur;
     req.estConnecte = true;
 
+    console.log(req.utilisateur);
+
     return next();
   } catch (err) {
     console.log(err);
@@ -60,4 +62,51 @@ const estConnecte = async (req, res, next) => {
   }
 };
 
-export default estConnecte;
+export const estValide = (req, res, next) => {
+  if (req.estConnecte === false || req.user === "") {
+    return res.render("pages/erreur401", {
+      estConnecte: false,
+      page: "",
+      prenom: "",
+    });
+  }
+  return next();
+};
+
+export const estVerifie = (req, res, next) => {
+  if (req.utilisateur.role == "verification") {
+    return res.render("pages/erreurVerif", {
+      estConnecte: false,
+      page: "",
+      prenom: req.utilisateur.prenom,
+    });
+  }
+  return next();
+};
+
+export const estAdministrateur = (req, res, next) => {
+  if (req.utilisateur != "administrateur") {
+    return res.status(400).render("pages/erreur401");
+  }
+  console.log(req.user);
+  return next();
+};
+
+export const estEntreprise = (req, res, next) => {
+  console.log(req.user);
+  return next();
+};
+
+export const estEtudiant = (req, res, next) => {
+  console.log(req.user);
+  return next();
+};
+
+export default {
+  verifierToken,
+  estAdministrateur,
+  estEntreprise,
+  estEtudiant,
+  estValide,
+  estVerifie,
+};

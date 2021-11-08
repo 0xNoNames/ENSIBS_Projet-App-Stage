@@ -68,7 +68,7 @@ export const useConnexion = async (req, res) => {
     if (!verifMotDePasse) return res.status(400).json({ message: "Email ou mot de passe invalide." });
 
     /* On créer le JWT */
-    const token = jwt.sign({ prenom: bddUtilisateur.prenom, nom: bddUtilisateur.nom }, process.env.JWT_SECRET, { expiresIn: process.env.jwtExpiresIn });
+    const token = jwt.sign({ id: bddUtilisateur.id }, process.env.JWT_SECRET, { expiresIn: process.env.jwtExpiresIn });
 
     if (!token) return res.status(400).json({ message: "Impossible de signer le token." });
 
@@ -105,7 +105,7 @@ export const useInscription = async (req, res) => {
 
     const result = await UtilisateurModel.create({ email, mot_de_passe: hash, prenom, nom });
 
-    const token = jwt.sign({ email: result.email, id: result._id }, process.env.JWT_SECRET, { expiresIn: process.env.jwtExpiresIn });
+    const token = jwt.sign({ id: result.id }, process.env.JWT_SECRET, { expiresIn: process.env.jwtExpiresIn });
 
     /* On créer le cookie contenant le JWT */
     res.cookie("token", token, {

@@ -1,10 +1,9 @@
-import estConnecte from "../../middleware/estConnecte.js";
 import { Router } from "express";
-import estValide from "../../middleware/estValide.js";
+import { verifierToken, estValide } from "../../middleware/auth.js";
 
 const router = Router();
 
-router.get("/", estConnecte, estValide, (req, res) => {
+router.get("/", verifierToken, estValide, (req, res) => {
   res.render("pages/cvtheque", {
     estConnecte: true,
     page: "cvtheque",

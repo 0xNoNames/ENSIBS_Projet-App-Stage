@@ -6,7 +6,7 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import path from "path";
-import estConnecte from "./backend/middleware/estConnecte.js";
+import { verifierToken } from "./backend/middleware/auth.js";
 
 // -- -- -- -- -- -- -- -- --  -- ROUTES -- -- -- -- -- -- -- -- --  -- \\
 
@@ -82,7 +82,7 @@ app.use("/api/soutenances", soutenancesRoutesAPI);
 // -- -- -- -- -- -- -- -- --  -- ROUTING -- -- -- -- -- -- -- -- --  -- \\
 
 // Page d'accueil
-app.get("/", estConnecte, (req, res) => {
+app.get("/", verifierToken, (req, res) => {
   console.log(req.utilisateur.prenom);
   res.render("pages/accueil", {
     estConnecte: req.estConnecte,
@@ -115,7 +115,7 @@ app.use("/offres", offresRoutes);
 // });
 
 // Page d 'erreur 404 (mettre en dernière route)
-app.get("*", estConnecte, (req, res) => {
+app.get("*", verifierToken, (req, res) => {
   res.status(404).render("pages/erreur404", {
     estConnecte: req.estConnecte,
     page: "",

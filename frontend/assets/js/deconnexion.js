@@ -4,7 +4,7 @@ const deconnexion = async () => {
       method: "DELETE",
       mode: "cors",
       credentials: "include",
-    }).then((data) => {
+    }).then(() => {
       window.location.href = "/compte/connexion";
     });
   } catch (error) {
