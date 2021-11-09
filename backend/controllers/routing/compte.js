@@ -36,6 +36,9 @@ export const getComptePage = (req, res) => {
     estConnecte: true,
     page: "Compte",
     prenom: req.utilisateur.prenom,
+    nom : req.utilisateur.nom,
+    email : req.utilisateur.email,
+    role : req.utilisateur.role
   });
 };
 

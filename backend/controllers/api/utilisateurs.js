@@ -20,8 +20,15 @@ export const updateUtilisateur = (req, res) => {
   res.status(200);
 };
 
-export const deleteUtilisateur = (req, res) => {
-  res.status(200);
+export const deleteUtilisateur = async (req, res) => {
+  const id = req.utilisateur.id;
+  try {
+    const supp = await UtilisateurModel.deleteOne({_id : id});
+    console.log(supp);
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const deleteAnyUtilisateur = (req, res) => {
