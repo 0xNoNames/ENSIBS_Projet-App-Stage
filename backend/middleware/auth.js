@@ -20,6 +20,7 @@ export const verifierToken = async (req, res, next) => {
     } catch (error) {
       req.estConnecte = false;
       req.utilisateur = "";
+      console.log(error);
       return next();
     }
 
@@ -27,6 +28,7 @@ export const verifierToken = async (req, res, next) => {
     if (cookieToken.nom != "token" || cookieToken.token == "") {
       req.estConnecte = false;
       req.utilisateur = "";
+      console.error("Pas de token.");
       return next();
     }
 
@@ -36,6 +38,7 @@ export const verifierToken = async (req, res, next) => {
     } catch (error) {
       req.estConnecte = false;
       req.utilisateur = "";
+      console.log(error);
       return next();
     }
 
@@ -44,6 +47,7 @@ export const verifierToken = async (req, res, next) => {
     if (!utilisateur) {
       req.estConnecte = false;
       req.utilisateur = "";
+      console.error("Pas d'utilisateur.");
       return next();
     }
 
@@ -51,8 +55,8 @@ export const verifierToken = async (req, res, next) => {
     req.estConnecte = true;
 
     return next();
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: "Erreur interne." });
   }
 };
@@ -64,6 +68,8 @@ export const estValide = (req, res, next) => {
       page: "Erreur 401",
       prenom: "",
     });
+  } else {
+    console.error("Pas valide.");
   }
   return next();
 };
@@ -75,6 +81,8 @@ export const estVerifie = (req, res, next) => {
       page: "Erreur",
       prenom: req.utilisateur.prenom,
     });
+  } else {
+    console.error("Pas vérifié.");
   }
   return next();
 };
@@ -86,6 +94,8 @@ export const estAdministrateur = (req, res, next) => {
       page: "Erreur 401",
       prenom: req.utilisateur.prenom,
     });
+  } else {
+    console.error("Pas administrateur.");
   }
   return next();
 };

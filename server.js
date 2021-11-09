@@ -38,7 +38,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 console.log(__dirname);
 
 app.set("view engine", "ejs");
-// app.set('views', path.join(__dirname, '/fontend/views'));
 app.set("views", "./frontend/views");
 
 app.use("/static", express.static(path.join(__dirname, "/frontend/assets")));
@@ -67,7 +66,6 @@ app.use("/api/offres", offresRoutesAPI);
 app.use("/api/utilisateurs", utilisateursRoutesAPI);
 app.use("/api/cvs", cvsRoutesAPI);
 app.use("/api/soutenances", soutenancesRoutesAPI);
-// app.update("/api/estconnecte", auth, (req, res) => { res.sendStatus(200) });
 
 // Serve static assets if in production
 // if (process.env.NODE_ENV === "production") {
