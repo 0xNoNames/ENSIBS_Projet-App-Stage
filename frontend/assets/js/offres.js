@@ -2,7 +2,6 @@ window.addEventListener("load", function () {
   const options = {
     method: "GET",
     mode: "cors",
-    headers,
     credentials: "include",
   };
 

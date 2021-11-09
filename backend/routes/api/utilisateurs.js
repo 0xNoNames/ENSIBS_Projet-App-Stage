@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUtilisateurs, createUtilisateur, updateUtilisateur, deleteUtilisateur, deleteAnyUtilisateur } from "../../controllers/api/utilisateurs.js";
+import { getUtilisateurs, createUtilisateur, updateUtilisateur, deleteUtilisateur, deleteAnyUtilisateur, postConnexion, postInscription, deleteDeconnexion } from "../../controllers/api/utilisateurs.js";
 import { verifierToken, estVerifie, estAdministrateur } from "../../middleware/auth.js";
 
 const router = Router();
@@ -22,6 +22,12 @@ router.get("/", verifierToken, estAdministrateur, getUtilisateurs);
  * @access  Public
  */
 router.post("/", createUtilisateur);
+
+router.post("/connexion", verifierToken, postConnexion);
+
+router.post("/inscription", verifierToken, postInscription);
+
+router.delete("/deconnexion", verifierToken, deleteDeconnexion);
 
 /**
  * @route   PUT /api/utilisateurs
