@@ -42,6 +42,12 @@ db.comptes.insertMany([{nom: "Nom", prenom: "Entreprise", email: "entreprise@dev
 db.comptes.updateOne({email: "email@dev.fr"},{$set: { "estVerifie" : true}})
 ```
 
+- Pour supprimer la collection :
+
+```bash
+db.comptes.drop()
+```
+
 ## Démarrage rapide
 
 ```bash
