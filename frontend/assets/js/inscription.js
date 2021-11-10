@@ -1,17 +1,43 @@
 window.addEventListener("load", function () {
   function sendData() {
-    fetch("/compte/inscription", {
-      method: "POST",
-      body: JSON.stringify({ prenom: form.prenom.value, nom: form.nom.value, email: form.email.value, mot_de_passe: form.password.value }),
-    })
-      .then((res) => res.json().then((data) => ({ status: res.status, body: data })))
-      .then((data) => {
-        if (data.status == 400) document.getElementById("messageErreur").innerHTML = data.body.message;
-        else window.location.href = "/compte";
-      })
-      .catch((err) => {
-        document.getElementById("messageErreur").innerHTML = err;
+    try {
+      const response = await fetch("/api/comptes/", {
+        method: "POST",
+        body: JSON.stringify({ prenom: form.prenom.value, nom: form.nom.value, email: form.email.value, mot_de_passe: form.password.value }),
+        mode: "cors",
+        credentials: "include",
       });
+      const data = await response.json();
+      if (data.status == 400) {
+        document.getElementById("messageErreur").innerHTML = data.body.message;
+        setTimeout(() => {
+          document.getElementById("messageErreur").innerHTML = "";
+        }, 2000);
+      } else {
+        window.location.href = "/compte";
+      }
+    } catch (erreur) {
+      console.log(erreur);
+    }
+
+    // fetch("/api/comptes/", {
+    //   method: "POST",
+    //   body: JSON.stringify({ prenom: form.prenom.value, nom: form.nom.value, email: form.email.value, mot_de_passe: form.password.value }),
+    // })
+    //   .then((res) => res.json().then((data) => ({ status: res.status, body: data })))
+    //   .then((data) => {
+    //     if (data.status == 400) {
+    //       document.getElementById("messageErreur").innerHTML = data.body.message;
+    //       setTimeout(() => {
+    //         document.getElementById("messageErreur").innerHTML = "";
+    //       }, 2000);
+    //     } else {
+    //       window.location.href = "/compte";
+    //     }
+    //   })
+    //   .catch((erreur) => {
+    //     console.log(erreur);
+    //   });
   }
 
   var form = document.getElementById("form");
@@ -25,11 +51,4 @@ window.addEventListener("load", function () {
     else if (!passRegex.test(form.password.value)) document.getElementById("messageErreur").innerHTML = "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial.";
     else sendData();
   });
-});
-
-const btn = document.querySelector("button.mobile-menu-button");
-const menu = document.querySelector(".mobile-menu");
-
-btn.addEventListener("click", () => {
-  menu.classList.toggle("hidden");
 });

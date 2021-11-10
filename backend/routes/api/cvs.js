@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getCVs, createCV, updateCV, deleteCV, deleteAnyCV } from "../../controllers/api/cvtheque.js";
+import { getCVs, createCV, updateCV, deleteCV, deleteAnyCV } from "../../controllers/api/cvtheques.js";
 import auth from "../../middleware/auth.js";
 
 const router = Router();

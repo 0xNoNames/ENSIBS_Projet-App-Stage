@@ -12,7 +12,7 @@ import { verifierToken } from "./backend/middleware/auth.js";
 
 // -- -- -- API -- -- -- \\
 import offresRoutesAPI from "./backend/routes/api/offres.js";
-import utilisateursRoutesAPI from "./backend/routes/api/utilisateurs.js";
+import comptesRoutesAPI from "./backend/routes/api/comptes.js";
 import cvsRoutesAPI from "./backend/routes/api/cvs.js";
 import soutenancesRoutesAPI from "./backend/routes/api/soutenances.js";
 
@@ -63,7 +63,7 @@ mongoose
 
 // Use Routes
 app.use("/api/offres", offresRoutesAPI);
-app.use("/api/utilisateurs", utilisateursRoutesAPI);
+app.use("/api/comptes", comptesRoutesAPI);
 app.use("/api/cvs", cvsRoutesAPI);
 app.use("/api/soutenances", soutenancesRoutesAPI);
 

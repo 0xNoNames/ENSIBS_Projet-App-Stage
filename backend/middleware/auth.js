@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import UtilisateurModel from "../models/utilisateur.js";
+import CompteModel from "../models/compte.js";
 
 dotenv.config({ path: "backend/.env" });
 
@@ -20,7 +20,7 @@ export const verifierToken = async (req, res, next) => {
     } catch (error) {
       req.estConnecte = false;
       req.utilisateur = "";
-      console.log(error);
+      console.log("Pas de cookies.");
       return next();
     }
 
@@ -38,12 +38,12 @@ export const verifierToken = async (req, res, next) => {
     } catch (error) {
       req.estConnecte = false;
       req.utilisateur = "";
-      console.log(error);
+      console.log("Token malformé.");
       return next();
     }
 
     /* On vérifie que l'utilisateur existe bien dans notre base de données */
-    const utilisateur = await UtilisateurModel.findOne({ _id: decodedToken.id });
+    const utilisateur = await CompteModel.findOne({ _id: decodedToken.id });
     if (!utilisateur) {
       req.estConnecte = false;
       req.utilisateur = "";

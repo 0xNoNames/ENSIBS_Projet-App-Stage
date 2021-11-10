@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUtilisateurs, createUtilisateur, updateUtilisateur, deleteUtilisateur, deleteAnyUtilisateur, postConnexion, postInscription, deleteDeconnexion } from "../../controllers/api/utilisateurs.js";
+import { getComptes, createCompte, updateCompte, deleteCompte, deleteAnyCompte, postConnexion, deleteDeconnexion } from "../../controllers/api/comptes.js";
 import { verifierToken, estVerifie, estAdministrateur } from "../../middleware/auth.js";
 
 const router = Router();
@@ -7,25 +7,23 @@ const router = Router();
 /**
  * DEBUG A SUPPRIMER
  */
-router.get("/XD", getUtilisateurs);
+router.get("/XD", getComptes);
 
 /**
  * @route   GET /api/utilisateurs
  * @desc    Récupérer tous les utilisateurs
  * @access  Administrateur
  */
-router.get("/", verifierToken, estAdministrateur, getUtilisateurs);
+router.get("/", verifierToken, estAdministrateur, getComptes);
 
 /**
  * @route   POST /api/utilisateurs
  * @desc    Créer un utilisateurs
  * @access  Public
  */
-router.post("/", createUtilisateur);
+router.post("/", verifierToken, createCompte);
 
 router.post("/connexion", verifierToken, postConnexion);
-
-router.post("/inscription", verifierToken, postInscription);
 
 router.delete("/deconnexion", verifierToken, deleteDeconnexion);
 
@@ -34,20 +32,20 @@ router.delete("/deconnexion", verifierToken, deleteDeconnexion);
  * @desc    Mettre à jour un utilisateur
  * @access  Private
  */
-router.put("/", verifierToken, estVerifie, updateUtilisateur);
+router.put("/", verifierToken, estVerifie, updateCompte);
 
 /**
  * @route   DELETE /api/utilisateurs
  * @desc    Supprimer son compte
  * @access  Private
  */
-router.delete("/supprimer", verifierToken, estVerifie, deleteUtilisateur);
+router.delete("/supprimer", verifierToken, estVerifie, deleteCompte);
 
 /**
  * @route   DELETE /api/utilisateurs/:id
  * @desc    Supprimer un utilisateur
  * @access  Administrateur
  */
-router.delete("/:id", verifierToken, estAdministrateur, deleteAnyUtilisateur);
+router.delete("/:id", verifierToken, estAdministrateur, deleteAnyCompte);
 
 export default router;
