@@ -7,7 +7,7 @@ const CompteSchema = new Schema({
   prenom: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   mot_de_passe: { type: String, required: true },
-  role: {
+  statut: {
     type: String,
     enum: ["etudiant", "entreprise", "administrateur"],
     required: true,

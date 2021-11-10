@@ -15,9 +15,9 @@ export const getComptes = async (req, res) => {
 };
 
 export const createCompte = async (req, res) => {
-  const { email, mot_de_passe, nom, prenom } = req.body;
+  const { nom, prenom, email, mot_de_passe, statut } = req.body;
 
-  if (!email || !mot_de_passe || !nom || !prenom) return res.status(400).json({ msg: "Remplissez tous les champs." });
+  if (!nom || !prenom || !email || !mot_de_passe || !statut) return res.status(400).json({ msg: "Remplissez tous les champs." });
 
   try {
     const bddCompte = await CompteModel.findOne({ email });
@@ -32,7 +32,7 @@ export const createCompte = async (req, res) => {
 
     const hash = await bcrypt.hash(mot_de_passe, 12);
 
-    const result = await CompteModel.create({ email, mot_de_passe: hash, prenom, nom });
+    const result = await CompteModel.create({ nom, prenom, email, mot_de_passe: hash, statut });
 
     const token = jwt.sign({ id: result.id }, process.env.JWT_SECRET, { expiresIn: process.env.jwtExpiresIn });
 
@@ -57,9 +57,9 @@ export const deleteCompte = async (req, res) => {
   const id = req.utilisateur.id;
   try {
     const supp = await CompteModel.deleteOne({ _id: id });
-    console.log(supp);
     res.sendStatus(200);
   } catch (error) {
+    res.sendStatus(400);
     console.log(error);
   }
 };
@@ -76,7 +76,7 @@ export const deleteDeconnexion = async (req, res) => {
       expires: new Date(0),
       maxAge: parseInt(process.env.jwtExpiresIn),
     });
-    res.sendStatus(201);
+    res.sendStatus(200);
   } else {
     res.sendStatus(400);
   }

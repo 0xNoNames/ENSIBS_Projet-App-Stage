@@ -1,14 +1,16 @@
 const supprimer = async () => {
   if (confirm("Supprimer le compte ?") == true) {
     try {
-      const response = await fetch("api/comptes/supprimer", {
+      const response = await fetch("/api/comptes/suppression", {
         method: "DELETE",
         mode: "cors",
         credentials: "include",
       });
       const data = await response;
-      if (data) {
+      if (response.status == 200) {
         window.location.href = "/compte/connexion";
+      } else {
+        alert("Supression impossible.");
       }
     } catch (error) {
       console.log(error);

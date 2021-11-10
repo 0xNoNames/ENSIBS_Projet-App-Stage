@@ -1,4 +1,4 @@
-window.addEventListener("load", function () {
+window.addEventListener("load", () => {
   const options = {
     method: "GET",
     mode: "cors",

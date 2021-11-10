@@ -6,8 +6,13 @@ const deconnexion = async () => {
       credentials: "include",
     });
     const data = await response;
-    if (data) {
+
+    console.log(response.status);
+
+    if (response.status == 200) {
       window.location.href = "/compte/connexion";
+    } else {
+      alert("Déconnexion impossible.");
     }
   } catch (erreur) {
     console.log(erreur);

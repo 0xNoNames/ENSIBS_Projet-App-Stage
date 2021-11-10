@@ -1,16 +1,16 @@
-window.addEventListener("load", function () {
-  function sendData() {
+window.addEventListener("load", () => {
+  const sendData = async () => {
     try {
       const response = await fetch("/api/comptes/connexion", {
         method: "POST",
-        body: JSON.stringify({ email: form.email.value, mot_de_passe: form.password.value, role: form.role.value }),
+        body: JSON.stringify({ email: form.email.value, mot_de_passe: form.password.value }),
         mode: "cors",
         credentials: "include",
       });
       const data = await response.json();
 
-      if (data.status == 400) {
-        document.getElementById("messageErreur").innerHTML = data.body.message;
+      if (response.status == 400) {
+        document.getElementById("messageErreur").innerHTML = data.message;
         setTimeout(() => {
           document.getElementById("messageErreur").innerHTML = "";
         }, 2000);
@@ -20,11 +20,11 @@ window.addEventListener("load", function () {
     } catch (erreur) {
       console.log(erreur);
     }
-  }
+  };
 
   var form = document.getElementById("form");
 
-  form.addEventListener("submit", function (event) {
+  form.addEventListener("submit", (event) => {
     event.preventDefault();
     sendData();
   });

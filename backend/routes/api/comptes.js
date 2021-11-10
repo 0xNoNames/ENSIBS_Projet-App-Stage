@@ -39,7 +39,7 @@ router.put("/", verifierToken, estVerifie, updateCompte);
  * @desc    Supprimer son compte
  * @access  Private
  */
-router.delete("/supprimer", verifierToken, estVerifie, deleteCompte);
+router.delete("/suppression", verifierToken, estVerifie, deleteCompte);
 
 /**
  * @route   DELETE /api/utilisateurs/:id
