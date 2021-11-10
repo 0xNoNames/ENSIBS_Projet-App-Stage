@@ -25,7 +25,7 @@ export const updateUtilisateur = (req, res) => {
 export const deleteUtilisateur = async (req, res) => {
   const id = req.utilisateur.id;
   try {
-    const supp = await UtilisateurModel.deleteOne({_id : id});
+    const supp = await UtilisateurModel.deleteOne({ _id: id });
     console.log(supp);
     res.sendStatus(200);
   } catch (error) {
