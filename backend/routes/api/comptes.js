@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getComptes, createCompte, updateCompte, deleteCompte, deleteAnyCompte, postConnexion, deleteDeconnexion } from "../../controllers/api/comptes.js";
-import { verifierToken, estVerifie, estAdministrateur } from "../../middleware/auth.js";
+import { verifierToken, estAdministrateur } from "../../middleware/auth.js";
 
 const router = Router();
 
@@ -32,14 +32,14 @@ router.delete("/deconnexion", verifierToken, deleteDeconnexion);
  * @desc    Mettre à jour un utilisateur
  * @access  Private
  */
-router.put("/", verifierToken, estVerifie, updateCompte);
+router.put("/", verifierToken, updateCompte);
 
 /**
  * @route   DELETE /api/utilisateurs
  * @desc    Supprimer son compte
  * @access  Private
  */
-router.delete("/suppression", verifierToken, estVerifie, deleteCompte);
+router.delete("/suppression", verifierToken, deleteCompte);
 
 /**
  * @route   DELETE /api/utilisateurs/:id

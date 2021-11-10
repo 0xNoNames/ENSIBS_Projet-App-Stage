@@ -21,7 +21,6 @@ import contactRoutes from "./backend/routes/routing/contact.js";
 import cvthequeRoutes from "./backend/routes/routing/cvtheque.js";
 import compteRoutes from "./backend/routes/routing/compte.js";
 import offresRoutes from "./backend/routes/routing/offres.js";
-import recuperationRoutes from "./backend/routes/routing/recuperation.js";
 import soutenancesRoutes from "./backend/routes/routing/soutenance.js";
 
 // -- -- -- -- -- -- -- -- --  -- CONFIG -- -- -- -- -- -- -- -- --  -- \\
@@ -98,11 +97,8 @@ app.use("/soutenances", soutenancesRoutes);
 // Page de contact
 app.use("/contact", contactRoutes);
 
-// Page de connexion, inscription et profil
+// Page de connexion, inscription, profil et aide
 app.use("/compte", compteRoutes);
-
-// Page de récupération
-app.use("/recuperation", recuperationRoutes);
 
 // Page des offres
 app.use("/offres", offresRoutes);

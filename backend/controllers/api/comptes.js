@@ -96,6 +96,8 @@ export const postConnexion = async (req, res) => {
 
     if (!verifMotDePasse) return res.status(400).json({ message: "Email ou mot de passe invalide." });
 
+    if (!bddCompte.estVerifie) return res.status(400).json({ message: "Veuillez vérifier votre compte." });
+
     /* On créer le JWT */
     const token = jwt.sign({ id: bddCompte.id }, process.env.JWT_SECRET, { expiresIn: process.env.jwtExpiresIn });
 

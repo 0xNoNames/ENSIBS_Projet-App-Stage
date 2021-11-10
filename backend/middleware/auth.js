@@ -54,6 +54,8 @@ export const verifierToken = async (req, res, next) => {
     req.utilisateur = utilisateur;
     req.estConnecte = true;
 
+    console.log(req.utilisateur);
+
     return next();
   } catch (error) {
     console.log(error);
@@ -74,19 +76,6 @@ export const estValide = (req, res, next) => {
   return next();
 };
 
-export const estVerifie = (req, res, next) => {
-  if (req.utilisateur.role == "verification") {
-    return res.render("pages/erreurVerif", {
-      estConnecte: false,
-      page: "Erreur",
-      prenom: req.utilisateur.prenom,
-    });
-  } else {
-    console.error("Pas vérifié.");
-  }
-  return next();
-};
-
 export const estAdministrateur = (req, res, next) => {
   if (req.utilisateur != "administrateur") {
     return res.render("pages/erreur401", {
@@ -101,12 +90,12 @@ export const estAdministrateur = (req, res, next) => {
 };
 
 export const estEntreprise = (req, res, next) => {
-  console.log(req.user);
+  console.log("APPEL estEntreprise");
   return next();
 };
 
 export const estEtudiant = (req, res, next) => {
-  console.log(req.user);
+  console.log("APPEL estEtudiant");
   return next();
 };
 
@@ -116,5 +105,4 @@ export default {
   estEntreprise,
   estEtudiant,
   estValide,
-  estVerifie,
 };
