@@ -7,7 +7,7 @@ router.get("/", verifierToken, (req, res) => {
   res.render("pages/contact", {
     estConnecte: req.estConnecte,
     page: "Contact",
-    prenom: req.utilisateur.prenom,
+    prenom: req.compte.prenom,
   });
 });
 

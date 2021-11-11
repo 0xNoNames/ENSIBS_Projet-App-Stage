@@ -1,5 +1,4 @@
 import dotenv from "dotenv";
-import path from "path";
 
 dotenv.config({ path: "../.env" });
 
@@ -21,7 +20,7 @@ export const getInscriptionPage = (req, res) => {
     res.render("pages/inscription", {
       estConnecte: false,
       page: "Inscription",
-      prenom: req.utilisateur.prenom,
+      prenom: req.compte.prenom,
     });
   }
 };
@@ -30,10 +29,10 @@ export const getComptePage = (req, res) => {
   res.render("pages/compte", {
     estConnecte: true,
     page: "Compte",
-    prenom: req.utilisateur.prenom,
-    nom: req.utilisateur.nom,
-    email: req.utilisateur.email,
-    role: req.utilisateur.role,
+    prenom: req.compte.prenom,
+    nom: req.compte.nom,
+    email: req.compte.email,
+    role: req.compte.role,
   });
 };
 

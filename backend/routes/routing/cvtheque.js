@@ -7,7 +7,7 @@ router.get("/", verifierToken, estValide, (req, res) => {
   res.render("pages/cvtheque", {
     estConnecte: true,
     page: "CVthèque",
-    prenom: req.utilisateur.prenom,
+    prenom: req.compte.prenom,
   });
 });
 

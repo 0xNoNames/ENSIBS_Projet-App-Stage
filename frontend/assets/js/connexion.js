@@ -1,5 +1,5 @@
 window.addEventListener("load", () => {
-  const sendData = async () => {
+  const envoyerFormulaire = async () => {
     try {
       const response = await fetch("/api/comptes/connexion", {
         method: "POST",
@@ -13,7 +13,7 @@ window.addEventListener("load", () => {
         document.getElementById("messageErreur").innerHTML = data.message;
         setTimeout(() => {
           document.getElementById("messageErreur").innerHTML = "";
-        }, 2000);
+        }, 5000);
       } else {
         window.location.href = "/compte";
       }
@@ -26,6 +26,6 @@ window.addEventListener("load", () => {
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    sendData();
+    envoyerFormulaire();
   });
 });

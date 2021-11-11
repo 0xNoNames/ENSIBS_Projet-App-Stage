@@ -3,7 +3,6 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import morgan from "morgan";
 import dotenv from "dotenv";
 import path from "path";
 import { verifierToken } from "./backend/middleware/auth.js";
@@ -44,7 +43,6 @@ app.use("/static", express.static(path.join(__dirname, "/frontend/assets")));
 // -- -- -- -- -- -- -- -- --  -- MIDDLEWARES -- -- -- -- -- -- -- -- --  -- \\
 
 app.use(cors());
-app.use(morgan("dev"));
 app.use(express.json({ type: "*/*" }));
 
 // -- -- -- -- -- -- -- -- --  -- DATABASE -- -- -- -- -- -- -- -- --  -- \\
@@ -80,11 +78,11 @@ app.use("/api/soutenances", soutenancesRoutesAPI);
 
 // Page d'accueil
 app.get("/", verifierToken, (req, res) => {
-  console.log(req.utilisateur.prenom);
+  console.log(req.compte.prenom);
   res.render("pages/accueil", {
     estConnecte: req.estConnecte,
     page: "Accueil",
-    prenom: req.utilisateur.prenom,
+    prenom: req.compte.prenom,
   });
 });
 
@@ -113,7 +111,7 @@ app.get("*", verifierToken, (req, res) => {
   res.status(404).render("pages/erreur404", {
     estConnecte: req.estConnecte,
     page: "Erreur 404",
-    prenom: req.utilisateur.prenom,
+    prenom: req.compte.prenom,
   });
 });
 

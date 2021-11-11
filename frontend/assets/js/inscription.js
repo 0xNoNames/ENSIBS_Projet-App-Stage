@@ -9,21 +9,21 @@ window.addEventListener("load", () => {
       document.getElementById("messageErreur").innerHTML = "Les mots de passe ne correspondent pas.";
       setTimeout(() => {
         document.getElementById("messageErreur").innerHTML = "";
-      }, 2000);
+      }, 5000);
     } else if (form.motDePasse.value.lenght < 8) {
       document.getElementById("messageErreur").innerHTML = "Le mot de passe doit faire au moins 8 caractères.";
       setTimeout(() => {
         document.getElementById("messageErreur").innerHTML = "";
-      }, 2000);
+      }, 5000);
     } else if (!passRegex.test(form.motDePasse.value)) {
       document.getElementById("messageErreur").innerHTML = "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial.";
       setTimeout(() => {
         document.getElementById("messageErreur").innerHTML = "";
-      }, 2000);
-    } else sendData();
+      }, 5000);
+    } else envoyerFormulaire();
   });
 
-  const sendData = async () => {
+  const envoyerFormulaire = async () => {
     const statut = form.etudiant.checked ? form.etudiant.value : form.entreprise.value;
     try {
       const response = await fetch("/api/comptes/", {
@@ -33,13 +33,12 @@ window.addEventListener("load", () => {
         credentials: "include",
       });
       const data = await response.json();
-      if (data.status == 400) {
-        document.getElementById("messageErreur").innerHTML = data.body.message;
+
+      if (data) {
+        document.getElementById("messageErreur").innerHTML = data.message;
         setTimeout(() => {
           document.getElementById("messageErreur").innerHTML = "";
-        }, 2000);
-      } else {
-        window.location.href = "/compte";
+        }, 5000);
       }
     } catch (erreur) {
       console.log(erreur);

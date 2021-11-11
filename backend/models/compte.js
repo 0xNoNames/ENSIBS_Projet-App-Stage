@@ -1,7 +1,6 @@
 import pkg from "mongoose";
 const { Schema, model } = pkg;
 
-// Create Schema
 const CompteSchema = new Schema({
   nom: { type: String, required: true },
   prenom: { type: String, required: true },
