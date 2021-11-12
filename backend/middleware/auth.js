@@ -8,9 +8,11 @@ export const verifierToken = async (req, res, next) => {
   var cookieToken = { nom: "", token: "" };
   var decodedToken;
 
+
   try {
     try {
       var cookies = req.headers.cookie.split(";");
+      console.log(cookies)
       cookies.forEach((cookie) => {
         let parts = cookie.split("=");
         if (parts[0].replace(/\s+/g, "") == "token") {
@@ -23,7 +25,7 @@ export const verifierToken = async (req, res, next) => {
       console.error("AUTH.JS : Pas de cookies.", error);
       return next();
     }
-
+    console.log(cookieToken)
     /* On vérifie que le JWT est présent dans les cookies de la requête */
     if (cookieToken.nom != "token" || cookieToken.token == "") {
       req.estConnecte = false;
@@ -34,7 +36,9 @@ export const verifierToken = async (req, res, next) => {
 
     /* On vérifie et décode le JWT à l'aide du secret et de l'algorithme utilisé pour le générer */
     try {
+      console.log(cookieToken.token)
       decodedToken = jwt.verify(cookieToken.token, process.env.JWT_SECRET);
+
     } catch (error) {
       req.estConnecte = false;
       req.compte = "";
