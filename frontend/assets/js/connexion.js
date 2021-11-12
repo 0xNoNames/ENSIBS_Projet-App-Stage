@@ -5,7 +5,7 @@ window.addEventListener("load", () => {
         method: "POST",
         body: JSON.stringify({ email: form.email.value, mot_de_passe: form.password.value }),
         mode: "cors",
-        credentials: "include"
+        credentials: "include",
       });
       const data = await response.json();
 

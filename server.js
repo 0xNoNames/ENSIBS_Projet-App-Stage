@@ -43,7 +43,7 @@ app.use("/static", express.static(path.join(__dirname, "/frontend/assets")));
 // -- -- -- -- -- -- -- -- --  -- MIDDLEWARES -- -- -- -- -- -- -- -- --  -- \\
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ type: "text/plain" }));
 app.use(express.raw({ type: "application/x-www-form-urlencoded" }));
 // -- -- -- -- -- -- -- -- --  -- DATABASE -- -- -- -- -- -- -- -- --  -- \\
 
