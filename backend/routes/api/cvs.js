@@ -16,8 +16,8 @@ router.get("/", verifierToken, estEntreprise, getCVs);
  * @desc    Créer un CV
  * @access  Private
  */
-router.post("/", verifierToken, estEtudiant, createCV);
-
+//router.post("/", verifierToken, estEtudiant, createCV);
+router.post("/", verifierToken, createCV);
 /**
  * @route   PUT /api/cvs
  * @desc    Mettre à jour un CV

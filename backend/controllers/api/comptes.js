@@ -100,8 +100,8 @@ export const postConnexion = async (req, res) => {
   }
 
   const { email, mot_de_passe } = req.body;
-
-  if (!email || !mot_de_passe) return res.status(400).json({ msg: "Remplissez tous les champs." });
+  console.log(req.body)
+  if (!email || !mot_de_passe) return res.status(400).json({ message: "Remplissez tous les champs." });
 
   try {
     const mongoCompte = await CompteModel.findOne({ email });

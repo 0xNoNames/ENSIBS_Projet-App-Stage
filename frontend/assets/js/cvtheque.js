@@ -1,38 +1,23 @@
-function getBase64(file) {
-  if (file){
-    return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
-  }
-  
-}
-
-window.addEventListener("load", () => {
-  getCV().then((data) => {
-    console.log(data);
-  });
+//let fs = require('fs');
 
 
-  // Function for fecting the api
 
-  const  sendData = async () => {
+const  sendData = async () => {
     console.log("Uploading the CV")
 
     // Get the file
     var input = document.getElementById("fileupload");
     var data_file = input.files[0];
     let formData = new FormData(); 
+    //let readStream = fs.createReadStream(data_file);
     formData.append("file", data_file);
 
-    headers = {
-      "Content-Type": "*/*"
+    var headers = {
+      "Content-Type": "application/x-www-form-urlencoded"
     };
 
 
-    //console.log(data_file)
+    console.log(data_file)
 
     
 
@@ -40,7 +25,7 @@ window.addEventListener("load", () => {
       method: "POST",
       mode: "cors",
       credentials: "include",
-      body: formData,
+      body: data_file,
       headers : headers
     };
 
@@ -51,22 +36,33 @@ window.addEventListener("load", () => {
       } catch (error) {
         //console.log(error);
       }
-      
-
-
     
 }
 
-
+window.addEventListener("load", () => {
+  getCV().then((data) => {
+    console.log(data);
+  });
 
   // Linking the function to the form
   var form = document.getElementById("form");
 
   form.addEventListener("submit", function (event) {
+    console.log("LINkING")
     event.preventDefault();
     sendData();
   });
 });
+
+
+  // Function for fecting the api
+
+
+
+
+
+  
+
 
 const getCV = async () => {
   const options = {
