@@ -4,18 +4,20 @@ import CVModel from "../../models/cv.js";
 
 const router = Router();
 
-router.get("/", verifierToken, estVerifie, estEntreprise, async (req, res) => {
+
+/* RAJOUTER estEntreprise */
+router.get("/", verifierToken, estVerifie, async (req, res) => {
   try {
     const Cvs = await CVModel.find();
+    res.render("pages/cvtheque", {
+      estConnecte: true,
+      page: "CVthèque",
+      prenom: req.compte.prenom,
+      cvs: Cvs,
+    });
   } catch (error) {
     res.error(404).json({ message: error.message });
   }
-  res.render("pages/cvtheque", {
-    estConnecte: true,
-    page: "CVthèque",
-    prenom: req.compte.prenom,
-    cvs: Cvs,
-  });
 });
 
 export default router;
