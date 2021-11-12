@@ -1,12 +1,11 @@
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import crypto, { createCipheriv } from "crypto";
+import crypto from "crypto";
 
 import CompteModel from "../../models/compte.js";
 import ValidationModel from "../../models/validation.js";
 import envoyerMail from "../../../utils/envoyerMail.js";
-import { captureRejections } from "events";
 
 dotenv.config({ path: "../.env" });
 
@@ -30,6 +29,12 @@ export const createCompte = async (req, res) => {
   if (!nom || !prenom || !email || !mot_de_passe || !statut) return res.status(400).json({ msg: "Remplissez tous les champs." });
 
   try {
+    const emailRegex = new RegExp("[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
+
+    console.log(emailRegex.text(email));
+
+    if (!emailRegex.test(email)) return res.status(400).json({ message: "L'adresse mail est mal formée." });
+
     const mongoCompte = await CompteModel.findOne({ email });
 
     if (mongoCompte) return res.status(400).json({ message: "L'email est utilisé." });
@@ -71,14 +76,14 @@ export const updateCompteMail = async (req, res) => {
   if (mongoCompte) return res.status(400).json({ message: "L'email est utilisé." });
   if (nouveauEmail != "") {
     try {
-      const test = await CompteModel.updateOne({ _id: req.compte.id }, { $set: { "email": nouveauEmail } })
+      const test = await CompteModel.updateOne({ _id: req.compte.id }, { $set: { email: nouveauEmail } });
     } catch (erreur) {
       console.log(erreur);
       res.status(500).json({ message: "Erreur interne." });
     }
     res.redirect("/compte");
   }
-}
+};
 
 export const updateCompteMotDePasse = async (req, res) => {
   if (!req.estConnecte) {
@@ -91,7 +96,7 @@ export const updateCompteMotDePasse = async (req, res) => {
       let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
       if (!passRegex.test(nouveauMotDePasse)) return res.status(400).json({ message: "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial." });
       const hash = await bcrypt.hash(nouveauMotDePasse, 12);
-      await CompteModel.updateOne({_id : req.compte.id}, {$set : { "mot_de_passe" : hash}})
+      await CompteModel.updateOne({ _id: req.compte.id }, { $set: { mot_de_passe: hash } });
     } catch (erreur) {
       console.log(erreur);
       res.status(500).json({ message: "Erreur interne." });
@@ -99,7 +104,7 @@ export const updateCompteMotDePasse = async (req, res) => {
     res.sendStatus(200);
     res.redirect("/compte");
   }
-}
+};
 
 export const deleteCompte = async (req, res) => {
   const id = req.compte.id;
@@ -116,7 +121,7 @@ export const deleteAnyCompte = (req, res) => {
   res.status(200);
 };
 
-export const deleteDeconnexion = async (req, res) => {
+export const deleteCompteDeconnexion = async (req, res) => {
   if (req.estConnecte) {
     res.cookie("token", "", {
       httpOnly: true,
@@ -130,7 +135,7 @@ export const deleteDeconnexion = async (req, res) => {
   }
 };
 
-export const postConnexion = async (req, res) => {
+export const postCompteConnexion = async (req, res) => {
   if (req.estConnecte) {
     return res.redirect("/compte");
   }
@@ -168,7 +173,7 @@ export const postConnexion = async (req, res) => {
   }
 };
 
-export const getValiderCompte = async (req, res) => {
+export const getCompteValider = async (req, res) => {
   try {
     const validation = await ValidationModel.findOne({ _compteId: req.params.id, token: req.params.token });
     if (!validation) {
@@ -194,7 +199,7 @@ export const getValiderCompte = async (req, res) => {
   }
 };
 
-export const postAideValidation = async (req, res) => {
+export const postCompteAideValidation = async (req, res) => {
   const compte = await CompteModel.findOne({ email: req.body.email });
 
   if (!compte) {
@@ -225,7 +230,7 @@ export const postAideValidation = async (req, res) => {
   });
 };
 
-export const postAideOublie = async (req, res) => {
+export const postCompteAideOublie = async (req, res) => {
   return res.status(200).send({
     message: "Un email de récupération vous a été envoyé, il expirera après un jour, si vous n'avez pas reçu l'email de vérification vérifiez vos spams.",
   });

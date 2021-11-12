@@ -78,7 +78,6 @@ app.use("/api/soutenances", soutenancesRoutesAPI);
 
 // Page d'accueil
 app.get("/", verifierToken, (req, res) => {
-  console.log(req.compte.prenom);
   res.render("pages/accueil", {
     estConnecte: req.estConnecte,
     page: "Accueil",
