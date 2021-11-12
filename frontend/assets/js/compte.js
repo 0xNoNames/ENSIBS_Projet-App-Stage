@@ -12,37 +12,37 @@ const supprimer = async () => {
       } else {
         alert("Supression impossible.");
       }
-    } catch (error) {
-      console.log(error);
+    } catch (erreur) {
+      console.log(erreur);
     }
   }
 };
 
 const ouvrirFormEmail = () => {
-  document.getElementById("myFormMail").style.display = "block";
+  document.getElementById("divMail").style.display = "block";
 };
 
-const fermerFormMotDePasse = () => {
-  document.getElementById("myFormMail").style.display = "none";
+const fermerFormEmail = () => {
+  document.getElementById("divMail").style.display = "none";
 };
 
 const ouvrirFormMotDePasse = () => {
-  document.getElementById("myFormPwd").style.display = "block";
+  document.getElementById("divMotDePasse").style.display = "block";
 };
 
 const fermerFormMotDePasse = () => {
-  document.getElementById("myFormPwd").style.display = "none";
+  document.getElementById("divMotDePasse").style.display = "none";
 };
 
-const formModifierEmail = document.getElementById("formMail");
-const formModifierMotDePasse = document.getElementById("formMotDePasse");
+const formMail = document.getElementById("formMail");
+const formMotDePasse = document.getElementById("formMotDePasse");
 
-formModifierEmail.addEventListener("submit", (event) => {
+formMail.addEventListener("submit", (event) => {
   event.preventDefault();
   modifierMail();
 });
 
-formModifierMotDePasse.addEventListener("submit", (event) => {
+formMotDePasse.addEventListener("submit", (event) => {
   event.preventDefault();
   let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
   if (formMotDePasse.password.value.lenght < 8) {
@@ -67,14 +67,17 @@ const modifierMail = async () => {
       mode: "cors",
       credentials: "include",
     });
-    const data = await response;
+    const data = await response.json();
     if (response.status == 200) {
-      window.location.href = "/compte/connexion";
+      window.location.href = "/compte/";
     } else {
-      alert("Modification impossible.");
+      document.getElementById("messageErreurMail").innerHTML = data.message;
+      setTimeout(() => {
+        document.getElementById("messageErreurMail").innerHTML = "";
+      }, 5000);
     }
-  } catch (error) {
-    console.log(error);
+  } catch (erreur) {
+    console.log(erreur);
   }
 };
 
@@ -86,13 +89,16 @@ const modifierMotDePasse = async () => {
       mode: "cors",
       credentials: "include",
     });
-    const data = await response;
+    const data = await response.json();
     if (response.status == 200) {
-      window.location.href = "/compte/connexion";
+      window.location.href = "/compte/";
     } else {
-      alert("Modification impossible.");
+      document.getElementById("messageErreurMotDePasse").innerHTML = data.message;
+      setTimeout(() => {
+        document.getElementById("messageErreurMotDePasse").innerHTML = "";
+      }, 5000);
     }
-  } catch (error) {
-    console.log(error);
+  } catch (erreur) {
+    console.log(erreur);
   }
 };

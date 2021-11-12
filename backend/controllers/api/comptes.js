@@ -192,7 +192,7 @@ export const getCompteValider = async (req, res) => {
 
     await CompteModel.updateOne({ _id: compte._id, estVerifie: true });
     await ValidationModel.findByIdAndRemove(validation._id);
-    return res.redirect("/compte/connexion"); //res.status(200).send({ message: "Votre compte a été vérifié avec succès." });
+    return res.redirect("/compte/connexion");
   } catch (erreur) {
     console.log("getValiderCompte() from /controllers/api/comptes.js : ", erreur);
     res.status(500).send({ message: "Erreur interne." });
