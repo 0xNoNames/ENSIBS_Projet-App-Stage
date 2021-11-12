@@ -48,7 +48,6 @@ window.addEventListener("load", () => {
   var form = document.getElementById("form");
 
   form.addEventListener("submit", function (event) {
-    console.log("LINkING")
     event.preventDefault();
     sendData();
   });

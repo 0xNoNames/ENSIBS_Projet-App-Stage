@@ -1,4 +1,5 @@
 import OffreModel from "../../models/offre.js";
+import CompteModel from "../../models/offre.js";
 
 export const getOffres = async (req, res) => {
     try {
@@ -12,17 +13,28 @@ export const getOffres = async (req, res) => {
 };
 
 export const createOffre = async (req, res) => {
-    const nouvelleOffre = new OffreModel({
-        name: req.body.name
-    });
+    console.log(req.body)
 
-    try {
-        const offre = await nouvelleOffre.save();
-        if (!offre) throw Error('Something went wrong saving the offre');
+    var binaire = req.body;
+    var id_user = req.compte.id;
+    var email = req.compte.email;
 
-        res.status(200).json(offre);
-    } catch (e) {
-        res.status(400).json({ msg: e.message });
+    console.log(req.compte)
+
+    // Check if the user has a account in the DB
+    try{
+      const mongoCompte = await CompteModel.findOne({ email });
+      if (!mongoCompte && false){
+        res.status(400).json({msg :"Compte non trouvé"})
+      } else {
+
+        // Create the oofer
+        const cv = await OffreModel.create({binaire:binaire,id_entreprise:id_user});
+        console.log("L'offre a bien ete upload")
+        res.status(200).json({msg : "L'offre a bien ete upload"})
+      }
+    } catch(erreur){
+      console.log(erreur)
     }
 };
 

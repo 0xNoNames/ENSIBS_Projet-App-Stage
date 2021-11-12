@@ -1,9 +1,9 @@
-import { verifierToken, estVerifie, estEtudiant } from "../../middleware/auth.js";
+import { verifierToken, estVerifie, estAdministrateur } from "../../middleware/auth.js";
 import { Router } from "express";
 
 const router = Router();
 
-router.get("/", verifierToken, estVerifie, estEtudiant, (req, res) => {
+router.get("/", verifierToken, estVerifie, estAdministrateur, (req, res) => {
   res.render("pages/offres", {
     estConnecte: true,
     page: "Offres de stage",

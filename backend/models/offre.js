@@ -2,11 +2,14 @@ import pkg from "mongoose";
 const { Schema, model } = pkg;
 
 const OffreSchema = new Schema({
-  name: { type: String, required: true },
+  id_entreprise: { type: String},id_entreprise: { type: Object, required: true },
+  name_poste: { type: String },
   date: { type: Date, default: Date.now },
-  //to complete
+  binaire: { type: Buffer, required: true }
+  //estCyberLog:{type:Boolean,required:true}
 });
 
+  
 const Offre = model("offre", OffreSchema);
 
 export default Offre;

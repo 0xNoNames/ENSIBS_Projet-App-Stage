@@ -15,6 +15,7 @@ export const createCV = async (req, res) => {
   var binaire = req.body;
   var id_user = req.compte.id;
   var email = req.compte.email;
+  //var estCyberLog = req.compte.
 
 
   // Check if the user has a account in the DB
