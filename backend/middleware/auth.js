@@ -5,9 +5,8 @@ import CompteModel from "../models/compte.js";
 dotenv.config({ path: "backend/.env" });
 
 export const verifierToken = async (req, res, next) => {
-  var cookieToken = {nom:"",token:""};
-  var decodedToken; 
-
+  var cookieToken = { nom: "", token: "" };
+  var decodedToken;
 
 
   try {
@@ -23,7 +22,7 @@ export const verifierToken = async (req, res, next) => {
     } catch (error) {
       req.estConnecte = false;
       req.compte = "";
-      console.log("AUTH.JS : Pas de cookies.");
+      console.error("AUTH.JS : Pas de cookies.", error);
       return next();
     }
     console.log(cookieToken)
@@ -43,7 +42,7 @@ export const verifierToken = async (req, res, next) => {
     } catch (error) {
       req.estConnecte = false;
       req.compte = "";
-      console.log("AUTH.JS : Token malformé.");
+      console.error("AUTH.JS : Token malformé.");
       return next();
     }
 
@@ -61,51 +60,63 @@ export const verifierToken = async (req, res, next) => {
 
     return next();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({ message: "Erreur interne." });
   }
 };
 
-export const estValide = (req, res, next) => {
-  if (req.estConnecte === false || req.user === "") {
+export const estVerifie = (req, res, next) => {
+  if (req.compte.estVerifie === false || req.estConnecte === false) {
+    console.error("AUTH.JS : Pas vérifié.");
     return res.render("pages/erreur401", {
       estConnecte: false,
       page: "Erreur 401",
       prenom: "",
     });
-  } else {
-    console.error("Pas valide.");
   }
   return next();
 };
 
 export const estAdministrateur = (req, res, next) => {
-  if (req.compte != "administrateur") {
+  if (req.estConnecte === false || req.compte.estAttribue === false || req.compte === "" || req.compte.statut != "administrateur") {
+    console.error("AUTH.JS : Statut administrateur nécéssaire.");
     return res.render("pages/erreur401", {
-      estConnecte: false,
+      estConnecte: true,
       page: "Erreur 401",
       prenom: req.compte.prenom,
     });
-  } else {
-    console.error("AUTH.JS : Pas administrateur.");
   }
   return next();
 };
 
 export const estEntreprise = (req, res, next) => {
-  console.log("AUTH.JS : APPEL estEntreprise");
+  if (req.estConnecte === false || req.compte.estAttribue === false || req.compte === "" || req.compte.statut != "entreprise") {
+    console.error("AUTH.JS : Statut entreprise nécéssaire.");
+    return res.render("pages/erreur401", {
+      estConnecte: true,
+      page: "Erreur 401",
+      prenom: req.compte.prenom,
+    });
+  }
   return next();
 };
 
 export const estEtudiant = (req, res, next) => {
-  console.log("AUTH.JS : APPEL estEtudiant");
+  if (req.estConnecte === false || req.compte.estAttribue === false || req.compte === "" || req.compte.statut != "etudiant") {
+    console.error("AUTH.JS : Statut étudiant nécéssaire.");
+    return res.render("pages/erreur401", {
+      estConnecte: true,
+      page: "Erreur 401",
+      prenom: req.compte.prenom,
+    });
+  }
   return next();
 };
 
 export default {
   verifierToken,
+  estVerifie,
   estAdministrateur,
   estEntreprise,
   estEtudiant,
-  estValide,
 };

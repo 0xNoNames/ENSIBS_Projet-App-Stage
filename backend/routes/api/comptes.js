@@ -1,20 +1,15 @@
 import { Router } from "express";
-import { getComptes, createCompte, updateCompte, deleteCompte, deleteAnyCompte, postConnexion, deleteDeconnexion, getValiderCompte, postAideValidation, postAideOublie } from "../../controllers/api/comptes.js";
-import { verifierToken, estAdministrateur } from "../../middleware/auth.js";
+import { getComptes, createCompte, updateCompteMail, updateCompteMotDePasse, deleteCompte, deleteAnyCompte, postCompteConnexion, deleteCompteDeconnexion, getCompteValider, postCompteAideValidation, postCompteAideOublie } from "../../controllers/api/comptes.js";
+import { verifierToken, estVerifie, estAdministrateur } from "../../middleware/auth.js";
 
 const router = Router();
-
-/**
- * DEBUG A SUPPRIMER
- */
-router.get("/XD", getComptes);
 
 /**
  * @route   GET /api/comptes
  * @desc    Récupérer tous les comptes
  * @access  Administrateur
  */
-router.get("/", verifierToken, estAdministrateur, getComptes);
+router.get("/", verifierToken, estVerifie, estAdministrateur, getComptes);
 
 /**
  * @route   POST /api/comptes
@@ -28,55 +23,62 @@ router.post("/", verifierToken, createCompte);
  * @desc    Se connecter à son compte
  * @access  Public
  */
-router.post("/connexion", verifierToken, postConnexion);
+router.post("/connexion", verifierToken, postCompteConnexion);
 
 /**
  * @route   DELETE /api/comptes/deconnexion
  * @desc    Se déconnecter de son compte
  * @access  Private
  */
-router.delete("/deconnexion", verifierToken, deleteDeconnexion);
+router.delete("/deconnexion", verifierToken, deleteCompteDeconnexion);
 
 /**
  * @route   GET /api/comptes/valider/:id/:token
  * @desc    Valider un compte
  * @access  Public
  */
-router.get("/valider/:id/:token", getValiderCompte);
+router.get("/valider/:id/:token", getCompteValider);
 
 /**
  * @route   POST /api/comptes/aide/validation
  * @desc    Renvoyer le mail de validation du compte
  * @access  Public
  */
-router.post("/aide/validation", postAideValidation);
+router.post("/aide/validation", postCompteAideValidation);
 
 /**
  * @route   POST /api/comptes/aide/oublie
  * @desc    Envoyer le mail de récupération du mot de passe
  * @access  Public
  */
-router.post("/aide/oublie", postAideOublie);
+router.post("/aide/oublie", postCompteAideOublie);
 
 /**
- * @route   PUT /api/comptes
- * @desc    Mettre à jour un utilisateur
+ * @route   PUT /api/comptes/mail
+ * @desc    Mettre à jour le mail d'un utilisateur
  * @access  Private
  */
-router.put("/", verifierToken, updateCompte);
+router.put("/email", verifierToken, estVerifie, updateCompteMail);
+
+/**
+ * @route   PUT /api/comptes/pwd
+ * @desc    Mettre à jour le mot de passe d'un utilisateur
+ * @access  Private
+ */
+router.put("/motdepasse", verifierToken, estVerifie, updateCompteMotDePasse);
 
 /**
  * @route   DELETE /api/comptes
  * @desc    Supprimer son compte
  * @access  Private
  */
-router.delete("/suppression", verifierToken, deleteCompte);
+router.delete("/suppression", verifierToken, estVerifie, deleteCompte);
 
 /**
  * @route   DELETE /api/comptes/:id
  * @desc    Supprimer un utilisateur
  * @access  Administrateur
  */
-router.delete("/:id", verifierToken, estAdministrateur, deleteAnyCompte);
+router.delete("/:id", verifierToken, estVerifie, estAdministrateur, deleteAnyCompte);
 
 export default router;

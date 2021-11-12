@@ -9,7 +9,7 @@ window.addEventListener("load", () => {
       });
       const data = await response.json();
 
-      if (response.status == 400) {
+      if (response.status != "201") {
         document.getElementById("messageErreur").innerHTML = data.message;
         setTimeout(() => {
           document.getElementById("messageErreur").innerHTML = "";

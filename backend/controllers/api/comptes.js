@@ -26,9 +26,15 @@ export const createCompte = async (req, res) => {
 
   const { nom, prenom, email, mot_de_passe, statut } = req.body;
 
-  if (!nom || !prenom || !email || !mot_de_passe || !statut) return res.status(400).json({ msg: "Remplissez tous les champs." });
+  if (!nom || !prenom || !email || !mot_de_passe || !statut) return res.status(400).json({ message: "Remplissez tous les champs." });
 
   try {
+    const emailRegex = new RegExp("[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
+
+    console.log(emailRegex.text(email));
+
+    if (!emailRegex.test(email)) return res.status(400).json({ message: "L'adresse mail est mal formée." });
+
     const mongoCompte = await CompteModel.findOne({ email });
 
     if (mongoCompte) return res.status(400).json({ message: "L'email est utilisé." });
@@ -61,8 +67,43 @@ export const createCompte = async (req, res) => {
   }
 };
 
-export const updateCompte = (req, res) => {
-  res.status(200);
+export const updateCompteMail = async (req, res) => {
+  if (!req.estConnecte) {
+    return res.redirect("/compte/connexion");
+  }
+  const nouveauEmail = req.body.email;
+  const mongoCompte = await CompteModel.findOne({ email: nouveauEmail });
+  if (mongoCompte) return res.status(400).json({ message: "L'email est utilisé." });
+  if (nouveauEmail != "") {
+    try {
+      const test = await CompteModel.updateOne({ _id: req.compte.id }, { $set: { email: nouveauEmail } });
+    } catch (erreur) {
+      console.log(erreur);
+      res.status(500).json({ message: "Erreur interne." });
+    }
+    res.redirect("/compte");
+  }
+};
+
+export const updateCompteMotDePasse = async (req, res) => {
+  if (!req.estConnecte) {
+    return res.redirect("/compte/connexion");
+  }
+  const nouveauMotDePasse = req.body.mot_de_passe;
+  if (nouveauMotDePasse != "") {
+    try {
+      if (nouveauMotDePasse < 8) return res.status(400).json({ message: "Le mot de passe doit faire minimum 8 caractères." });
+      let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
+      if (!passRegex.test(nouveauMotDePasse)) return res.status(400).json({ message: "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial." });
+      const hash = await bcrypt.hash(nouveauMotDePasse, 12);
+      await CompteModel.updateOne({ _id: req.compte.id }, { $set: { mot_de_passe: hash } });
+    } catch (erreur) {
+      console.log(erreur);
+      res.status(500).json({ message: "Erreur interne." });
+    }
+    res.sendStatus(200);
+    res.redirect("/compte");
+  }
 };
 
 export const deleteCompte = async (req, res) => {
@@ -80,7 +121,7 @@ export const deleteAnyCompte = (req, res) => {
   res.status(200);
 };
 
-export const deleteDeconnexion = async (req, res) => {
+export const deleteCompteDeconnexion = async (req, res) => {
   if (req.estConnecte) {
     res.cookie("token", "", {
       httpOnly: true,
@@ -94,13 +135,13 @@ export const deleteDeconnexion = async (req, res) => {
   }
 };
 
-export const postConnexion = async (req, res) => {
+export const postCompteConnexion = async (req, res) => {
   if (req.estConnecte) {
     return res.redirect("/compte");
   }
 
   const { email, mot_de_passe } = req.body;
-  console.log(req.body)
+
   if (!email || !mot_de_passe) return res.status(400).json({ message: "Remplissez tous les champs." });
 
   try {
@@ -125,14 +166,14 @@ export const postConnexion = async (req, res) => {
       secure: true,
       maxAge: parseInt(process.env.JWT_EXPIRES_IN),
     });
-    res.status(201).json({ mongoCompte });
+    res.status(201).json({ message: "OK" });
   } catch (erreur) {
     console.log("postConnexion() from /controllers/api/comptes.js : ", erreur);
     res.status(500).json({ message: "Erreur interne." });
   }
 };
 
-export const getValiderCompte = async (req, res) => {
+export const getCompteValider = async (req, res) => {
   try {
     const validation = await ValidationModel.findOne({ _compteId: req.params.id, token: req.params.token });
     if (!validation) {
@@ -158,7 +199,7 @@ export const getValiderCompte = async (req, res) => {
   }
 };
 
-export const postAideValidation = async (req, res) => {
+export const postCompteAideValidation = async (req, res) => {
   const compte = await CompteModel.findOne({ email: req.body.email });
 
   if (!compte) {
@@ -189,7 +230,7 @@ export const postAideValidation = async (req, res) => {
   });
 };
 
-export const postAideOublie = async (req, res) => {
+export const postCompteAideOublie = async (req, res) => {
   return res.status(200).send({
     message: "Un email de récupération vous a été envoyé, il expirera après un jour, si vous n'avez pas reçu l'email de vérification vérifiez vos spams.",
   });
