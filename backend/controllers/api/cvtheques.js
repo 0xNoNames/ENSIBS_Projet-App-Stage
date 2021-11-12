@@ -1,6 +1,5 @@
 import CVModel from "../../models/cv.js";
 import CompteModel from "../../models/compte.js"
-import fs from "fs";
 
 export const getCVs = async (req, res) => {
   try {

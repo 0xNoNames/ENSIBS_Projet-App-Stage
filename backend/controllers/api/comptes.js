@@ -75,7 +75,7 @@ export const updateCompteMail = async (req, res) => {
 
   // VALIDATE EMAIL
   if (nouveauEmail == "") {
-    return res.status(400).json({ message: "L'email est mal formée" });
+    return res.status(400).json({ message: "L'email est mal formée." });
   }
 
   const mongoCompte = await CompteModel.findOne({ email: nouveauEmail });
@@ -99,9 +99,13 @@ export const updateCompteMail = async (req, res) => {
       "Bonjour MM./M. " + req.compte.nom + ",\n\n" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : \nhttp://" + req.headers.host + "/api/comptes/valider/" + req.compte.id + "/" + validation.token + "\n\nMerci!\n"
     );
 
-    res.status(200).send({
-      message: "Un email de vérification vous a été envoyé, il expirera après un jour, si vous n'avez pas reçu l'email de vérification vérifiez vos spams.",
+    res.cookie("token", "", {
+      httpOnly: true,
+      secure: true,
+      expires: new Date(0),
+      maxAge: parseInt(process.env.JWT_EXPIRES_IN),
     });
+    res.sendStatus(200);
   } catch (erreur) {
     console.log(erreur);
     res.status(500).json({ message: "Erreur interne." });

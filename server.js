@@ -44,7 +44,7 @@ app.use("/static", express.static(path.join(__dirname, "/frontend/assets")));
 
 app.use(cors());
 app.use(express.json());
-app.use(express.raw({type:"application/x-www-form-urlencoded"}))
+app.use(express.raw({ type: "application/x-www-form-urlencoded" }));
 // -- -- -- -- -- -- -- -- --  -- DATABASE -- -- -- -- -- -- -- -- --  -- \\
 
 // Configuration de Mongo
@@ -100,12 +100,7 @@ app.use("/compte", compteRoutes);
 // Page des offres
 app.use("/offres", offresRoutes);
 
-// Send a mail
-// app.post("/mail", function(req, res) {
-//     res.send("mail page");
-// });
-
-// Page d 'erreur 404 (mettre en dernière route)
+// Page d'erreur 404 (mettre en dernière route)
 app.get("*", verifierToken, (req, res) => {
   res.status(404).render("pages/erreur404", {
     estConnecte: req.estConnecte,
