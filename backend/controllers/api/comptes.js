@@ -69,7 +69,7 @@ export const createCompte = async (req, res) => {
 
 export const updateCompteMail = async (req, res) => {
   if (!req.estConnecte) {
-    return res.redirect("/compte/connexion");
+    return res.status(400).json({ message: "Vous n'êtes pas connecté." });
   }
   const nouveauEmail = req.body.email;
 
@@ -105,31 +105,35 @@ export const updateCompteMail = async (req, res) => {
       expires: new Date(0),
       maxAge: parseInt(process.env.JWT_EXPIRES_IN),
     });
-    res.sendStatus(200);
+    res.status(200).json({ message: "OK" });
   } catch (erreur) {
-    console.log(erreur);
+    console.log("updateCompteMail() from /controllers/api/comptes.js :", erreur);
     res.status(500).json({ message: "Erreur interne." });
   }
 };
 
 export const updateCompteMotDePasse = async (req, res) => {
   if (!req.estConnecte) {
-    return res.redirect("/compte/connexion");
+    return res.status(400).json({ message: "Vous n'êtes pas connecté." });
   }
+
   const nouveauMotDePasse = req.body.mot_de_passe;
-  if (nouveauMotDePasse != "") {
-    try {
-      if (nouveauMotDePasse < 8) return res.status(400).json({ message: "Le mot de passe doit faire minimum 8 caractères." });
-      let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
-      if (!passRegex.test(nouveauMotDePasse)) return res.status(400).json({ message: "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial." });
-      const hash = await bcrypt.hash(nouveauMotDePasse, 12);
-      await CompteModel.updateOne({ _id: req.compte.id }, { $set: { mot_de_passe: hash } });
-    } catch (erreur) {
-      console.log(erreur);
-      res.status(500).json({ message: "Erreur interne." });
-    }
-    res.sendStatus(200);
-    res.redirect("/compte");
+
+  if (nouveauMotDePasse < 8) return res.status(400).json({ message: "Le mot de passe doit faire minimum 8 caractères." });
+
+  let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
+
+  if (!passRegex.test(nouveauMotDePasse)) return res.status(400).json({ message: "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial." });
+
+  const hash = await bcrypt.hash(nouveauMotDePasse, 12);
+
+  try {
+    await CompteModel.updateOne({ _id: req.compte.id }, { $set: { mot_de_passe: hash } });
+
+    res.status(200).json({ message: "OK" });
+  } catch (erreur) {
+    console.log("updateCompteMotDePasse() from /controllers/api/comptes.js :", erreur);
+    res.status(500).json({ message: "Erreur interne." });
   }
 };
 
@@ -217,7 +221,7 @@ export const getCompteValider = async (req, res) => {
       await ValidationModel.findByIdAndRemove(validation._id);
     }
 
-    await CompteModel.updateOne({ _id: compte._id, estVerifie: true });
+    await CompteModel.updateOne({ _id: compte._id }, { $set: { estVerifie: true } });
     await ValidationModel.findByIdAndRemove(validation._id);
     return res.redirect("/compte/connexion");
   } catch (erreur) {

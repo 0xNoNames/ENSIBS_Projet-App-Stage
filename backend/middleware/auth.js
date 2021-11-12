@@ -33,7 +33,6 @@ export const verifierToken = async (req, res, next) => {
 
     /* On vérifie et décode le JWT à l'aide du secret et de l'algorithme utilisé pour le générer */
     try {
-      console.log(cookieToken.token);
       decodedToken = jwt.verify(cookieToken.token, process.env.JWT_SECRET);
     } catch (error) {
       req.estConnecte = false;
