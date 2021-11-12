@@ -1,4 +1,6 @@
 import CVModel from "../../models/cv.js";
+import CompteModel from "../../models/compte.js"
+import fs from "fs";
 
 export const getCVs = async (req, res) => {
   try {
@@ -9,8 +11,31 @@ export const getCVs = async (req, res) => {
   }
 };
 
-export const createCV = (req, res) => {
-  res.status(200);
+export const createCV = async (req, res) => {
+  
+  var binaire = req.body;
+  var id_user = req.compte.id;
+  var email = req.compte.email;
+
+
+  // Check if the user has a account in the DB
+  try{
+    const mongoCompte = await CompteModel.findOne({ email });
+
+    if (!mongoCompte){
+      res.status(400).json({msg :"Compte non trouvé"})
+    } else {
+      const cv = await CVModel.create({binaire,id_eleve:id_user});
+      console.log("Le Cv a bien ete upload")
+
+      res.status(200).json({msg : "Le CV a bien ete upload"})
+    }
+  } catch(erreur){
+    console.log(erreur)
+  }
+  
+
+  
 };
 
 export const updateCV = (req, res) => {
