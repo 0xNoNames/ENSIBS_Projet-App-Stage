@@ -3,7 +3,9 @@ import { verifierToken, estVerifie, estEntreprise } from "../../middleware/auth.
 
 const router = Router();
 
-router.get("/", verifierToken, estVerifie, estEntreprise, (req, res) => {
+
+//router.get("/", verifierToken, estVerifie, estEntreprise, (req, res) => {
+router.get("/", verifierToken, (req, res) => {
   res.render("pages/cvtheque", {
     estConnecte: true,
     page: "CVthèque",

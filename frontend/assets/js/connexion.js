@@ -5,11 +5,11 @@ window.addEventListener("load", () => {
         method: "POST",
         body: JSON.stringify({ email: form.email.value, mot_de_passe: form.password.value }),
         mode: "cors",
-        credentials: "include",
+        credentials: "include"
       });
       const data = await response.json();
 
-      if (response.status == 400) {
+      if (response.status != "201") {
         document.getElementById("messageErreur").innerHTML = data.message;
         setTimeout(() => {
           document.getElementById("messageErreur").innerHTML = "";

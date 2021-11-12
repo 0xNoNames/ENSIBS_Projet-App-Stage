@@ -16,6 +16,7 @@ router.get("/", verifierToken, estVerifie, estEntreprise, getCVs);
  * @desc    Créer un CV
  * @access  Private
  */
+
 router.post("/", verifierToken, estVerifie, estEtudiant, createCV);
 
 /**
