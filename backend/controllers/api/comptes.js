@@ -72,16 +72,39 @@ export const updateCompteMail = async (req, res) => {
     return res.redirect("/compte/connexion");
   }
   const nouveauEmail = req.body.email;
+
+  // VALIDATE EMAIL
+  if (nouveauEmail == "") {
+    return res.status(400).json({ message: "L'email est mal formée" });
+  }
+
   const mongoCompte = await CompteModel.findOne({ email: nouveauEmail });
   if (mongoCompte) return res.status(400).json({ message: "L'email est utilisé." });
-  if (nouveauEmail != "") {
-    try {
-      const test = await CompteModel.updateOne({ _id: req.compte.id }, { $set: { email: nouveauEmail } });
-    } catch (erreur) {
-      console.log(erreur);
-      res.status(500).json({ message: "Erreur interne." });
+
+  try {
+    await CompteModel.updateOne({ _id: req.compte.id }, { $set: { email: nouveauEmail, estVerifie: false } });
+
+    var validation = await ValidationModel.findOne({ _compteId: req.compte._id });
+
+    if (validation) {
+      await ValidationModel.findByIdAndRemove(validation._id);
     }
-    res.redirect("/compte");
+
+    validation = await ValidationModel.create({ _compteId: req.compte._id, token: crypto.randomBytes(16).toString("hex") });
+
+    await envoyerMail(
+      res,
+      req.body.email,
+      "Mail de vérification ENSIBS",
+      "Bonjour MM./M. " + req.compte.nom + ",\n\n" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : \nhttp://" + req.headers.host + "/api/comptes/valider/" + req.compte.id + "/" + validation.token + "\n\nMerci!\n"
+    );
+
+    res.status(200).send({
+      message: "Un email de vérification vous a été envoyé, il expirera après un jour, si vous n'avez pas reçu l'email de vérification vérifiez vos spams.",
+    });
+  } catch (erreur) {
+    console.log(erreur);
+    res.status(500).json({ message: "Erreur interne." });
   }
 };
 
@@ -166,7 +189,7 @@ export const postCompteConnexion = async (req, res) => {
       secure: true,
       maxAge: parseInt(process.env.JWT_EXPIRES_IN),
     });
-    res.status(201).json({ message: "OK" });
+    res.status(200).json({ message: "OK" });
   } catch (erreur) {
     console.log("postConnexion() from /controllers/api/comptes.js : ", erreur);
     res.status(500).json({ message: "Erreur interne." });
