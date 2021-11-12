@@ -1,4 +1,4 @@
-const supprimer = async () => {
+const supprimerCompte = async () => {
   if (confirm("Supprimer le compte ?") == true) {
     try {
       const response = await fetch("/api/comptes/suppression", {
@@ -69,7 +69,7 @@ const modifierMail = async () => {
     });
     const data = await response.json();
     if (response.status == 200) {
-      window.location.href = "/compte/";
+      window.location.replace("/compte/connexion");
     } else {
       document.getElementById("messageErreurMail").innerHTML = data.message;
       setTimeout(() => {
@@ -91,7 +91,7 @@ const modifierMotDePasse = async () => {
     });
     const data = await response.json();
     if (response.status == 200) {
-      window.location.href = "/compte/";
+      window.location.replace("/compte/connexion");
     } else {
       document.getElementById("messageErreurMotDePasse").innerHTML = data.message;
       setTimeout(() => {
