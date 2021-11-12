@@ -26,7 +26,7 @@ export const createCompte = async (req, res) => {
 
   const { nom, prenom, email, mot_de_passe, statut } = req.body;
 
-  if (!nom || !prenom || !email || !mot_de_passe || !statut) return res.status(400).json({ msg: "Remplissez tous les champs." });
+  if (!nom || !prenom || !email || !mot_de_passe || !statut) return res.status(400).json({ message: "Remplissez tous les champs." });
 
   try {
     const emailRegex = new RegExp("[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
@@ -142,7 +142,7 @@ export const postCompteConnexion = async (req, res) => {
 
   const { email, mot_de_passe } = req.body;
 
-  if (!email || !mot_de_passe) return res.status(400).json({ msg: "Remplissez tous les champs." });
+  if (!email || !mot_de_passe) return res.status(400).json({ message: "Remplissez tous les champs." });
 
   try {
     const mongoCompte = await CompteModel.findOne({ email });
@@ -166,7 +166,7 @@ export const postCompteConnexion = async (req, res) => {
       secure: true,
       maxAge: parseInt(process.env.JWT_EXPIRES_IN),
     });
-    res.status(201).json({ mongoCompte });
+    res.status(201).json({ message: "OK" });
   } catch (erreur) {
     console.log("postConnexion() from /controllers/api/comptes.js : ", erreur);
     res.status(500).json({ message: "Erreur interne." });

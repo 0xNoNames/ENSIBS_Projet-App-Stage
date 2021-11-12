@@ -18,31 +18,31 @@ const supprimer = async () => {
   }
 };
 
-function openFormEmail() {
+const ouvrirFormEmail = () => {
   document.getElementById("myFormMail").style.display = "block";
-}
+};
 
-function closeFormEmail() {
+const fermerFormMotDePasse = () => {
   document.getElementById("myFormMail").style.display = "none";
-}
+};
 
-function openFormPwd() {
+const ouvrirFormMotDePasse = () => {
   document.getElementById("myFormPwd").style.display = "block";
-}
+};
 
-function closeFormPwd() {
+const fermerFormMotDePasse = () => {
   document.getElementById("myFormPwd").style.display = "none";
-}
+};
 
-const formModifyEmail = document.getElementById("formMail");
-const formModifyPassword = document.getElementById("formMotDePasse");
+const formModifierEmail = document.getElementById("formMail");
+const formModifierMotDePasse = document.getElementById("formMotDePasse");
 
-formModifyEmail.addEventListener("submit", event => {
+formModifierEmail.addEventListener("submit", (event) => {
   event.preventDefault();
   modifierMail();
 });
 
-formModifyPassword.addEventListener("submit", event => {
+formModifierMotDePasse.addEventListener("submit", (event) => {
   event.preventDefault();
   let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
   if (formMotDePasse.password.value.lenght < 8) {
@@ -54,15 +54,16 @@ formModifyPassword.addEventListener("submit", event => {
     document.getElementById("messageErreur").innerHTML = "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial.";
     setTimeout(() => {
       document.getElementById("messageErreur").innerHTML = "";
-    }, 5000);}
+    }, 5000);
+  }
   modifierMotDePasse();
 });
 
-const modifierMail = async() => {
+const modifierMail = async () => {
   try {
     const response = await fetch("/api/comptes/email/", {
       method: "PUT",
-      body : JSON.stringify({email: formMail.email.value}),
+      body: JSON.stringify({ email: formMail.email.value }),
       mode: "cors",
       credentials: "include",
     });
@@ -75,13 +76,13 @@ const modifierMail = async() => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-const modifierMotDePasse = async() => {
+const modifierMotDePasse = async () => {
   try {
     const response = await fetch("/api/comptes/motdepasse/", {
       method: "PUT",
-      body : JSON.stringify({mot_de_passe: formMotDePasse.password.value }),
+      body: JSON.stringify({ mot_de_passe: formMotDePasse.password.value }),
       mode: "cors",
       credentials: "include",
     });
@@ -94,4 +95,4 @@ const modifierMotDePasse = async() => {
   } catch (error) {
     console.log(error);
   }
-}
+};
