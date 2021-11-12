@@ -15,11 +15,11 @@
       </br>
         <div class=""
           <p> Mail : <%=email%> 
-            <button onClick="openForm()" class="py-2 px-3 ml-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier le mail</button>
+            <button onClick="openFormEmail()" class="py-2 px-3 ml-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier le mail</button>
           </p>
         </div>
         <p>
-          <button onClick="openForm()" class="py-2 px-3 ml-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier le mot de passe</button>
+          <button onClick="openFormPwd()" class="py-2 px-3 ml-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier le mot de passe</button>
         </p>
         <p>CV</p>
         <p>Offres sauvgardés</p>
@@ -28,15 +28,29 @@
       </div>
     </div>
 
-    <div class="form-popup" id="myForm">
-      <form class="form-container">
-        <h1>Changement d'informations</h1>
+
+
+    <div class="form-popup" id="myFormMail" style.display="none">
+      <form id="formMail" class="form-container">
+        <h1>Changement de mail</h1>
     
         <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required>
-        
+        <input type="text" placeholder="Enter Email" id="email">
+
         <button type="submit" class="btn">Changer</button>
-        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        <button type="button" class="btn cancel" onclick="closeFormEmail()">Close</button>
+      </form>
+    </div>
+
+    <div class="form-popup" id="myFormPwd" style.display="none">
+      <form id="formMotDePasse" class="form-container">
+        <h1>Changement d'informations</h1>
+        
+        <label for="password"><b>Mot de passe</b></label>
+        <input type="password" placeholder="Entrer Mot de Passe" id="password">
+
+        <button type="submit" class="btn">Changer</button>
+        <button type="button" class="btn cancel" onclick="closeFormPwd()">Close</button>
       </form>
     </div>
 

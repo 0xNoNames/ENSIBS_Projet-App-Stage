@@ -1,11 +1,12 @@
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import crypto from "crypto";
+import crypto, { createCipheriv } from "crypto";
 
 import CompteModel from "../../models/compte.js";
 import ValidationModel from "../../models/validation.js";
 import envoyerMail from "../../../utils/envoyerMail.js";
+import { captureRejections } from "events";
 
 dotenv.config({ path: "../.env" });
 
@@ -61,9 +62,44 @@ export const createCompte = async (req, res) => {
   }
 };
 
-export const updateCompte = (req, res) => {
-  res.status(200);
-};
+export const updateCompteMail = async (req, res) => {
+  if (!req.estConnecte) {
+    return res.redirect("/compte/connexion");
+  }
+  const nouveauEmail = req.body.email;
+  const mongoCompte = await CompteModel.findOne({ email: nouveauEmail });
+  if (mongoCompte) return res.status(400).json({ message: "L'email est utilisé." });
+  if (nouveauEmail != "") {
+    try {
+      const test = await CompteModel.updateOne({ _id: req.compte.id }, { $set: { "email": nouveauEmail } })
+    } catch (erreur) {
+      console.log(erreur);
+      res.status(500).json({ message: "Erreur interne." });
+    }
+    res.redirect("/compte");
+  }
+}
+
+export const updateCompteMotDePasse = async (req, res) => {
+  if (!req.estConnecte) {
+    return res.redirect("/compte/connexion");
+  }
+  const nouveauMotDePasse = req.body.mot_de_passe;
+  if (nouveauMotDePasse != "") {
+    try {
+      if (nouveauMotDePasse < 8) return res.status(400).json({ message: "Le mot de passe doit faire minimum 8 caractères." });
+      let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
+      if (!passRegex.test(nouveauMotDePasse)) return res.status(400).json({ message: "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial." });
+      const hash = await bcrypt.hash(nouveauMotDePasse, 12);
+      await CompteModel.updateOne({_id : req.compte.id}, {$set : { "mot_de_passe" : hash}})
+    } catch (erreur) {
+      console.log(erreur);
+      res.status(500).json({ message: "Erreur interne." });
+    }
+    res.sendStatus(200);
+    res.redirect("/compte");
+  }
+}
 
 export const deleteCompte = async (req, res) => {
   const id = req.compte.id;

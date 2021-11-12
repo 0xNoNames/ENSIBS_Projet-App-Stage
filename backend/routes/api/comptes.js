@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getComptes, createCompte, updateCompte, deleteCompte, deleteAnyCompte, postConnexion, deleteDeconnexion, getValiderCompte, postAideValidation, postAideOublie } from "../../controllers/api/comptes.js";
+import { getComptes, createCompte, updateCompteMail, updateCompteMotDePasse, deleteCompte, deleteAnyCompte, postConnexion, deleteDeconnexion, getValiderCompte, postAideValidation, postAideOublie } from "../../controllers/api/comptes.js";
 import { verifierToken, estAdministrateur } from "../../middleware/auth.js";
 
 const router = Router();
@@ -59,11 +59,18 @@ router.post("/aide/validation", postAideValidation);
 router.post("/aide/oublie", postAideOublie);
 
 /**
- * @route   PUT /api/comptes
- * @desc    Mettre à jour un utilisateur
+ * @route   PUT /api/comptes/mail
+ * @desc    Mettre à jour le mail d'un utilisateur
  * @access  Private
  */
-router.put("/", verifierToken, updateCompte);
+router.put("/email", verifierToken, updateCompteMail);
+
+/**
+ * @route   PUT /api/comptes/pwd
+ * @desc    Mettre à jour le mot de passe d'un utilisateur
+ * @access  Private
+ */
+router.put("/motdepasse", verifierToken, updateCompteMotDePasse);
 
 /**
  * @route   DELETE /api/comptes
