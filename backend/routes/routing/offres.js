@@ -7,7 +7,7 @@ router.get("/", verifierToken, estValide, (req, res) => {
   res.render("pages/offres", {
     estConnecte: true,
     page: "Offres de stage",
-    prenom: req.utilisateur.prenom,
+    prenom: req.compte.prenom,
   });
 });
 

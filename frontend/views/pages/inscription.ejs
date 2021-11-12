@@ -4,42 +4,54 @@
     <%- include('../partials/head'); %>
   </head>
 
-  <body class="h-screen">
+  <body>
     <!-- <header> -->
     <%- include('../partials/navbar'); %>
     <!-- </header> -->
 
-    <div class="mt-12 flex justify-center items-center">
+    <div class="my-12 flex justify-center items-center">
       <form id="form" class="flex flex-col py-8 px-8 text-left text-white rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <h3 class="flex flex-col mx-28 text-white text-4xl font-medium text-center">
+        <h3 class="flex flex-col mx-28 text-white text-3xl font-medium text-center">
           Inscription
-          <span class="pt-2 text-gray-200 text-lg font-light">Votre compte sera vérifié manuellement.</span>
+          <span class="pt-2 text-gray-200 text-base font-light">Votre compte sera vérifié manuellement.</span>
         </h3>
 
-        <label for="prenom" class="mt-6 text-lg">Prénom</label>
-        <input type="text" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Alan" id="prenom" required />
+        <label for="prenom" class="mt-6 text-base">Prénom</label>
+        <input type="text" id="prenom" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Alan" required />
 
-        <label for="nom" class="mt-6 text-lg">Nom</label>
-        <input type="text" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Perron" id="nom" required />
+        <label for="nom" class="mt-6 text-base">Nom</label>
+        <input type="text" id="nom" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Perron" required />
 
-        <label for="email" class="mt-6 text-lg">E-mail</label>
-        <input type="email" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="mail@domain.net" id="email" required />
+        <label for="email" class="mt-6 text-base">E-mail</label>
+        <input type="email" id="email" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="mail@domain.net" required />
 
-        <label for="password" class="mt-6 text-lg">Mot de passe</label>
-        <input type="password" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Minimum 8 caractères" id="password" required min="8" />
+        <label for="motDePasse" class="mt-6 text-base">Mot de passe</label>
+        <input type="password" id="motDePasse" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Minimum 8 caractères" required min="8" />
 
-        <label for="passwordConfirm" class="mt-6 text-lg">Confirmation mot de passe</label>
-        <input type="password" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Minimum 8 caractères" id="passwordConfirm" required min="8" />
+        <label for="motDePasseConfirmation" class="mt-6 text-base">Confirmation mot de passe</label>
+        <input type="password" id="motDePasseConfirmation" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Minimum 8 caractères" required min="8" />
+
+        <div class="mt-6 flex flex-row justify-evenly text-lg">
+          <label class="inline-flex items-center">
+            <input id="etudiant" type="radio" class="h-6 w-6" name="statut" value="etudiant" required />
+            <span class="ml-2">ÉTUDIANT</span>
+          </label>
+
+          <label class="inline-flex items-center">
+            <input id="entreprise" type="radio" class="h-6 w-6" name="statut" value="entreprise" required />
+            <span class="ml-2">ENTREPRISE</span>
+          </label>
+        </div>
 
         <span id="messageErreur" class="pt-4 w-104 self-center text-red-300 font-bold text-base text-center"></span>
 
-        <button class="p-3 mx-10 my-8 text-lg font-semibold bg-white text-gray-800 rounded shadow-2xl bg-opacity-75 hover:bg-opacity-100">S'incrire</button>
+        <button class="p-3 mx-10 my-8 text-base font-semibold bg-white text-gray-800 rounded shadow-2xl bg-opacity-75 hover:bg-opacity-100">S'incrire</button>
       </form>
     </div>
 
-    <!-- <footer>
-        <%- include('../partials/footer'); %>
-    </footer> -->
+    <!-- <footer> -->
+    <%- include('../partials/footer'); %>
+    <!--</footer> -->
 
     <script src="/static/js/inscription.js"></script>
   </body>

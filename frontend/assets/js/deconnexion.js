@@ -1,13 +1,20 @@
 const deconnexion = async () => {
   try {
-    fetch("/compte/deconnexion", {
+    const response = await fetch("api/comptes/deconnexion", {
       method: "DELETE",
       mode: "cors",
       credentials: "include",
-    }).then(() => {
-      window.location.href = "/compte/connexion";
     });
-  } catch (error) {
-    console.log(error);
+    const data = await response;
+
+    console.log(response.status);
+
+    if (response.status == 200) {
+      window.location.href = "/compte/connexion";
+    } else {
+      alert("Déconnexion impossible.");
+    }
+  } catch (erreur) {
+    console.log(erreur);
   }
 };

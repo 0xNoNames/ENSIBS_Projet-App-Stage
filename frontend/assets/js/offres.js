@@ -1,4 +1,4 @@
-window.addEventListener("load", function () {
+window.addEventListener("load", () => {
   const options = {
     method: "GET",
     mode: "cors",
@@ -13,11 +13,4 @@ window.addEventListener("load", function () {
   } catch (error) {
     console.log(error);
   }
-});
-
-const btn = document.querySelector("button.mobile-menu-button");
-const menu = document.querySelector(".mobile-menu");
-
-btn.addEventListener("click", () => {
-  menu.classList.toggle("hidden");
 });

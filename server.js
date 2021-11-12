@@ -3,7 +3,6 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import morgan from "morgan";
 import dotenv from "dotenv";
 import path from "path";
 import { verifierToken } from "./backend/middleware/auth.js";
@@ -12,7 +11,7 @@ import { verifierToken } from "./backend/middleware/auth.js";
 
 // -- -- -- API -- -- -- \\
 import offresRoutesAPI from "./backend/routes/api/offres.js";
-import utilisateursRoutesAPI from "./backend/routes/api/utilisateurs.js";
+import comptesRoutesAPI from "./backend/routes/api/comptes.js";
 import cvsRoutesAPI from "./backend/routes/api/cvs.js";
 import soutenancesRoutesAPI from "./backend/routes/api/soutenances.js";
 
@@ -21,7 +20,6 @@ import contactRoutes from "./backend/routes/routing/contact.js";
 import cvthequeRoutes from "./backend/routes/routing/cvtheque.js";
 import compteRoutes from "./backend/routes/routing/compte.js";
 import offresRoutes from "./backend/routes/routing/offres.js";
-import recuperationRoutes from "./backend/routes/routing/recuperation.js";
 import soutenancesRoutes from "./backend/routes/routing/soutenance.js";
 
 // -- -- -- -- -- -- -- -- --  -- CONFIG -- -- -- -- -- -- -- -- --  -- \\
@@ -45,7 +43,6 @@ app.use("/static", express.static(path.join(__dirname, "/frontend/assets")));
 // -- -- -- -- -- -- -- -- --  -- MIDDLEWARES -- -- -- -- -- -- -- -- --  -- \\
 
 app.use(cors());
-app.use(morgan("dev"));
 app.use(express.json({ type: "*/*" }));
 
 // -- -- -- -- -- -- -- -- --  -- DATABASE -- -- -- -- -- -- -- -- --  -- \\
@@ -63,7 +60,7 @@ mongoose
 
 // Use Routes
 app.use("/api/offres", offresRoutesAPI);
-app.use("/api/utilisateurs", utilisateursRoutesAPI);
+app.use("/api/comptes", comptesRoutesAPI);
 app.use("/api/cvs", cvsRoutesAPI);
 app.use("/api/soutenances", soutenancesRoutesAPI);
 
@@ -81,11 +78,11 @@ app.use("/api/soutenances", soutenancesRoutesAPI);
 
 // Page d'accueil
 app.get("/", verifierToken, (req, res) => {
-  console.log(req.utilisateur.prenom);
+  console.log(req.compte.prenom);
   res.render("pages/accueil", {
     estConnecte: req.estConnecte,
     page: "Accueil",
-    prenom: req.utilisateur.prenom,
+    prenom: req.compte.prenom,
   });
 });
 
@@ -98,11 +95,8 @@ app.use("/soutenances", soutenancesRoutes);
 // Page de contact
 app.use("/contact", contactRoutes);
 
-// Page de connexion, inscription et profil
+// Page de connexion, inscription, profil et aide
 app.use("/compte", compteRoutes);
-
-// Page de récupération
-app.use("/recuperation", recuperationRoutes);
 
 // Page des offres
 app.use("/offres", offresRoutes);
@@ -117,7 +111,7 @@ app.get("*", verifierToken, (req, res) => {
   res.status(404).render("pages/erreur404", {
     estConnecte: req.estConnecte,
     page: "Erreur 404",
-    prenom: req.utilisateur.prenom,
+    prenom: req.compte.prenom,
   });
 });
 

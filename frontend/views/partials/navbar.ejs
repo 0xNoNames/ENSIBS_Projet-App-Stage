@@ -1,7 +1,7 @@
 <!-- Background -->
-<div class="fixed h-full w-full bg-cover" style="background-image: url('/static/img/bg.jpg'); z-index: -99"></div>
+<div class="fixed h-screen w-screen bg-cover" style="background-image: url('/static/img/bg.jpg'); z-index: -99"></div>
 
-<nav class="sticky top-0 z-10 backdrop-blur-md border-b border-gray-200 border-opacity-50 bg-black bg-opacity-20 backdrop-saturate-125">
+<nav class="relative w-full top-0 z-10 backdrop-blur-md border-b border-gray-200 border-opacity-50 bg-black bg-opacity-20 backdrop-saturate-125">
   <div class="w-full flex justify-around">
     <div class="flex space-x-2">
       <!-- Logo -->
@@ -22,6 +22,7 @@
         <% } else { %>
           <a href="/" class="py-4 px-2 text-lg <% if (page == "Accueil") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">ACCUEIL</a>
           <a href="/contact" class="py-4 px-3 text-lg <% if (page == "Contact") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">CONTACT</a>
+          <a href="/compte/aide" class="py-4 px-3 text-lg <% if (page == "Aide") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">AIDE</a>
         <% } %>
       </div>
     </div>

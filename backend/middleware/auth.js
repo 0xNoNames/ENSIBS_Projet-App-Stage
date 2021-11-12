@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import UtilisateurModel from "../models/utilisateur.js";
+import CompteModel from "../models/compte.js";
 
 dotenv.config({ path: "backend/.env" });
 
@@ -19,16 +19,16 @@ export const verifierToken = async (req, res, next) => {
       });
     } catch (error) {
       req.estConnecte = false;
-      req.utilisateur = "";
-      console.log(error);
+      req.compte = "";
+      console.log("AUTH.JS : Pas de cookies.");
       return next();
     }
 
     /* On vérifie que le JWT est présent dans les cookies de la requête */
     if (cookieToken.nom != "token" || cookieToken.token == "") {
       req.estConnecte = false;
-      req.utilisateur = "";
-      console.error("Pas de token.");
+      req.compte = "";
+      console.error("AUTH.JS : Pas de token.");
       return next();
     }
 
@@ -37,21 +37,21 @@ export const verifierToken = async (req, res, next) => {
       decodedToken = jwt.verify(cookieToken.token, process.env.JWT_SECRET);
     } catch (error) {
       req.estConnecte = false;
-      req.utilisateur = "";
-      console.log(error);
+      req.compte = "";
+      console.log("AUTH.JS : Token malformé.");
       return next();
     }
 
-    /* On vérifie que l'utilisateur existe bien dans notre base de données */
-    const utilisateur = await UtilisateurModel.findOne({ _id: decodedToken.id });
-    if (!utilisateur) {
+    /* On vérifie que l'compte existe bien dans notre base de données */
+    const compte = await CompteModel.findOne({ _id: decodedToken.id });
+    if (!compte) {
       req.estConnecte = false;
-      req.utilisateur = "";
-      console.error("Pas d'utilisateur.");
+      req.compte = "";
+      console.error("AUTH.JS : Pas d'compte.");
       return next();
     }
 
-    req.utilisateur = utilisateur;
+    req.compte = compte;
     req.estConnecte = true;
 
     return next();
@@ -74,39 +74,26 @@ export const estValide = (req, res, next) => {
   return next();
 };
 
-export const estVerifie = (req, res, next) => {
-  if (req.utilisateur.role == "verification") {
-    return res.render("pages/erreurVerif", {
-      estConnecte: false,
-      page: "Erreur",
-      prenom: req.utilisateur.prenom,
-    });
-  } else {
-    console.error("Pas vérifié.");
-  }
-  return next();
-};
-
 export const estAdministrateur = (req, res, next) => {
-  if (req.utilisateur != "administrateur") {
+  if (req.compte != "administrateur") {
     return res.render("pages/erreur401", {
       estConnecte: false,
       page: "Erreur 401",
-      prenom: req.utilisateur.prenom,
+      prenom: req.compte.prenom,
     });
   } else {
-    console.error("Pas administrateur.");
+    console.error("AUTH.JS : Pas administrateur.");
   }
   return next();
 };
 
 export const estEntreprise = (req, res, next) => {
-  console.log(req.user);
+  console.log("AUTH.JS : APPEL estEntreprise");
   return next();
 };
 
 export const estEtudiant = (req, res, next) => {
-  console.log(req.user);
+  console.log("AUTH.JS : APPEL estEtudiant");
   return next();
 };
 
@@ -116,5 +103,4 @@ export default {
   estEntreprise,
   estEtudiant,
   estValide,
-  estVerifie,
 };
