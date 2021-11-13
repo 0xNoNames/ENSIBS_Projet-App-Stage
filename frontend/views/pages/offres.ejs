@@ -21,6 +21,11 @@
       </div>
     </div>
 
+    <% offres.forEach(function(offre) { %>
+      <h1><%=offre.id_entreprise %></h1>
+      <iframe src='/api/offres/<%=offre.id_entreprise%>/pdf' width="13%">      
+    <% }); %>
+
     <script src="/static/js/offres.js" type="module"></script>
 
     <!-- <footer> -->
