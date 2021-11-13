@@ -38,6 +38,17 @@ export const createCV = async (req, res) => {
   
 };
 
+
+export const getStudentCV = async (req, res) => {
+  var id_user = req.compte.id;
+  const mongoCompte = await CompteModel.findOne({ id_user });
+  const pdfBinary = await CVModel.findOne({id_user});
+  var username = mongoCompte._id;
+  var binary = pdfBinary.binary;
+  res.contentType("application/pdf");
+  res.send(binary);
+}
+
 export const updateCV = (req, res) => {
   res.status(200);
 };

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getCVs, createCV, updateCV, deleteCV, deleteAnyCV } from "../../controllers/api/cvtheques.js";
+import { getCVs, createCV, updateCV, deleteCV, deleteAnyCV , getStudentCV} from "../../controllers/api/cvtheques.js";
 import { verifierToken, estVerifie, estEntreprise, estEtudiant, estAdministrateur } from "../../middleware/auth.js";
 
 const router = Router();
@@ -10,6 +10,13 @@ const router = Router();
  * @access  Private
  */
 router.get("/", verifierToken, estVerifie, estEntreprise, getCVs);
+
+/**
+ * @route GET /api/cvs/id/pdf
+ * @desc Recupérer le CV associé à l'id
+ * @acces Private
+ */
+router.get("/:id/pdf", verifierToken, estVerifie, getStudentCV);
 
 /**
  * @route   POST /api/cvs
