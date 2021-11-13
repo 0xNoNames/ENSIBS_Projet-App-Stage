@@ -7,7 +7,12 @@ export const getSoutenances = (req, res) => {
 
 export const createSoutenance = (req, res) => {
   // Get the value on name in the headers
-  var name = req.header("name");
+  var date = req.body.date;
+  var lieu = req.body.lieu;
+  var hour = req.body.hour
+
+
+
   /*
       const newSoutenance = new Soutenance({
           name,

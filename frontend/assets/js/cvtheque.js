@@ -1,7 +1,3 @@
-//let fs = require('fs');
-
-
-
 const  sendData = async () => {
     console.log("Uploading the CV")
 
