@@ -21,20 +21,20 @@
 
 
       <h1><%= username %></h1>
-      <img src='/profile/<%= userid %>/picture' />
+      <iframe src='/api/cvs/618e95aed7384416025b20e5/pdf' width="13%" ></iframe>
+      <!-- <img src='/api/cvs/<%= userid %>/pdf' /> -->
 
-   <!-- <% cvs.forEach(function(cv) { %>
-      <script>
-        const binaire = document.createElement('div');
-        const id_eleve = document.createElement('div');
-        id_eleve.innerText = '<%=cv.id_eleve%>'
-        console.log(id_eleve.innerText);
-      </script>
-      <iframe src='<%=cv.binaire%>' width="100%" height="500px"></iframe>
-    <% }); %>-->
+      <% cvs.forEach(function(cv) { %>
+        <script>
+          const binaire = document.createElement('div');
+          const id_eleve = document.createElement('p');
+          id_eleve.innerText = '<%=cv.id_eleve%>'
+        </script>
+        <iframe src='/api/cvs/618e95aed7384416025b20e5/pdf' width="13%">
+      <% }); %>
 
 
-    <!-- <script src="/static/js/cvtheque.js" type="module"></script> -->
+    <script src="/static/js/cvtheque.js" type="module"></script>
 
     <!-- <footer> -->
     <%- include('../partials/footer'); %>

@@ -11,11 +11,12 @@ export const getCVs = async (req, res) => {
 };
 
 export const createCV = async (req, res) => {
-  
+  console.log("CV API.JS : upload Unique CV")
   var binaire = req.body;
   var id_user = req.compte.id;
   var email = req.compte.email;
   //var estCyberLog = req.compte.
+
 
 
   // Check if the user has a account in the DB
@@ -32,6 +33,7 @@ export const createCV = async (req, res) => {
     }
   } catch(erreur){
     console.log(erreur)
+    res.status(400);
   }
   
 
@@ -40,13 +42,21 @@ export const createCV = async (req, res) => {
 
 
 export const getStudentCV = async (req, res) => {
+  console.log("CV API.JS : REQUEST Unique CV")
   var id_user = req.compte.id;
   const mongoCompte = await CompteModel.findOne({ id_user });
   const pdfBinary = await CVModel.findOne({id_user});
-  var username = mongoCompte._id;
-  var binary = pdfBinary.binary;
-  res.contentType("application/pdf");
-  res.send(binary);
+  if (pdfBinary){
+    //console.log("CV API.JS : "+ pdfBinary)
+    var username = mongoCompte._id;
+    var binary = pdfBinary.binaire;
+    //console.log(binary)
+    res.contentType("pdf");
+    res.end(binary, 'binary');
+  } else {
+    res.status(400);
+  }
+  
 }
 
 export const updateCV = (req, res) => {

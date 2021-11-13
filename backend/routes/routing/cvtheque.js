@@ -1,23 +1,27 @@
 import { Router } from "express";
 import { verifierToken, estVerifie, estEntreprise } from "../../middleware/auth.js";
-import CVModel from "../../models/cv.js";
+import {cvPage} from "../../controllers/routing/cvtheque.js"
 
 const router = Router();
 
 
 /* RAJOUTER estEntreprise */
-router.get("/", verifierToken, estVerifie, async (req, res) => {
+/*router.get("/", verifierToken, estVerifie, async (req, res) => {
   try {
     const Cvs = await CVModel.find();
     res.render("pages/cvtheque", {
       estConnecte: true,
       page: "CVthèque",
-      prenom: req.compte.prenom,
+      username: req.compte.prenom+"_"+req.compte.nom,
       cvs: Cvs,
+      prenom:req.compte.prenom,
+      userid:req.compte.id
     });
   } catch (error) {
     res.error(404).json({ message: error.message });
   }
-});
+});*/
+
+router.get("/",verifierToken,estVerifie,cvPage);
 
 export default router;

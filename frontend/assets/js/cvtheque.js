@@ -40,6 +40,7 @@ const  sendData = async () => {
 }
 
 window.addEventListener("load", () => {
+  console.log("event")
   getCV().then((data) => {
     console.log(data);
   });
@@ -49,6 +50,7 @@ window.addEventListener("load", () => {
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
+
     sendData();
   });
 });
