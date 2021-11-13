@@ -5,7 +5,6 @@ const OffreSchema = new Schema({
   id_entreprise: { type: String},id_entreprise: { type: Object, required: true },
   name_poste: { type: String },
   date: { type: Date, default: Date.now },
-  binaire: { type: Buffer, required: true },
   formation:{
     type:String,
     enum:["CyberLog", "CyberData"],
