@@ -24,7 +24,10 @@ window.addEventListener("load", () => {
   });
 
   const envoyerFormulaire = async () => {
-    const statut = form.etudiant.checked ? form.etudiant.value : form.entreprise.value;
+    console.log("form.cyberdata.checked : " + form.cyberdata.checked);
+    console.log("form.cyberlog.checked : " + form.cyberlog.checked);
+    console.log("form.entreprise.checked : " + form.entreprise.checked);
+    const statut = form.cyberdata.checked ? form.cyberdata.value : form.cyberlog.checked ? form.cyberlog.value : form.entreprise.value;
     try {
       const response = await fetch("/api/comptes/", {
         method: "POST",
