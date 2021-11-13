@@ -121,7 +121,7 @@ export const estCyberdata = (req, res, next) => {
 };
 
 export const estEtudiant = (req, res, next) => {
-  if (req.estConnecte === false || req.compte.estAttribue === false || req.compte === "" || req.compte.statut != "cyberlog" || req.compte.statut != "cyberdata") {
+  if (req.estConnecte === false || req.compte.estAttribue === false || req.compte === "" || (req.compte.statut != "cyberlog" && req.compte.statut != "cyberdata")) {
     console.error("AUTH.JS : Statut étudiant nécéssaire.");
     return res.render("pages/erreur401", {
       estConnecte: true,

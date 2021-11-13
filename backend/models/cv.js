@@ -6,7 +6,7 @@ const CvSchema = new Schema({
   id_eleve: { type: Object, required: true },
   formation:{
     type:String,
-    enum:["CyberLog", "CyberData"],
+    enum:["cyberlog", "cyberdata"],
     required:true
   }
 });

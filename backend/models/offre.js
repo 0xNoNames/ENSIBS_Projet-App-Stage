@@ -7,10 +7,11 @@ const OffreSchema = new Schema({
   date: { type: Date, default: Date.now },
   formation:{
     type:String,
-    enum:["CyberLog", "CyberData"],
+    enum:["cyberlog", "cyberdata"],
     required:true
   },
-  binaire : { type: Buffer, required: true }
+  binaire : { type: Buffer, required: true },
+  lieu_poste : {type:String}
 });
 
   
