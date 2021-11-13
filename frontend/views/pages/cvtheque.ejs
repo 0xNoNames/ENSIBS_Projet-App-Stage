@@ -20,17 +20,17 @@
     </div>
 
 
-      <h1><%= username %></h1>
+      
       <iframe src='/api/cvs/618e95aed7384416025b20e5/pdf' width="13%" ></iframe>
-      <!-- <img src='/api/cvs/<%= userid %>/pdf' /> -->
+
 
       <% cvs.forEach(function(cv) { %>
-        <script>
-          const binaire = document.createElement('div');
-          const id_eleve = document.createElement('p');
-          id_eleve.innerText = '<%=cv.id_eleve%>'
-        </script>
-        <iframe src='/api/cvs/618e95aed7384416025b20e5/pdf' width="13%">
+        <% comptes.forEach(function(compte) { %>
+          <% if (compte.id == cv.id_eleve) { %>
+            <h1><%=compte.nom %> <%=compte.prenom %></h1>
+          <% } %>
+        <% }); %>
+        <iframe src='/api/cvs/<%=cv.id_eleve%>/pdf' width="13%">
       <% }); %>
 
 
