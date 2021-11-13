@@ -2,7 +2,7 @@ import CVModel from "../../models/cv.js";
 import CompteModel from "../../models/compte.js";
 
 
-export const cvPage = async (req,res) =>{
+export const getCvPage = async (req,res) =>{
 	try {
 	    const Cvs = await CVModel.find();
 	    const comptes = await CompteModel.find();

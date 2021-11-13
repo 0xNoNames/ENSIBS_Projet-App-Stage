@@ -15,7 +15,7 @@ export const createCV = async (req, res) => {
   var binaire = req.body;
   var id_user = req.compte.id;
   var email = req.compte.email;
-  //var estCyberLog = req.compte.
+  var formation = req.compte.statut;
 
 
 
@@ -26,7 +26,7 @@ export const createCV = async (req, res) => {
     if (!mongoCompte){
       res.status(400).json({msg :"Compte non trouvé"})
     } else {
-      const cv = await CVModel.create({binaire,id_eleve:id_user});
+      const cv = await CVModel.create({binaire,id_eleve:id_user,formation:formation});
       console.log("Le Cv a bien ete upload")
 
       res.status(200).json({msg : "Le CV a bien ete upload"})

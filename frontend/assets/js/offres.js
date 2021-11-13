@@ -35,12 +35,27 @@ const  sendData = async () => {
     // Get the file
     var input = document.getElementById("fileupload");
     var data_file = input.files[0];
+
+    // Get the info on the offre
+    var nom_poste = document.getElementById("nom_poste").value
+    var nom_entreprise = document.getElementById("nom_entreprise").value
+    var lieu_poste = document.getElementById("lieu_poste").value
+
+    if (document.getElementById('checkBoxCyberData').checked){
+      var formation = "cyberdata"
+    } else {
+      var formation = "cyberlog"
+    }
+    
     let formData = new FormData(); 
-    //let readStream = fs.createReadStream(data_file);
     formData.append("file", data_file);
 
     var headers = {
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Content-Type": "application/x-www-form-urlencoded",
+      "nom_entreprise" : nom_entreprise,
+      "nom_poste":nom_poste,
+      "formation" : formation,
+      "lieu_poste" : lieu_poste
     };
 
 

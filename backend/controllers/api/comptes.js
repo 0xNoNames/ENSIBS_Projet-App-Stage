@@ -31,7 +31,7 @@ export const createCompte = async (req, res) => {
   try {
     const emailRegex = new RegExp("[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
 
-    console.log(emailRegex.text(email));
+    console.log(emailRegex.test(email));
 
     if (!emailRegex.test(email)) return res.status(400).json({ message: "L'adresse mail est mal formée." });
 

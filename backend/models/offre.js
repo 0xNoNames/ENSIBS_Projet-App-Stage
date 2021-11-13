@@ -2,14 +2,16 @@ import pkg from "mongoose";
 const { Schema, model } = pkg;
 
 const OffreSchema = new Schema({
-  id_entreprise: { type: String},id_entreprise: { type: Object, required: true },
-  name_poste: { type: String },
+  nom_entreprise : {type:String},
+  nom_poste: { type: String },
   date: { type: Date, default: Date.now },
   formation:{
     type:String,
-    enum:["CyberLog", "CyberData"],
+    enum:["cyberlog", "cyberdata"],
     required:true
-  }
+  },
+  binaire : { type: Buffer, required: true },
+  lieu_poste : {type:String}
 });
 
   

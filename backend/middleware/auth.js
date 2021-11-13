@@ -96,8 +96,32 @@ export const estEntreprise = (req, res, next) => {
   return next();
 };
 
+export const estCyberlog = (req, res, next) => {
+  if (req.estConnecte === false || req.compte.estAttribue === false || req.compte === "" || req.compte.statut != "cyberlog") {
+    console.error("AUTH.JS : Statut cyberlog nécéssaire.");
+    return res.render("pages/erreur401", {
+      estConnecte: true,
+      page: "Erreur 401",
+      prenom: req.compte.prenom,
+    });
+  }
+  return next();
+};
+
+export const estCyberdata = (req, res, next) => {
+  if (req.estConnecte === false || req.compte.estAttribue === false || req.compte === "" || req.compte.statut != "cyberdata") {
+    console.error("AUTH.JS : Statut cyberdata nécéssaire.");
+    return res.render("pages/erreur401", {
+      estConnecte: true,
+      page: "Erreur 401",
+      prenom: req.compte.prenom,
+    });
+  }
+  return next();
+};
+
 export const estEtudiant = (req, res, next) => {
-  if (req.estConnecte === false || req.compte.estAttribue === false || req.compte === "" || req.compte.statut != "etudiant") {
+  if (req.estConnecte === false || req.compte.estAttribue === false || req.compte === "" || (req.compte.statut != "cyberlog" && req.compte.statut != "cyberdata")) {
     console.error("AUTH.JS : Statut étudiant nécéssaire.");
     return res.render("pages/erreur401", {
       estConnecte: true,
@@ -114,4 +138,6 @@ export default {
   estAdministrateur,
   estEntreprise,
   estEtudiant,
+  estCyberdata,
+  estCyberlog,
 };

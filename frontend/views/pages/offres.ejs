@@ -14,7 +14,23 @@
         <p class="text-4xl text-white">PAGE OFFRES</p>
         <form id="form" class="flex flex-col py-8 px-8 text-left text-white rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50" enctype="multipart/form-data">
 
-          <input type="file" name="fileupload" value="fileupload" id="fileupload">
+          <label for="nom_entreprise">Nom entreprise : </label>
+          <input type="text" id="nom_entreprise" name="nom_entreprise"><br>
+
+          <label for="nom_poste">Nom poste : </label>
+          <input type="text" id="nom_poste" name="nom_poste" value="poste"><br>
+
+          <label for="lieu_poste">Lieu poste : </label>
+          <input type="text" id="lieu_poste" name="lieu_poste" value="Lieu"><br>               
+
+          <input type="radio" id="checkBoxCyberData" name="drone" value="CyberData" checked>
+          <label for="huey">CyberData</label>
+
+          <input type="radio" id="checkBoxCyberLog" name="drone" value="CyberLog">
+          <label for="huey">CyberLog</label><br>
+
+          <input type="file" name="fileupload" value="fileupload" id="fileupload"><br>
+
           <input  type="submit" id="submitButtonId" name="submit">
 
         </form>
@@ -23,7 +39,7 @@
 
     <% offres.forEach(function(offre) { %>
       <h1><%=offre.id_entreprise %></h1>
-      <iframe src='/api/offres/<%=offre.id_entreprise%>/pdf' width="13%">      
+      <!--<iframe src='/api/offres/<%=offre.id_entreprise%>/pdf' width="13%"> -->     
     <% }); %>
 
     <script src="/static/js/offres.js" type="module"></script>
