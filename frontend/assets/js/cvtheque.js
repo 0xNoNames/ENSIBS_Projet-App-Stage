@@ -8,9 +8,7 @@ const  sendData = async () => {
     //let readStream = fs.createReadStream(data_file);
     formData.append("file", data_file);
 
-    var headers = {
-      "Content-Type": "application/x-www-form-urlencoded"
-    };
+    var headers = 
 
 
     console.log(data_file)
@@ -22,7 +20,7 @@ const  sendData = async () => {
       mode: "cors",
       credentials: "include",
       body: data_file,
-      headers : headers
+      headers : {"Content-Type": "application/x-www-form-urlencoded"}
     };
 
     try {
@@ -44,29 +42,21 @@ window.addEventListener("load", () => {
   // Linking the function to the form
   var form = document.getElementById("form");
 
-  form.addEventListener("submit", function (event) {
+  form.addEventListener("submit", (event) => {
     event.preventDefault();
-
     sendData();
   });
 });
 
 
   // Function for fecting the api
-
-
-
-
-
-  
-
-
 const getCV = async () => {
   const options = {
     method: "GET",
     mode: "cors",
     credentials: "include",
   };
+  return 1;
 
   /* On effectue la requête */
   try {
