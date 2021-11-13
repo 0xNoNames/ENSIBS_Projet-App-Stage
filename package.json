@@ -22,6 +22,10 @@
     },
     "homepage": "https://github.com/arthur-petre/projet-app-stage#readme",
     "dependencies": {
+        "@fullcalendar/core": "^5.10.1",
+        "@fullcalendar/daygrid": "^5.10.1",
+        "@fullcalendar/list": "^5.10.1",
+        "@fullcalendar/timegrid": "^5.10.1",
         "bcryptjs": "^2.4.3",
         "cors": "^2.8.5",
         "dotenv": "^10.0.0",
