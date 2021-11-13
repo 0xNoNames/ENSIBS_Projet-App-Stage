@@ -1,14 +1,9 @@
 import { Router } from "express";
 import { verifierToken } from "../../middleware/auth.js";
+import { getContactPage } from "../../controllers/routing/contact.js";
 
 const router = Router();
 
-router.get("/", verifierToken, (req, res) => {
-  res.render("pages/contact", {
-    estConnecte: req.estConnecte,
-    page: "Contact",
-    prenom: req.compte.prenom,
-  });
-});
+router.get("/", verifierToken, getContactPage);
 
 export default router;
