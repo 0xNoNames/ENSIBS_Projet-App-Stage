@@ -1,9 +1,8 @@
 import { Router } from "express";
 import { verifierToken, estVerifie, estEntreprise } from "../../middleware/auth.js";
-import {cvPage} from "../../controllers/routing/cvtheque.js"
+import { getCvPage } from "../../controllers/routing/cvtheque.js";
 
 const router = Router();
-
 
 /* RAJOUTER estEntreprise */
 /*router.get("/", verifierToken, estVerifie, async (req, res) => {
@@ -22,6 +21,6 @@ const router = Router();
   }
 });*/
 
-router.get("/",verifierToken,estVerifie,cvPage);
+router.get("/", verifierToken, estVerifie, estEntreprise, getCvPage);
 
 export default router;

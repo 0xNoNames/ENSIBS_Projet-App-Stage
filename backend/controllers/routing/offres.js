@@ -1,34 +1,16 @@
-import CompteModel from "../../models/compte.js";
 import OffreModel from "../../models/offre.js";
 
-export const offrePageData = async (req,res) =>{
-	try {
-	    const Offres = await OffreModel.find();
-	    const comptes = await CompteModel.find();
-	    res.render("pages/offres", {
-	      estConnecte: true,
-	      page: "Offres",
-	      offres: Offres,
-	      comptes : comptes,
-	      prenom:req.compte.prenom,
-	});
+export const getOffrePage = async (req, res) => {
+  try {
+    const offres = await OffreModel.find({ statut: req.compte.status });
+    res.render("pages/offres", {
+      estConnecte: true,
+      page: "Offres",
+      offres: offres,
+      prenom: req.compte.prenom,
+    });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    console.log("controllers/routing/routing.js : ", error);
+    res.status(500).json({ message: "Erreur interne." });
   }
-}
-
-export const offrePageLog = async (req,res) =>{
-	try {
-	    const Offres = await OffreModel.find();
-	    const comptes = await CompteModel.find();
-	    res.render("pages/offres", {
-	      estConnecte: true,
-	      page: "Offres",
-	      offres: Offres,
-	      comptes : comptes,
-	      prenom:req.compte.prenom,
-	});
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-}
+};
