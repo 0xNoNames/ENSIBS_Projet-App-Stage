@@ -4,6 +4,20 @@ import CompteModel from "../../models/compte.js";
 export const getSoutenances = (req, res) => {
   // var base_dir = path.resolve("./");
   // res.sendFile(base_dir + "/frontend/soutenances.html");
+  let Calendar = new Calendar(calendar, {
+    plugins: [ dayGridPlugin, listPlugin ],
+    initialView: 'dayGridMonth',
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,listWeek'
+    }
+  });
+  res.render("pages/alternance", {
+    estConnecte: true,
+    page: "alternance",
+    calendar: Calendar
+    });
 };
 
 export const createSoutenance = async (req, res) => {
