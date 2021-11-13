@@ -1,8 +1,26 @@
 import SoutenanceModel from "../../models/soutenance.js";
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
 
 export const getSoutenances = (req, res) => {
   // var base_dir = path.resolve("./");
   // res.sendFile(base_dir + "/frontend/soutenances.html");
+  let Calendar = new Calendar(calendar, {
+    plugins: [ dayGridPlugin, listPlugin ],
+    initialView: 'dayGridMonth',
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,listWeek'
+    }
+  });
+  res.render("pages/alternance", {
+    estConnecte: true,
+    page: "alternance",
+    calendar: Calendar
+    });
 };
 
 export const createSoutenance = (req, res) => {
