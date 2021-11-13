@@ -1,4 +1,4 @@
-import SoutenanceModel from "../../model/soutenance.js";
+import SoutenanceModel from "../../models/soutenance.js";
 import { Calendar } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
