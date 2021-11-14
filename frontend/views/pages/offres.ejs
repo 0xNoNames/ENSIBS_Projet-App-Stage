@@ -37,6 +37,27 @@
       </div>
     </div>
 
+
+    <div class="mt-32 flex justify-center items-center">
+      <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+        <p class="text-4xl text-white">Offres non validés</p>
+
+        <% offresNonValide.forEach(function(offre) { %>
+          <div id="<%=offre.id %>">
+            <p> Nom entreprise : <%=offre.nom_entreprise %></p>
+            <p> Nom poste : <%= offre.nom_poste %> </p>
+            <!-- TODO : pdf de l'offre-->
+            <p> Formation : <%= offre.formation %> </p>
+
+            <button class="buttonValidateOffre">Validate</button>
+          </div>
+          
+          
+        <% }); %>
+      </div>
+    </div>
+
+
     <% offres.forEach(function(offre) { %>
       <h1><%=offre.id_entreprise %></h1>
       <!--<iframe src='/api/offres/<%=offre.id_entreprise%>/pdf' width="13%"> -->     

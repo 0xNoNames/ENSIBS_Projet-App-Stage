@@ -8,6 +8,9 @@ export const getOffresPage = async (req, res) => {
     } else {
       offres = await OffreModel.find({ statut: req.compte.statut });
     }
+
+    var offresNonValide = await OffreModel.find({estValide:false})
+    
     res.render("pages/offres", {
       estConnecte: true,
       page: "Offres",
@@ -15,6 +18,7 @@ export const getOffresPage = async (req, res) => {
       prenom: req.compte.prenom,
       statut: req.compte.statut,
       estAttribue: req.compte.estAttribue,
+      offresNonValide : offresNonValide
     });
   } catch (error) {
     console.log("controllers/routing/offres.js : ", error);

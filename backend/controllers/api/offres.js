@@ -24,10 +24,10 @@ export const createOffre = async (req, res) => {
     var formation = req.headers.formation;
     var lieu = req.headers.lieu_poste;
 
-    try{
-        if(!validator.isAlphanumeric(nom_poste, 'fr-FR', {ignore:"'() -/,&[]@:."})) res.status(400).json({message: "Le nom du poste contient des caracteres non valides"});
-        if(!validator.isAlphanumeric(nom_entreprise, 'fr-FR', {ignore:"'() -/,&[]@:.!?"})) res.status(400).json({message: "Le nom de l'entreprise contient des caracteres non valides"});
-        if(!validator.isAlphanumeric(nom_poste, 'fr-FR', {ignore:"'() -/,&[]"})) res.status(400).json({message: "Le nom du lieu contient des caracteres non valides"});
+    try {
+        if (!validator.isAlphanumeric(nom_poste, 'fr-FR', { ignore: "'() -/,&[]@:." })) res.status(400).json({ message: "Le nom du poste contient des caracteres non valides" });
+        if (!validator.isAlphanumeric(nom_entreprise, 'fr-FR', { ignore: "'() -/,&[]@:.!?" })) res.status(400).json({ message: "Le nom de l'entreprise contient des caracteres non valides" });
+        if (!validator.isAlphanumeric(nom_poste, 'fr-FR', { ignore: "'() -/,&[]" })) res.status(400).json({ message: "Le nom du lieu contient des caracteres non valides" });
 
     } catch (erreur) {
         console.log(erreur)
@@ -40,7 +40,7 @@ export const createOffre = async (req, res) => {
         } else {
 
             // Create the oofer
-            const cv = await OffreModel.create({ binaire: binaire, nom_entreprise: nom_entreprise, formation: formation, nom_poste: nom_poste,lieu_poste:lieu});
+            const cv = await OffreModel.create({ binaire: binaire, nom_entreprise: nom_entreprise, formation: formation, nom_poste: nom_poste, lieu_poste: lieu, estValide: false });
             console.log("L'offre a bien ete upload")
             res.status(200).json({ msg: "L'offre a bien ete upload" })
         }
@@ -80,3 +80,18 @@ export const deleteOffre = async (req, res) => {
         res.status(400).json({ msg: e.message, success: false });
     }
 };
+
+
+
+export const validateOffre = async (req, res) => {
+    console.log("Validation Offre");
+    var id = req.body.id
+
+    try {
+        await OffreModel.updateOne({ _id: id }, { $set: { estValide: true } });
+        res.status(200).json({ message: "OK" });
+    } catch (erreur) {
+        console.log("ValidationOffre from /controllers/api/offre.js :", erreur);
+        res.status(500).json({ message: "Erreur interne." });
+    }
+}

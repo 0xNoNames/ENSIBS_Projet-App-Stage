@@ -1,19 +1,22 @@
-window.addEventListener("load", async () => {
-  const options = {
-    method: "GET",
-    mode: "cors",
-    credentials: "include",
-  };
+const valider = async (id) => {
+  const url = "/api/offres/validate/" + id;
 
-  /* On effectue la requête */
   try {
-    const response = await fetch("/api/offres", options);
+    const response = await fetch(url, {
+      method: "PUT",
+      body: JSON.stringify({ id: id }),
+      mode: "cors",
+      credentials: "include",
+    });
     const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    //console.log(error);
+    console.log(data)
+  } catch (erreur) {
+    console.log(erreur);
   }
+}
 
+
+window.addEventListener("load", async () => {
   // Linking the function to the form
   var form = document.getElementById("form");
 
@@ -21,15 +24,24 @@ window.addEventListener("load", async () => {
     console.log("LINkING")
     event.preventDefault();
     sendData();
-  });
+  }); 
 });
 
 
+// Link les boutons validate avec la fonction qui fait l'appel api pour valider les offres
+var classname = document.getElementsByClassName("buttonValidateOffre");
+for (var i = 0 ; i < classname.length; i++) {
+  classname[i].addEventListener('click' , (event) =>{
+    valider(event.path[0].parentNode.id)
+  } , false ) ;
+}
 
 
 
 
-const  sendData = async () => {
+
+
+const sendData = async () => {
     console.log("Uploading the offer")
 
     // Get the file

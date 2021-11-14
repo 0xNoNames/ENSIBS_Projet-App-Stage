@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getOffres, createOffre, updateOffre, deleteOffre } from "../../controllers/api/offres.js";
+import { getOffres, createOffre, updateOffre, deleteOffre,validateOffre } from "../../controllers/api/offres.js";
 import { verifierToken, estEtudiant, estAdministrateur, estVerifie } from "../../middleware/auth.js";
 const router = Router();
 
@@ -23,6 +23,13 @@ router.post("/", verifierToken, estVerifie, estAdministrateur, createOffre);
  * @access  Administrateur
  */
 router.put("/", verifierToken, estVerifie, estAdministrateur, updateOffre);
+
+/**
+ * @route   PUT /api/offres/validate/:id
+ * @desc    Validation d'une offre
+ * @access  Administrateur
+ */
+router.put("/validate/:id", verifierToken, estVerifie, estAdministrateur, validateOffre);
 
 /**
  * @route   DELETE /api/offres/:id
