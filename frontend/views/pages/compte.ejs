@@ -20,6 +20,7 @@
         <% if (estAttribue && statut != "Administrateur") { %>
           <button onClick="ouvrirFormCV()" class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier CV</button>
           <button onClick="ouvrirLettreMotivation()" class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier lettre de motivation</button>
+          <button onClick="ouvrirFormLinkedin()" class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier linkedin</button>
           <button onClick="ouvrirOffres()" class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Offres sauvgardés</button>
           <button onClick="ouvrirSoutenances()" class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Dates entretiens</button>
         <% } %>  
@@ -99,6 +100,20 @@
 
         <button type="submit" class="btn">Upload</button>
         <button type="button" class="btn cancel" onclick="fermerFormCV()">Close</button>
+      </form>
+      
+      <span id="messageErreurMail" class="mt-4 text-red-300 font-bold text-base text-center"></span>
+    </div>
+
+    <div class="bg-black bg-opacity-25 text-white" id="divLinkedin" style="display: none">
+      <form id="formLinkedin" class="">
+        <h1>Associer Linkedin</h1>
+    
+        <label for="textInputLinkedin"><b>Lien Compte Linkedin</b></label>
+        <input type="text" name="textInputLinkedin" value="" id="textInputLinkedin">
+
+        <button type="submit" class="btn">Modifier</button>
+        <button type="button" class="btn cancel" onclick="fermerFormLinkedin()">Close</button>
       </form>
       
       <span id="messageErreurMail" class="mt-4 text-red-300 font-bold text-base text-center"></span>

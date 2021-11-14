@@ -50,11 +50,20 @@ const fermerLettreMotivation = () => {
   document.getElementById("divLettreMotivation").style.display = "none";
 }
 
+const ouvrirFormLinkedin = () => {
+  document.getElementById("divLinkedin").style.display = "block";
+}
+
+const fermerFormLinkedin = () => {
+  document.getElementById("divLinkedin").style.display = "none";
+}
+
 
 const formMail = document.getElementById("formMail");
 const formMotDePasse = document.getElementById("formMotDePasse");
 const formLettreMotivation = document.getElementById("formMotivation");
 const formCV = document.getElementById("formCV");
+const formLinkedin = document.getElementById("formLinkedin");
 
 formMail.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -87,6 +96,11 @@ formLettreMotivation.addEventListener("submit", (event) => {
 formCV.addEventListener("submit", (event) => {
   event.preventDefault();
   sendDataCV();
+})
+
+formLinkedin.addEventListener("submit",(event) => {
+  event.preventDefault();
+  sendDataLinkedin();
 })
 
 const modifierMail = async () => {
@@ -174,6 +188,30 @@ const sendDataCV = async() => {
 
   try {
     const response = await fetch("/api/cvs", options);
+    const response_data = await response.json();
+    console.log(response_data);
+  } catch (error) {
+    //console.log(error);
+  }
+}
+
+const sendDataLinkedin = async () => {
+  console.log("Modifier linkedin");
+  var new_linkedin = document.getElementById("textInputLinkedin").value;
+
+  var body = JSON.stringify({ linkedin: new_linkedin })
+  console.log(body)
+
+  const options = {
+    method: "PUT",
+    mode: "cors",
+    credentials: "include",
+    body: body,
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  };
+
+  try {
+    const response = await fetch("/api/comptes/linkedin", options);
     const response_data = await response.json();
     console.log(response_data);
   } catch (error) {

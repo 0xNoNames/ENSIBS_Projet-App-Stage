@@ -13,6 +13,7 @@ import {
   postCompteAideOublie,
   attribuerCompte,
   getAttribuerComptes,
+  updateLinkedin
 } from "../../controllers/api/comptes.js";
 import { verifierToken, estVerifie, estAdministrateur } from "../../middleware/auth.js";
 
@@ -80,6 +81,13 @@ router.put("/email", verifierToken, estVerifie, updateCompteMail);
  * @access  Private
  */
 router.put("/motdepasse", verifierToken, estVerifie, updateCompteMotDePasse);
+
+/**
+ * @route   PUT /api/comptes/pwd
+ * @desc    Mettre à jour le mot de passe d'un utilisateur
+ * @access  Private
+ */
+router.put("/linkedin", verifierToken, estVerifie, updateLinkedin);
 
 /**
  * @route   DELETE /api/comptes

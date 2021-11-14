@@ -305,3 +305,23 @@ export const postCompteAideOublie = async (req, res) => {
     message: "Un email de récupération vous a été envoyé, il expirera après un jour, si vous n'avez pas reçu l'email de vérification vérifiez vos spams.",
   });
 };
+
+
+export const updateLinkedin = async (req,res) => {
+  var JSONbody = JSON.parse(req.body)
+  var linkedin = JSONbody.linkedin
+  console.log(req.compte.id)
+  console.log(typeof linkedin)
+
+
+  try {
+
+    const test = await CompteModel.updateOne({ _id: req.compte.id }, { $set: { link_linkedin: linkedin } });
+    console.log(test);
+
+    res.status(200).json({ message: "OK" });
+  } catch (erreur) {
+    console.log("updateCompteLinkedin() from /controllers/api/comptes.js :", erreur);
+    res.status(500).json({ message: "Erreur interne." });
+  }
+}
