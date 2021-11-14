@@ -7,7 +7,8 @@ const SoutenanceSchema = new Schema({
   lieu: { type: String, default: undefined, required:true },
   id_invitation: { type: [Number], default: undefined },
   url_teams : {type:String},
-  nom_maitre_stage : {type:String}
+  nom_maitre_stage : {type:String},
+  confidentiel : {type:Boolean}
 });
 
 const Soutance = model("soutenance", SoutenanceSchema);

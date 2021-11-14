@@ -40,6 +40,14 @@ export const createSoutenance = async (req, res) => {
   var date = req.body.date;
   var lieu = req.body.lieu;
   var hour = req.body.hour;
+  var confidentiel_value = req.body.confidentiel;
+
+  console.log(typeof confidentiel_value)
+  if (confidentiel_value == "on"){
+    var confidentiel = true;
+  } else {
+    var confidentiel = false;
+  }
 
   var id = req.compte.id;
   var email = req.compte.email;
@@ -65,7 +73,7 @@ export const createSoutenance = async (req, res) => {
     if (!mongoCompte){
       res.status(400).json({msg :"Compte non trouvé"})
     } else {
-      const cv = await SoutenanceModel.create({id_organisateur : id,date:date,lieu:lieu});
+      const cv = await SoutenanceModel.create({id_organisateur : id,date:date,lieu:lieu,confidentiel:confidentiel});
       console.log("Le soutenance a bien ete upload")
 
       res.status(200).json({msg : "Le CV a bien ete upload"})

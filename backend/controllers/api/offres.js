@@ -30,7 +30,7 @@ export const createOffre = async (req, res) => {
         } else {
 
             // Create the oofer
-            const cv = await OffreModel.create({ binaire: binaire, nom_entreprise: nom_entreprise, formation: formation, nom_poste: nom_poste,lieu_poste:lieu });
+            const cv = await OffreModel.create({ binaire: binaire, nom_entreprise: nom_entreprise, formation: formation, nom_poste: nom_poste,lieu_poste:lieu});
             console.log("L'offre a bien ete upload")
             res.status(200).json({ msg: "L'offre a bien ete upload" })
         }

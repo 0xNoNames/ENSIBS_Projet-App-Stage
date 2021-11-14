@@ -7,6 +7,6 @@ export const getSoutenancesPage = async (req, res) => {
   estConnecte: true,
   page: "Soutenances de stage",
   prenom: req.compte.prenom,
-  lieux: lieux,
+  lieux: lieux
   });
 };

@@ -68,6 +68,9 @@ const sendData = async () => {
     var lieu = lieu_input.value;
     // format : "hh:mm"
     var hour = hour_input.value;
+    
+    var confidentiel = document.getElementById("confidentiel_checkbox").value
+    console.log(confidentiel)
 
 
     // Create the formData
@@ -76,7 +79,7 @@ const sendData = async () => {
     formData.append("lieu", lieu);
     formData.append("hour", hour);
 
-    var body = JSON.stringify({ date: date, lieu: lieu,hour:hour })
+    var body = JSON.stringify({ date: date, lieu: lieu,hour:hour, confidentiel:confidentiel })
 
 
     var headers = {
