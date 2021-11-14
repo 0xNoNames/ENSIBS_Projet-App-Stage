@@ -14,6 +14,7 @@ import offresRoutesAPI from "./backend/routes/api/offres.js";
 import comptesRoutesAPI from "./backend/routes/api/comptes.js";
 import cvsRoutesAPI from "./backend/routes/api/cvs.js";
 import soutenancesRoutesAPI from "./backend/routes/api/soutenances.js";
+import motivationRoutesAPI from "./backend/routes/api/motivation.js";
 
 // -- -- -- non-API -- -- -- \\
 import contactRoutes from "./backend/routes/routing/contact.js";
@@ -21,6 +22,7 @@ import cvthequeRoutes from "./backend/routes/routing/cvtheque.js";
 import compteRoutes from "./backend/routes/routing/compte.js";
 import offresRoutes from "./backend/routes/routing/offres.js";
 import soutenancesRoutes from "./backend/routes/routing/soutenance.js";
+import motivationRoutes from "./backend/routes/routing/motivation.js";
 
 // -- -- -- -- -- -- -- -- --  -- CONFIG -- -- -- -- -- -- -- -- --  -- \\
 
@@ -63,6 +65,8 @@ app.use("/api/offres", offresRoutesAPI);
 app.use("/api/comptes", comptesRoutesAPI);
 app.use("/api/cvs", cvsRoutesAPI);
 app.use("/api/soutenances", soutenancesRoutesAPI);
+app.use("/api/motivation", motivationRoutesAPI);
+
 
 // Serve static assets if in production
 // if (process.env.NODE_ENV === "production") {
@@ -104,6 +108,8 @@ app.use("/compte", compteRoutes);
 
 // Page des offres
 app.use("/offres", offresRoutes);
+
+app.use("/motivation",motivationRoutes)
 
 // Page d'erreur 404 (mettre en dernière route)
 app.get("*", verifierToken, (req, res) => {

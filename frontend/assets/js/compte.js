@@ -34,6 +34,11 @@ const fermerFormMotDePasse = () => {
   document.getElementById("divMotDePasse").style.display = "none";
 };
 
+
+const ouvrirLettreDeMotivation = () => {
+  window.location.href = "/motivation";
+}
+
 const formMail = document.getElementById("formMail");
 const formMotDePasse = document.getElementById("formMotDePasse");
 
