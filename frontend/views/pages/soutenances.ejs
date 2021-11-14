@@ -14,6 +14,8 @@
     <div class="mt-32 flex justify-center items-center">
       <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
         <p class="text-4xl text-white">PAGE SOUTENANCES</p>
+
+        <% if (statut != "Entreprise") { %>
         <form id="form" class="flex flex-col py-8 px-8 text-left text-white rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50" enctype="multipart/form-data">
           <!-- Start Date -->
           <input type="date" id="date_soutenances" name="date_soutenances"
@@ -36,6 +38,8 @@
 
           <input  type="submit" id="submitButtonId" name="submit">
         </form>
+
+        <% } %> 
       </div>
       <div id="calendrier"></div>
 
