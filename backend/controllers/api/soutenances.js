@@ -1,23 +1,38 @@
 import SoutenanceModel from "../../models/soutenance.js";
 import CompteModel from "../../models/compte.js";
 
-export const getSoutenances = (req, res) => {
-  // var base_dir = path.resolve("./");
-  // res.sendFile(base_dir + "/frontend/soutenances.html");
-  let Calendar = new Calendar(calendar, {
-    plugins: [ dayGridPlugin, listPlugin ],
-    initialView: 'dayGridMonth',
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,listWeek'
+export const getSoutenances = async (req, res) => {
+  console.log("GETTING SOUTENANCES")
+  const soutenances = await SoutenanceModel.find({});
+
+  // Format 
+  //{ "title":"Live Coding - démo", "start":"2021-11-30 14:00:00", "end":"2021-11-30 16:00:00" }
+
+  var result_soutenances = []
+
+  for (const soutenance of soutenances){
+    try{
+      const user = await CompteModel.findOne({id:soutenance.id_organisateur});
+      var title = user.nom;
+      
+      var date = soutenance.date;
+      var dateString = date.toISOString();
+
+      // format "2016-02-18T23:59:48.039Z"
+      var start = dateString.replace("T"," ").slice(0,-5);
+
+      var endDate = date.setHours(date.getHours() + 1);
+      var end = dateString.replace("T"," ").slice(0,-5);
+
+      var soutenanceResult = {title:title,start : start, end:endDate}
+
+      result_soutenances.push(soutenanceResult);
+    } catch (erreur){
+      console.log(erreur);
     }
-  });
-  res.render("pages/alternance", {
-    estConnecte: true,
-    page: "alternance",
-    calendar: Calendar
-    });
+    
+  }
+  res.status(200).json(JSON.stringify({result:result_soutenances}))
 };
 
 export const createSoutenance = async (req, res) => {
