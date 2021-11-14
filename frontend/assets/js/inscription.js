@@ -36,9 +36,8 @@ window.addEventListener("load", () => {
 
       if (data) {
         if (data.alert) {
-          if (confirm(data.message) == true) {
-            window.location.href = "/";
-          }
+          confirm(data.message);
+          window.location.href = "/";
         } else {
           document.getElementById("messageErreur").innerHTML = data.message;
           setTimeout(() => {
