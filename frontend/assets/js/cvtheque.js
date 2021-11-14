@@ -3,6 +3,8 @@ const sendData = async () => {
 
   // Get the file
   var input = document.getElementById("fileupload");
+  var linkedin = document.getElementById("linkedin");
+  var description = document.getElementById("description");
   var data_file = input.files[0];
   let formData = new FormData();
   //let readStream = fs.createReadStream(data_file);
@@ -14,7 +16,7 @@ const sendData = async () => {
     method: "POST",
     mode: "cors",
     credentials: "include",
-    body: data_file,
+    body: {data_file, linkedin, description},
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
   };
 

@@ -16,9 +16,8 @@
         <p class="text-4xl text-white">Page CVTHÈQUE</p>
         <form id="form" class="flex flex-col py-8 px-8 text-left text-white rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50" enctype="multipart/form-data">
           <input type="file" name="fileupload" value="fileupload" id="fileupload">
-
-          
-
+          <input type="text" name="linkedin" value="linkedin" id="linkedin">
+          <input type ="text" name="description" value="description" id="description">
 
           <input  type="submit" id="submitButtonId" name="submit">
         </form>
@@ -32,10 +31,10 @@
             <iframe src='/api/cvs/<%=cv.id_eleve%>/pdf' width="13%">
             <h1><%=compte.prenom %></h1> 
             <h1><%=compte.nom %></h1>
-            <h1><%=cv.formation %></h1>
+            <!-- <h1><%=cv.formation %></h1>
             <h1><%=cv.linkedin %></h1>
             <h1><%=cv.description%></h1>
-            <h1>Link CV</h1>
+            <h1>Link CV</h1> -->
           <% } %>
         <% }); %>
         </div>
