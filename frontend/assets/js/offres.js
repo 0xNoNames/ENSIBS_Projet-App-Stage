@@ -56,7 +56,6 @@ const  sendData = async () => {
       "nom_poste":nom_poste,
       "formation" : formation,
       "lieu_poste" : lieu_poste
-      "confidentiel" : confidentiel
     };
 
 
