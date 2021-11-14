@@ -150,11 +150,11 @@ export const estEtudiant = (req, res, next) => {
   }
 };
 
-export const estDataEntreprise = (req, res, next) => {
-  if (req.compte.estAttribue === true && req.estConnecte === true && (req.compte.statut == "Administrateur" || req.compte.statut == "Entreprise" || req.compte.statut == "CyberData")) {
+export const estEtudiantEntreprise = (req, res, next) => {
+  if (req.compte.estAttribue === true && req.estConnecte === true && (req.compte.statut == "Administrateur" || req.compte.statut == "Entreprise" || req.compte.statut == "CyberData" || req.compte.statut == "CyberLog")) {
     return next();
   } else {
-    console.error("AUTH.JS : Statut étudiant nécéssaire.");
+    console.error("AUTH.JS : Statut étudiant ou entreprise nécéssaire.");
     return res.render("pages/erreur401", {
       estConnecte: true,
       page: "Erreur 401",
