@@ -1,13 +1,14 @@
 import SoutenanceModel from "../../models/soutenance.js";
-import CompteModel from "../../models/compte.js"
-
-var lieux = [{ nom: "D0010" }];
+import EntretienModel from "../../models/entretien.js";
+import CompteModel from "../../models/compte.js";
 
 export const getSoutenancesPage = async (req, res) => {
   if (req.baseUrl == "/soutenances") {
     var page = "Soutenances";
+    var data = await SoutenanceModel.find();
   } else {
     var page = "Entretiens";
+    var data = await EntretienModel.find();
   }
   res.render("pages/soutenances", {
     estConnecte: true,
@@ -15,14 +16,13 @@ export const getSoutenancesPage = async (req, res) => {
     prenom: req.compte.prenom,
     statut: req.compte.statut,
     estAttribue: req.compte.estAttribue,
-    lieux: lieux,
+    data: data,
   });
 };
 
-
-export const getUniqueSoutenancePage = async (req,res) => {
-  const soutenance = await SoutenanceModel.findOne({id_organisateur:req.params.id})
-  const eleve_soutenance = await CompteModel.findOne({id:req.params.id})
+export const getUniqueSoutenancePage = async (req, res) => {
+  const soutenance = await SoutenanceModel.findOne({ id_organisateur: req.params.id });
+  const eleve_soutenance = await CompteModel.findOne({ id: req.params.id });
   //console.log("SOUTENANCE ROUTING COUNROLLER  : " + soutenance)
 
   res.render("pages/soutenanceUnique", {
@@ -31,8 +31,7 @@ export const getUniqueSoutenancePage = async (req,res) => {
     prenom: req.compte.prenom,
     statut: req.compte.statut,
     estAttribue: req.compte.estAttribue,
-    lieux: lieux,
-    soutenance : soutenance,
-    eleve : eleve_soutenance
+    soutenance: soutenance,
+    eleve: eleve_soutenance,
   });
-}
+};

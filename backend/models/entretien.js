@@ -6,9 +6,9 @@ const EntretienSchema = new Schema({
   date: { type: Date, default: Date.now },
   lieu: { type: String, default: undefined },
   id_invitation: { type: [Number], default: undefined },
-  url_teams : {type:String},
-  enseignant : {type:String}
-  entreprises_inscrites : {type : [Object]}
+  url_teams: { type: String },
+  enseignant: { type: String },
+  entreprises_inscrites: { type: [Object] },
 });
 
 const Entretien = model("entretien", EntretienSchema);
