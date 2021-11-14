@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import CompteModel from "../../models/compte.js";
 
 dotenv.config({ path: "../.env" });
 
@@ -29,16 +30,31 @@ export const getInscriptionPage = (req, res) => {
   }
 };
 
-export const getComptePage = (req, res) => {
-  res.render("pages/compte", {
-    estConnecte: true,
-    page: "Aide",
-    prenom: req.compte.prenom,
-    nom: req.compte.nom,
-    email: req.compte.email,
-    statut: req.compte.statut,
-    estAttribue: req.compte.estAttribue,
-  });
+export const getComptePage = async (req, res) => {
+  if (req.compte.statut == "Administrateur") {
+    var comptesAttribuer = await CompteModel.find({ estAttribue: false, estVerifie: true });
+    res.render("pages/compte", {
+      estConnecte: true,
+      page: "Aide",
+      prenom: req.compte.prenom,
+      nom: req.compte.nom,
+      email: req.compte.email,
+      statut: req.compte.statut,
+      estAttribue: req.compte.estAttribue,
+      comptes: comptesAttribuer,
+    });
+  } else {
+    res.render("pages/compte", {
+      estConnecte: true,
+      page: "Aide",
+      prenom: req.compte.prenom,
+      nom: req.compte.nom,
+      email: req.compte.email,
+      statut: req.compte.statut,
+      estAttribue: req.compte.estAttribue,
+      comptes: "",
+    });
+  }
 };
 
 export const getAidePage = (req, res) => {

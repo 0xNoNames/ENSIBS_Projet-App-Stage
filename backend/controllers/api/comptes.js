@@ -52,13 +52,11 @@ export const createCompte = async (req, res) => {
     await envoyerMail(
       res,
       email,
-      "Mail de vérification ENSIBS",
+      "Mail de vérification - ENSIBS",
       "Bonjour MM./M. " + compte.nom + ",\n\n" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : \nhttp://" + req.headers.host + "/api/comptes/valider/" + compte.id + "/" + validation.token + "\n\nMerci!\n"
     );
 
-    res.status(200).send({
-      message: "Un email de vérification vous a été envoyé, il expirera après un jour, si vous n'avez pas reçu l'email de vérification vérifiez vos spam ou cliquez ici : <a href='/compte/aide/' class='text-green-ensibs-light text-4xl'>AIDE</a>",
-    });
+    res.status(200).send({ alert: true, message: "Un email de vérification vous a été envoyé, il expirera après un jour. Si vous n'avez pas reçu l'email de vérification, vérifiez vos spam ou aller sur la page d'AIDE." });
   } catch (erreur) {
     console.log("createCompte() from /controllers/api/comptes.js : ", erreur);
     res.status(500).json({ message: "Erreur interne." });
@@ -93,7 +91,7 @@ export const updateCompteMail = async (req, res) => {
     await envoyerMail(
       res,
       req.body.email,
-      "Mail de vérification ENSIBS",
+      "Mail de vérification - ENSIBS",
       "Bonjour MM./M. " + req.compte.nom + ",\n\n" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : \nhttp://" + req.headers.host + "/api/comptes/valider/" + req.compte.id + "/" + validation.token + "\n\nMerci!\n"
     );
 
@@ -146,8 +144,41 @@ export const deleteCompte = async (req, res) => {
   }
 };
 
-export const deleteAnyCompte = (req, res) => {
-  res.status(200);
+export const deleteAnyCompte = async (req, res) => {
+  try {
+    await CompteModel.deleteOne({ email: req.params.email });
+    await envoyerMail(
+      res,
+      req.params.email,
+      "Votre compte a été supprimé par un administrateur - ENSIBS",
+      "Bonjour MM./M.,\n\nVotre compte a été supprimé par un administrateur, veuillez recréer un compte ou contacter un administrateur via le formulaire de contact du site."
+    );
+    res.status(200).send({ message: "OK" });
+  } catch (erreur) {
+    console.log("deleteAnyCompte() from /controllers/api/comptes.js : ", erreur);
+    res.status(500).send({ message: "Erreur interne." });
+  }
+};
+
+export const attribuerCompte = async (req, res) => {
+  try {
+    await CompteModel.updateOne({ email: req.params.email }, { $set: { estAttribue: true } });
+    await envoyerMail(res, req.params.email, "Votre compte a été validé - ENSIBS", "Bonjour MM./M.,\n\nVotre compte a été validé par un administrateur, connectez-vous pour ajouter votre CV via la page Compte.\n\nMerci!\n");
+    res.status(200).send({ message: "OK" });
+  } catch (erreur) {
+    console.log("attribuerCompte() from /controllers/api/comptes.js : ", erreur);
+    res.status(500).send({ message: "Erreur interne." });
+  }
+};
+
+export const getAttribuerComptes = async (req, res) => {
+  try {
+    const comptesAttribuer = await CompteModel.find({ estAttribue: false, estVerifie: true });
+    res.status(200).json(comptesAttribuer);
+  } catch (erreur) {
+    console.log("getAttribuerCompte() from /controllers/api/comptes.js : ", erreur);
+    res.status(500).send({ message: "Erreur interne." });
+  }
 };
 
 export const deleteCompteDeconnexion = async (req, res) => {

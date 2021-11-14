@@ -11,6 +11,8 @@ import {
   getCompteValider,
   postCompteAideValidation,
   postCompteAideOublie,
+  attribuerCompte,
+  getAttribuerComptes,
 } from "../../controllers/api/comptes.js";
 import { verifierToken, estVerifie, estAdministrateur } from "../../middleware/auth.js";
 
@@ -91,6 +93,20 @@ router.delete("/suppression", verifierToken, estVerifie, deleteCompte);
  * @desc    Supprimer un utilisateur
  * @access  Administrateur
  */
-router.delete("/:id", verifierToken, estVerifie, estAdministrateur, deleteAnyCompte);
+router.delete("/:email", verifierToken, estVerifie, estAdministrateur, deleteAnyCompte);
+
+/**
+ * @route   PUT /api/comptes/attribuer
+ * @desc    Valider le statut d'un utilisateur
+ * @access  Administrateur
+ */
+router.put("/attribuer/:email", verifierToken, estVerifie, estAdministrateur, attribuerCompte);
+
+/**
+ * @route   GET /api/comptes/attribuer
+ * @desc    Récupérer les comptes non validés.
+ * @access  Administrateur
+ */
+router.get("/attribuer/", verifierToken, estVerifie, estAdministrateur, getAttribuerComptes);
 
 export default router;

@@ -24,9 +24,6 @@ window.addEventListener("load", () => {
   });
 
   const envoyerFormulaire = async () => {
-    console.log("form.cyberdata.checked : " + form.cyberdata.checked);
-    console.log("form.cyberlog.checked : " + form.cyberlog.checked);
-    console.log("form.entreprise.checked : " + form.entreprise.checked);
     const statut = form.cyberdata.checked ? form.cyberdata.value : form.cyberlog.checked ? form.cyberlog.value : form.entreprise.value;
     try {
       const response = await fetch("/api/comptes/", {
@@ -38,10 +35,16 @@ window.addEventListener("load", () => {
       const data = await response.json();
 
       if (data) {
-        document.getElementById("messageErreur").innerHTML = data.message;
-        setTimeout(() => {
-          document.getElementById("messageErreur").innerHTML = "";
-        }, 5000);
+        if (data.alert) {
+          if (confirm(data.message) == true) {
+            window.location.href = "/";
+          }
+        } else {
+          document.getElementById("messageErreur").innerHTML = data.message;
+          setTimeout(() => {
+            document.getElementById("messageErreur").innerHTML = "";
+          }, 5000);
+        }
       }
     } catch (erreur) {
       console.log(erreur);
