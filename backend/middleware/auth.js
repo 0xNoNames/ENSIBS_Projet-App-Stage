@@ -61,87 +61,87 @@ export const verifierToken = async (req, res, next) => {
 };
 
 export const estVerifie = (req, res, next) => {
-  if (req.compte.estVerifie === false || req.estConnecte === false) {
+  if (req.compte.estAttribue === true && req.estConnecte === true) {
+    return next();
+  } else {
     console.error("AUTH.JS : Pas vérifié.");
     return res.render("pages/erreur401", {
       estConnecte: false,
       page: "Erreur 401",
       prenom: "",
+      statut: "",
     });
   }
-  return next();
 };
 
 export const estAdministrateur = (req, res, next) => {
-  if (req.estConnecte === false || req.compte.estAttribue === false || req.compte === "" || req.compte.statut != "administrateur") {
+  if (req.compte.estAttribue === true && req.estConnecte === true && req.compte.statut == "Administrateur") {
+    return next();
+  } else {
     console.error("AUTH.JS : Statut administrateur nécéssaire.");
     return res.render("pages/erreur401", {
       estConnecte: true,
       page: "Erreur 401",
       prenom: req.compte.prenom,
+      statut: req.compte.statut,
     });
   }
-  return next();
 };
 
 export const estEntreprise = (req, res, next) => {
-  if (req.compte.statut == "administrateur") {
+  if (req.compte.estAttribue === true && req.estConnecte === true && (req.compte.statut == "Administrateur" || req.compte.statut == "Entreprise")) {
     return next();
-  }
-  if (req.estConnecte === false || req.compte.estAttribue === false || req.compte === "" || req.compte.statut != "entreprise") {
+  } else {
     console.error("AUTH.JS : Statut entreprise nécéssaire.");
     return res.render("pages/erreur401", {
       estConnecte: true,
       page: "Erreur 401",
       prenom: req.compte.prenom,
+      statut: req.compte.statut,
     });
   }
-  return next();
 };
 
 export const estCyberlog = (req, res, next) => {
-  if (req.compte.statut == "administrateur") {
+  if (req.compte.estAttribue === true && req.estConnecte === true && (req.compte.statut == "Administrateur" || req.compte.statut == "CyberLog")) {
     return next();
-  }
-  if (req.estConnecte === false || req.compte.estAttribue === false || req.compte === "" || req.compte.statut != "cyberlog") {
-    console.error("AUTH.JS : Statut cyberlog nécéssaire.");
+  } else {
+    console.error("AUTH.JS : Statut CyberLog nécéssaire.");
     return res.render("pages/erreur401", {
       estConnecte: true,
       page: "Erreur 401",
       prenom: req.compte.prenom,
+      statut: req.compte.statut,
     });
   }
-  return next();
 };
 
 export const estCyberdata = (req, res, next) => {
-  if (req.compte.statut == "administrateur") {
+  if (req.compte.estAttribue === true && req.estConnecte === true && (req.compte.statut == "Administrateur" || req.compte.statut == "CyberData")) {
     return next();
-  }
-  if (req.estConnecte === false || req.compte.estAttribue === false || req.compte === "" || req.compte.statut != "cyberdata") {
-    console.error("AUTH.JS : Statut cyberdata nécéssaire.");
+  } else {
+    console.error("AUTH.JS : Statut CyberData nécéssaire.");
     return res.render("pages/erreur401", {
       estConnecte: true,
       page: "Erreur 401",
       prenom: req.compte.prenom,
+      statut: req.compte.statut,
     });
   }
-  return next();
 };
 
 export const estEtudiant = (req, res, next) => {
-  if (req.compte.statut == "administrateur") {
+  if (req.compte.estAttribue === true && req.estConnecte === true && (req.compte.statut == "Administrateur" || req.compte.statut == "CyberLog" || req.compte.statut == "CyberData")) {
     return next();
-  }
-  if (req.estConnecte === false || req.compte.estAttribue === false || req.compte === "" || (req.compte.statut != "cyberlog" && req.compte.statut != "cyberdata")) {
+  } else {
     console.error("AUTH.JS : Statut étudiant nécéssaire.");
     return res.render("pages/erreur401", {
       estConnecte: true,
       page: "Erreur 401",
       prenom: req.compte.prenom,
+      statut: req.compte.statut,
     });
   }
-  return next();
 };
 
 export default {

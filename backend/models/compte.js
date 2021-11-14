@@ -8,7 +8,7 @@ const CompteSchema = new Schema({
   mot_de_passe: { type: String, required: true },
   statut: {
     type: String,
-    enum: ["cyberlog", "cyberdata", "entreprise", "administrateur"],
+    enum: ["CyberLog", "CyberData", "Entreprise", "Administrateur"],
     required: true,
   },
   estVerifie: { type: Boolean, default: false },
