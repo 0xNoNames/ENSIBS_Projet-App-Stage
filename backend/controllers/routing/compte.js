@@ -10,6 +10,7 @@ export const getConnexionPage = (req, res) => {
       estConnecte: false,
       page: "",
       statut: "",
+      estAttribue: false,
     });
   }
 };
@@ -23,6 +24,7 @@ export const getInscriptionPage = (req, res) => {
       page: "Inscription",
       prenom: req.compte.prenom,
       statut: req.compte.statut,
+      estAttribue: req.compte.estAttribue,
     });
   }
 };
@@ -30,11 +32,12 @@ export const getInscriptionPage = (req, res) => {
 export const getComptePage = (req, res) => {
   res.render("pages/compte", {
     estConnecte: true,
-    page: "Compte",
+    page: "Aide",
     prenom: req.compte.prenom,
     nom: req.compte.nom,
     email: req.compte.email,
     statut: req.compte.statut,
+    estAttribue: req.compte.estAttribue,
   });
 };
 
@@ -46,6 +49,7 @@ export const getAidePage = (req, res) => {
       estConnecte: false,
       page: "Aide",
       statut: "",
+      estAttribue: false,
     });
   }
 };

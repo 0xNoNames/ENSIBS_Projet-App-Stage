@@ -27,6 +27,7 @@ export const getSoutenancesPage = async (req, res) => {
     page: page,
     prenom: req.compte.prenom,
     statut: req.compte.statut,
+    estAttribue: req.compte.estAttribue,
     lieux: lieux,
   });
 };

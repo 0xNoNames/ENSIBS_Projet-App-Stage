@@ -14,6 +14,7 @@ export const getOffresPage = async (req, res) => {
       offres: offres,
       prenom: req.compte.prenom,
       statut: req.compte.statut,
+      estAttribue: req.compte.estAttribue,
     });
   } catch (error) {
     console.log("controllers/routing/offres.js : ", error);

@@ -4,5 +4,6 @@ export const getContactPage = async (req, res) => {
     page: "Contact",
     prenom: req.compte.prenom,
     statut: req.compte.statut,
+    estAttribue: req.compte.estAttribue,
   });
 };

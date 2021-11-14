@@ -83,6 +83,7 @@ app.get("/", verifierToken, (req, res) => {
     page: "Accueil",
     prenom: req.compte.prenom,
     statut: req.compte.statut,
+    estAttribue: req.compte.estAttribue,
   });
 });
 
@@ -111,6 +112,7 @@ app.get("*", verifierToken, (req, res) => {
     page: "Erreur 404",
     prenom: req.compte.prenom,
     statut: req.compte.statut,
+    estAttribue: req.compte.estAttribue,
   });
 });
 

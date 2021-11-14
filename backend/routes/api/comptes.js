@@ -1,5 +1,17 @@
 import { Router } from "express";
-import { getComptes, createCompte, updateCompteMail, updateCompteMotDePasse, deleteCompte, deleteAnyCompte, postCompteConnexion, deleteCompteDeconnexion, getCompteValider, postCompteAideValidation, postCompteAideOublie } from "../../controllers/api/comptes.js";
+import {
+  getComptes,
+  createCompte,
+  updateCompteMail,
+  updateCompteMotDePasse,
+  deleteCompte,
+  deleteAnyCompte,
+  postCompteConnexion,
+  deleteCompteDeconnexion,
+  getCompteValider,
+  postCompteAideValidation,
+  postCompteAideOublie,
+} from "../../controllers/api/comptes.js";
 import { verifierToken, estVerifie, estAdministrateur } from "../../middleware/auth.js";
 
 const router = Router();
