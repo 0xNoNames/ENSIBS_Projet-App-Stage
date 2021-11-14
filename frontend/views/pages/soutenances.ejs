@@ -2,6 +2,8 @@
 <html lang="fr">
   <head>
     <%- include('../partials/head'); %>
+    <link rel="stylesheet" href="static/fullcalendar/main.css">
+    <script src="static/fullcalendar/main.js"></script>
   </head>
 
   <body>
@@ -15,8 +17,8 @@
         <form id="form" class="flex flex-col py-8 px-8 text-left text-white rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50" enctype="multipart/form-data">
           <!-- Start Date -->
           <input type="date" id="date_soutenances" name="date_soutenances"
-           value="2018-07-22"
-           min="2018-01-01" max="2018-12-31">
+           value="2021-11-13"
+           min="2018-01-01" max="2030-12-31">
 
           <select name="lieux" id="lieux-select">
             <option value="">Choisissez un lieu pour la soutenance--</option>
@@ -31,7 +33,7 @@
           <input  type="submit" id="submitButtonId" name="submit">
         </form>
       </div>
-
+      <div id="calendrier"></div>
 
     </div>
 

@@ -1,4 +1,21 @@
-window.addEventListener("load", () => {
+const getEvenements = async () => {
+
+  const options = {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+  };
+
+  try {
+      const response = await fetch("/api/soutenances", options);
+      const response_data = await response.json();
+      return response_data
+    } catch (error) {
+      //console.log(error);
+  }
+}
+
+window.addEventListener("load", async () => {
   /*console.log("event")
   getCV().then((data) => {
     console.log(data);
@@ -11,6 +28,27 @@ window.addEventListener("load", () => {
     event.preventDefault();
     sendData();
   });
+
+
+    // On va chercher la div dans le HTML
+    let calendarEl = document.getElementById('calendrier');
+
+
+    // Recuperer la liste des evenements
+    var events = await getEvenements()
+    var jsonEvent = JSON.parse(events)
+    var evenements = jsonEvent.result;
+
+
+    // On instancie le calendrier
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale:"fr",
+      events : evenements
+    });
+
+    // On affiche le calendrier
+    calendar.render();
 });
 
 
