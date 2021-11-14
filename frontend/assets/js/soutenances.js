@@ -71,26 +71,18 @@ const sendData = async () => {
     // format : "hh:mm"
     var hour = hour_input.value;
     
+    var nom_soutenance = document.getElementById("nom_text_input").value
+
     var confidentiel = document.getElementById("confidentiel_checkbox").value
-    console.log(confidentiel)
 
 
-    // Create the formData
-    var formData = new FormData();
-    formData.append("date", date);
-    formData.append("lieu", lieu);
-    formData.append("hour", hour);
-
-    var body = JSON.stringify({ date: date, lieu: lieu,hour:hour, confidentiel:confidentiel })
+    var body = JSON.stringify({ date: date, lieu: lieu,hour:hour, confidentiel:confidentiel,nom_soutenance:nom_soutenance })
+    console.log(body)
 
 
     var headers = {
       "Content-Type": "application/x-www-form-urlencoded"
     };
-
-    for (var value of formData.values()) {
-       //console.log(value);
-    }
 
 
     const options = {

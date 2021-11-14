@@ -5,9 +5,6 @@ export const getSoutenances = async (req, res) => {
   console.log("GETTING SOUTENANCES")
   const soutenances = await SoutenanceModel.find({});
 
-  // Format 
-  //{ "title":"Live Coding - démo", "start":"2021-11-30 14:00:00", "end":"2021-11-30 16:00:00" }
-
   var result_soutenances = []
 
   for (const soutenance of soutenances){
@@ -43,8 +40,9 @@ export const createSoutenance = async (req, res) => {
   var lieu = req.body.lieu;
   var hour = req.body.hour;
   var confidentiel_value = req.body.confidentiel;
+  var nom_soutenance = req.body.nom_soutenance;
 
-  console.log(typeof confidentiel_value)
+
   if (confidentiel_value == "on"){
     var confidentiel = true;
   } else {
@@ -65,9 +63,6 @@ export const createSoutenance = async (req, res) => {
   var date = new Date(year, monthIndex, day, hours, minutes)
 
 
-
-
-
   try{
     // verifier si le compte existe
     const mongoCompte = await CompteModel.findOne({ email });
@@ -75,7 +70,7 @@ export const createSoutenance = async (req, res) => {
     if (!mongoCompte){
       res.status(400).json({msg :"Compte non trouvé"})
     } else {
-      const cv = await SoutenanceModel.create({id_organisateur : id,date:date,lieu:lieu,confidentiel:confidentiel});
+      const cv = await SoutenanceModel.create({id_organisateur : id,date:date,lieu:lieu,confidentiel:confidentiel,nom_soutenance:nom_soutenance});
       console.log("Le soutenance a bien ete upload")
 
       res.status(200).json({msg : "Le CV a bien ete upload"})
