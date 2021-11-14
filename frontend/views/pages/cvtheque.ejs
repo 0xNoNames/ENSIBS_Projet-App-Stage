@@ -25,18 +25,20 @@
       </div>
     </div>
 
-
-      
-      <iframe src='/api/cvs/618e95aed7384416025b20e5/pdf' width="13%" ></iframe>
-
-
       <% cvs.forEach(function(cv) { %>
         <% comptes.forEach(function(compte) { %>
           <% if (compte.id == cv.id_eleve) { %>
-            <h1><%=compte.nom %> <%=compte.prenom %></h1>
+        <div>
+            <iframe src='/api/cvs/<%=cv.id_eleve%>/pdf' width="13%">
+            <h1><%=compte.prenom %></h1> 
+            <h1><%=compte.nom %></h1>
+            <h1><%=cv.formation %></h1>
+            <h1><%=cv.linkedin %></h1>
+            <h1><%=cv.description%></h1>
+            <h1>Link CV</h1>
           <% } %>
         <% }); %>
-        <iframe src='/api/cvs/<%=cv.id_eleve%>/pdf' width="13%">
+        </div>
       <% }); %>
 
 

@@ -9,6 +9,8 @@ const CvSchema = new Schema({
     enum: ["CyberLog", "CyberData"],
     required: true,
   },
+  linkedin: {type: String},
+  description: {text : String}
 });
 
 const Cv = model("cv", CvSchema);
