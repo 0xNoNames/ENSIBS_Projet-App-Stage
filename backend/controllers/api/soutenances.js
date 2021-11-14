@@ -24,7 +24,9 @@ export const getSoutenances = async (req, res) => {
       var endDate = date.setHours(date.getHours() + 1);
       var end = dateString.replace("T"," ").slice(0,-5);
 
-      var soutenanceResult = {title:title,start : start, end:endDate}
+      var id = soutenance.id_organisateur;
+
+      var soutenanceResult = {title:title,start : start, end:endDate,id:id}
 
       result_soutenances.push(soutenanceResult);
     } catch (erreur){

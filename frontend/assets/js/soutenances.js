@@ -1,5 +1,4 @@
 const getEvenements = async () => {
-
   const options = {
     method: "GET",
     mode: "cors",
@@ -7,20 +6,41 @@ const getEvenements = async () => {
   };
 
   try {
-      const response = await fetch("/api/soutenances", options);
-      const response_data = await response.json();
-      return response_data
-    } catch (error) {
-      //console.log(error);
+    const response = await fetch("/api/soutenances", options);
+    const response_data = await response.json();
+    return response_data
+  } catch (error) {
+    //console.log(error);
   }
 }
 
-window.addEventListener("load", async () => {
-  /*console.log("event")
-  getCV().then((data) => {
-    console.log(data);
-  });*/
 
+const generateCalendar = async() => {
+  // On va chercher la div dans le HTML
+  let calendarEl = document.getElementById('calendrier');
+
+  // Recuperer la liste des evenements
+  var events = await getEvenements()
+  var jsonEvent = JSON.parse(events)
+  var evenements = jsonEvent.result;
+
+  // On instancie le calendrier
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    locale:"fr",
+    events : evenements,
+    // Function executed when the events is clicked on 
+    eventClick: function(info) {
+      window.open("/soutenances/" + info.event.id, '_blank').focus();
+    }
+  });
+
+  // On affiche le calendrier
+  calendar.render();
+}
+
+
+const addListenerFrom = () => {
   // Linking the function to the form
   var form = document.getElementById("form");
 
@@ -30,29 +50,9 @@ window.addEventListener("load", async () => {
       sendData();
     });
   }
-  
+}
 
 
-    // On va chercher la div dans le HTML
-    let calendarEl = document.getElementById('calendrier');
-
-
-    // Recuperer la liste des evenements
-    var events = await getEvenements()
-    var jsonEvent = JSON.parse(events)
-    var evenements = jsonEvent.result;
-
-
-    // On instancie le calendrier
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      locale:"fr",
-      events : evenements
-    });
-
-    // On affiche le calendrier
-    calendar.render();
-});
 
 
 const sendData = async () => {
@@ -107,6 +107,12 @@ const sendData = async () => {
         console.log(response_data);
       } catch (error) {
         //console.log(error);
-      }
-    
+      }  
 }
+
+
+window.addEventListener("load", async () => {
+  addListenerFrom();
+  
+  generateCalendar();
+});

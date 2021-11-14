@@ -1,8 +1,5 @@
 import SoutenanceModel from "../../models/soutenance.js";
-import { Calendar } from "@fullcalendar/core";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import listPlugin from "@fullcalendar/list";
+import CompteModel from "../../models/compte.js"
 
 // let calendar = new Calendar(calendareL, {
 //   plugins: [dayGridPlugin, listPlugin],
@@ -31,3 +28,21 @@ export const getSoutenancesPage = async (req, res) => {
     lieux: lieux,
   });
 };
+
+
+export const getUniqueSoutenancePage = async (req,res) => {
+  const soutenance = await SoutenanceModel.findOne({id_organisateur:req.params.id})
+  const eleve_soutenance = await CompteModel.findOne({id:req.params.id})
+  //console.log("SOUTENANCE ROUTING COUNROLLER  : " + soutenance)
+
+  res.render("pages/soutenanceUnique", {
+    estConnecte: true,
+    page: "Soutenance",
+    prenom: req.compte.prenom,
+    statut: req.compte.statut,
+    estAttribue: req.compte.estAttribue,
+    lieux: lieux,
+    soutenance : soutenance,
+    eleve : eleve_soutenance
+  });
+}
