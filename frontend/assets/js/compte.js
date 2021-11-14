@@ -34,13 +34,27 @@ const fermerFormMotDePasse = () => {
   document.getElementById("divMotDePasse").style.display = "none";
 };
 
-
-const ouvrirLettreDeMotivation = () => {
-  window.location.href = "/motivation";
+const ouvrirFormCV = () => {
+  document.getElementById("divCV").style.display = "block";
 }
+
+const fermerFormCV = () => {
+  document.getElementById("divCV").style.display = "none";
+}
+
+const ouvrirLettreMotivation = () => {
+  document.getElementById("divLettreMotivation").style.display = "block";
+}
+
+const fermerLettreMotivation = () => {
+  document.getElementById("divLettreMotivation").style.display = "none";
+}
+
 
 const formMail = document.getElementById("formMail");
 const formMotDePasse = document.getElementById("formMotDePasse");
+const formLettreMotivation = document.getElementById("formMotivation");
+const formCV = document.getElementById("formCV");
 
 formMail.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -63,6 +77,17 @@ formMotDePasse.addEventListener("submit", (event) => {
   }
   modifierMotDePasse();
 });
+
+
+formLettreMotivation.addEventListener("submit", (event) => {
+  event.preventDefault();
+  sendDataLettreMotivation();
+})
+
+formCV.addEventListener("submit", (event) => {
+  event.preventDefault();
+  sendDataCV();
+})
 
 const modifierMail = async () => {
   try {
@@ -107,6 +132,54 @@ const modifierMotDePasse = async () => {
     console.log(erreur);
   }
 };
+
+const sendDataLettreMotivation = async() => {
+  console.log("Uploading lettre de motivation");
+
+  // Get the file
+  var input = document.getElementById("fileUploadLettreMotivation");
+  var data_file = input.files[0];
+
+  const options = {
+    method: "POST",
+    mode: "cors",
+    credentials: "include",
+    body: data_file,
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  };
+
+  try {
+    const response = await fetch("/api/motivation", options);
+    const response_data = await response.json();
+    console.log(response_data);
+  } catch (error) {
+    //console.log(error);
+  }
+}
+
+const sendDataCV = async() => {
+  console.log("Uploading the CV");
+
+  // Get the file
+  var input = document.getElementById("fileUploadCV");
+  var data_file = input.files[0];
+
+  const options = {
+    method: "POST",
+    mode: "cors",
+    credentials: "include",
+    body: data_file,
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  };
+
+  try {
+    const response = await fetch("/api/cvs", options);
+    const response_data = await response.json();
+    console.log(response_data);
+  } catch (error) {
+    //console.log(error);
+  }
+}
 
 const annuler = async (element) => {
   // Utilisation de la méthode DELETE.

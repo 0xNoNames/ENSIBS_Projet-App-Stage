@@ -12,13 +12,13 @@ export const getCVs = async (req, res) => {
 
 export const createCV = async (req, res) => {
   console.log("CV API.JS : upload Unique CV")
-  var binaire = req.body.data_file;
+  var binaire = req.body;
   var id_user = req.compte.id;
   var email = req.compte.email;
   var formation = req.compte.statut;
   //New fields
-  var linkedin = req.body.linkedin;
-  var description = req.body.description;
+  //var linkedin = req.body.linkedin;
+  //var description = req.body.description;
 
 
 
@@ -29,8 +29,7 @@ export const createCV = async (req, res) => {
     if (!mongoCompte){
       res.status(400).json({msg :"Compte non trouvé"})
     } else {
-      const cv = await CVModel.create({binaire,id_eleve:id_user,formation:formation,linkedin,description});
-      console.log("Le Cv a bien ete upload")
+      const cv = await CVModel.create({binaire,id_eleve:id_user,formation:formation});
 
       res.status(200).json({msg : "Le CV a bien ete upload"})
     }
