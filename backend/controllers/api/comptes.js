@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
+import validator from 'validator';
 
 import CompteModel from "../../models/compte.js";
 import ValidationModel from "../../models/validation.js";
@@ -29,9 +30,18 @@ export const createCompte = async (req, res) => {
   if (!nom || !prenom || !email || !mot_de_passe || !statut) return res.status(400).json({ message: "Remplissez tous les champs." });
 
   try {
+
+    if(!validator.isAlpha(nom, 'fr-FR', {ignore :"-'",})) return res.status(400).json({message: "Le nom n'est pas valide"});
+
+    if(!validator.isAlpha(prenom, 'fr-FR', {ignore :"-'",})) return res.status(400).json({message: "Le nom n'est pas valide"});
+
     const emailRegex = new RegExp("[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
 
     if (!emailRegex.test(email)) return res.status(400).json({ message: "L'adresse mail est mal formée." });
+
+    if(!validator.isEmail(email)) return res.status(400).json({ message: "L'adresse mail n'est pas valide."});
+
+    let email = validator.normalizeEmail(email);
 
     const mongoCompte = await CompteModel.findOne({ email });
 
@@ -41,7 +51,7 @@ export const createCompte = async (req, res) => {
 
     let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
 
-    if (!passRegex.test(mot_de_passe)) return res.status(400).json({ message: "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial." });
+    if (!passRegex.test(mot_de_passe)) return res.status(400).json({ message: "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffre et un caractère spécial." });
 
     const hash = await bcrypt.hash(mot_de_passe, 12);
 

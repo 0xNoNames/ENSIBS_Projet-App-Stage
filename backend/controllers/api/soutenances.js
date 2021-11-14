@@ -1,3 +1,4 @@
+import validator from "validator";
 import SoutenanceModel from "../../models/soutenance.js";
 import CompteModel from "../../models/compte.js";
 
@@ -43,6 +44,16 @@ export const createSoutenance = async (req, res) => {
   var nom_soutenance = req.body.nom_soutenance;
 
 
+  try {
+    if((!lieu === undefined) && (!validator.isAlphanumeric(lieu, 'fr-FR', {ignore : " '-_"}))) res.status(400).json({message: "Le nom du lieu contient des caracteres non valides"});
+    
+    if((!validator.isNumeric(date,  {ignore : "-"}))) res.status(400).json({message: "La date contient des caracteres non valide"});
+    if((!validator.isNumeric(hour,  {ignore : ":"}))) res.status(400).json({message: "L'heure contient des caracteres non valide"});
+
+  } catch (erreur) {
+    console.log(erreur)
+  }
+  
   if (confidentiel_value == "on"){
     var confidentiel = true;
   } else {

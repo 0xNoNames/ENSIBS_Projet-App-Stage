@@ -1,5 +1,7 @@
+import validator from "validator";
 import OffreModel from "../../models/offre.js";
 import CompteModel from "../../models/offre.js";
+
 
 export const getOffres = async (req, res) => {
     try {
@@ -22,6 +24,14 @@ export const createOffre = async (req, res) => {
     var formation = req.headers.formation;
     var lieu = req.headers.lieu_poste;
 
+    try{
+        if(!validator.isAlphanumeric(nom_poste, 'fr-FR', {ignore:"'() -/,&[]@:."})) res.status(400).json({message: "Le nom du poste contient des caracteres non valides"});
+        if(!validator.isAlphanumeric(nom_entreprise, 'fr-FR', {ignore:"'() -/,&[]@:.!?"})) res.status(400).json({message: "Le nom de l'entreprise contient des caracteres non valides"});
+        if(!validator.isAlphanumeric(nom_poste, 'fr-FR', {ignore:"'() -/,&[]"})) res.status(400).json({message: "Le nom du lieu contient des caracteres non valides"});
+
+    } catch (erreur) {
+        console.log(erreur)
+    }
     // Check if the user has a account in the DB
     try {
         const mongoCompte = await CompteModel.findOne({ email });
