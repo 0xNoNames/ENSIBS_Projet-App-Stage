@@ -82,6 +82,7 @@ app.get("/", verifierToken, (req, res) => {
     estConnecte: req.estConnecte,
     page: "Accueil",
     prenom: req.compte.prenom,
+    statut: req.compte.statut,
   });
 });
 
@@ -90,6 +91,9 @@ app.use("/cvtheque", cvthequeRoutes);
 
 // Page des soutenances
 app.use("/soutenances", soutenancesRoutes);
+
+// Page des entretiens
+app.use("/entretiens", soutenancesRoutes);
 
 // Page de contact
 app.use("/contact", contactRoutes);
@@ -106,6 +110,7 @@ app.get("*", verifierToken, (req, res) => {
     estConnecte: req.estConnecte,
     page: "Erreur 404",
     prenom: req.compte.prenom,
+    statut: req.compte.statut,
   });
 });
 

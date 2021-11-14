@@ -11,6 +11,7 @@ export const getCvsPage = async (req, res) => {
       cvs: Cvs,
       comptes: comptes,
       prenom: req.compte.prenom,
+      statut: req.compte.statut,
     });
   } catch (error) {
     console.log("controllers/routing/cvtheque.js : ", error);

@@ -13,6 +13,7 @@ export const getOffresPage = async (req, res) => {
       page: "Offres",
       offres: offres,
       prenom: req.compte.prenom,
+      statut: req.compte.statut,
     });
   } catch (error) {
     console.log("controllers/routing/offres.js : ", error);

@@ -15,9 +15,26 @@
       <div id="navBar" class="hidden mr-8 md:flex items-center space-x-1">
         <%if (estConnecte) { %>
           <a href="/" class="py-4 px-2 text-lg <% if (page == "Accueil") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">ACCUEIL</a>
-          <a href="/cvtheque" class="py-4 px-3 text-lg <% if (page == "CVthèque") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">CVTHÈQUE</a>
-          <a href="/offres" class="py-4 px-3 text-lg <% if (page == "Offres de stage") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">OFFRES</a>
-          <a href="/soutenances" class="py-4 px-3 text-lg <% if (page == "Soutenances de stage") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">SOUTENANCES</a>
+          <% if (statut == "CyberLog" || statut == "Administrateur") { %> 
+            <a href="/offres" class="py-4 px-3 text-lg <% if (page == "Offres") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">OFFRES DE STAGE</a>
+             <% } %> 
+
+          <% if (statut == "CyberData" || statut == "Administrateur") { %>
+             <a href="/offres" class="py-4 px-3 text-lg <% if (page == "Offres") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">OFFRES D'ALTERNANCE</a>
+              <% } %> 
+
+          <% if (statut == "Entreprise" || statut == "Administrateur") { %>
+             <a href="/cvtheque" class="py-4 px-3 text-lg <% if (page == "CVthèque") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">CVTHÈQUE</a>
+              <% } %> 
+
+          <% if (statut == "Entreprise" || statut == "CyberLog" || statut == "Administrateur") { %>
+           <a href="/soutenances" class="py-4 px-3 text-lg <% if (page == "Soutenances") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">SOUTENANCES DE STAGE</a>
+            <% } %>  
+
+          <% if (statut == "Entreprise" || statut == "CyberData" || statut == "Administrateur") { %> 
+          <a href="/entretiens" class="py-4 px-3 text-lg <% if (page == "Entretiens") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">ENTRETIENS DE MOTIVATION</a>
+           <% } %> 
+
           <a href="/contact" class="py-4 px-3 text-lg <% if (page == "Contact") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">CONTACT</a>
         <% } else { %>
           <a href="/" class="py-4 px-2 text-lg <% if (page == "Accueil") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">ACCUEIL</a>

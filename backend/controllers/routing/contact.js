@@ -3,5 +3,6 @@ export const getContactPage = async (req, res) => {
     estConnecte: req.estConnecte,
     page: "Contact",
     prenom: req.compte.prenom,
+    statut: req.compte.statut,
   });
 };
