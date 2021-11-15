@@ -19,91 +19,89 @@ const supprimerCompte = async () => {
 };
 
 const ouvrirFormEmail = () => {
-  document.getElementById("divMail").style.display = "block";
+  document.getElementById("popMail").style.display = "block";
 };
 
 const fermerFormEmail = () => {
-  document.getElementById("divMail").style.display = "none";
+  document.getElementById("popMail").style.display = "none";
 };
 
-const ouvrirFormMotDePasse = () => {
-  document.getElementById("divMotDePasse").style.display = "block";
+const ouvrirFormMDP = () => {
+  document.getElementById("popMDP").style.display = "block";
 };
 
-const fermerFormMotDePasse = () => {
-  document.getElementById("divMotDePasse").style.display = "none";
+const fermerFormMDP = () => {
+  document.getElementById("popMDP").style.display = "none";
 };
 
 const ouvrirFormCV = () => {
-  document.getElementById("divCV").style.display = "block";
-}
+  document.getElementById("popCV").style.display = "block";
+};
 
 const fermerFormCV = () => {
-  document.getElementById("divCV").style.display = "none";
-}
+  document.getElementById("popCV").style.display = "none";
+};
 
-const ouvrirLettreMotivation = () => {
-  document.getElementById("divLettreMotivation").style.display = "block";
-}
+const ouvrirFormLM = () => {
+  document.getElementById("popLM").style.display = "block";
+};
 
-const fermerLettreMotivation = () => {
-  document.getElementById("divLettreMotivation").style.display = "none";
-}
+const fermerFormLM = () => {
+  document.getElementById("popLM").style.display = "none";
+};
 
-const ouvrirFormLinkedin = () => {
-  document.getElementById("divLinkedin").style.display = "block";
-}
+const ouvrirFormLinkedIn = () => {
+  document.getElementById("popLinkedIn").style.display = "block";
+};
 
-const fermerFormLinkedin = () => {
-  document.getElementById("divLinkedin").style.display = "none";
-}
-
+const fermerFormLinkedIn = () => {
+  document.getElementById("popLinkedIn").style.display = "none";
+};
 
 const formMail = document.getElementById("formMail");
-const formMotDePasse = document.getElementById("formMotDePasse");
-const formLettreMotivation = document.getElementById("formMotivation");
+const formMDP = document.getElementById("formMDP");
+const formLM = document.getElementById("formLM");
 const formCV = document.getElementById("formCV");
-const formLinkedin = document.getElementById("formLinkedin");
+const formLinkedIn = document.getElementById("formLinkedIn");
 
 formMail.addEventListener("submit", (event) => {
   event.preventDefault();
-  modifierMail();
+  sendDataMail();
 });
 
-formMotDePasse.addEventListener("submit", (event) => {
+formMDP.addEventListener("submit", (event) => {
   event.preventDefault();
   let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
-  if (formMotDePasse.password.value.lenght < 8) {
+  if (formMDP.password.value.lenght < 8) {
     document.getElementById("messageErreur").innerHTML = "Le mot de passe doit faire au moins 8 caractères.";
     setTimeout(() => {
       document.getElementById("messageErreur").innerHTML = "";
     }, 5000);
-  } else if (!passRegex.test(formMotDePasse.password.value)) {
+  } else if (!passRegex.test(formMDP.password.value)) {
     document.getElementById("messageErreur").innerHTML = "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial.";
     setTimeout(() => {
       document.getElementById("messageErreur").innerHTML = "";
     }, 5000);
   }
-  modifierMotDePasse();
+  sendDataMDP();
 });
 
-
-formLettreMotivation.addEventListener("submit", (event) => {
+formLM.addEventListener("submit", (event) => {
   event.preventDefault();
-  sendDataLettreMotivation();
-})
+  sendDataLM();
+});
 
 formCV.addEventListener("submit", (event) => {
   event.preventDefault();
   sendDataCV();
-})
+});
 
-formLinkedin.addEventListener("submit",(event) => {
+formLinkedIn.addEventListener("submit", (event) => {
   event.preventDefault();
-  sendDataLinkedin();
-})
+  sendDataLinkedIn();
+});
 
-const modifierMail = async () => {
+const sendDataMail = async () => {
   try {
     const response = await fetch("/api/comptes/email/", {
       method: "PUT",
@@ -113,7 +111,11 @@ const modifierMail = async () => {
     });
     const data = await response.json();
     if (response.status == 200) {
-      window.location.replace("/compte/connexion");
+      if (data.alert) {
+        if (confirm(data.message) == true) {
+          window.location.replace("/compte/connexion");
+        }
+      }
     } else {
       document.getElementById("messageErreurMail").innerHTML = data.message;
       setTimeout(() => {
@@ -125,11 +127,11 @@ const modifierMail = async () => {
   }
 };
 
-const modifierMotDePasse = async () => {
+const sendDataMDP = async () => {
   try {
     const response = await fetch("/api/comptes/motdepasse/", {
       method: "PUT",
-      body: JSON.stringify({ mot_de_passe: formMotDePasse.password.value }),
+      body: JSON.stringify({ mot_de_passe: formMDP.password.value }),
       mode: "cors",
       credentials: "include",
     });
@@ -137,9 +139,9 @@ const modifierMotDePasse = async () => {
     if (response.status == 200) {
       window.location.replace("/compte/connexion");
     } else {
-      document.getElementById("messageErreurMotDePasse").innerHTML = data.message;
+      document.getElementById("messageErreurMDP").innerHTML = data.message;
       setTimeout(() => {
-        document.getElementById("messageErreurMotDePasse").innerHTML = "";
+        document.getElementById("messageErreurMDP").innerHTML = "";
       }, 5000);
     }
   } catch (erreur) {
@@ -147,11 +149,11 @@ const modifierMotDePasse = async () => {
   }
 };
 
-const sendDataLettreMotivation = async() => {
+const sendDataLM = async () => {
   console.log("Uploading lettre de motivation");
 
   // Get the file
-  var input = document.getElementById("fileUploadLettreMotivation");
+  var input = document.getElementById("fileUploadLM");
   var data_file = input.files[0];
 
   const options = {
@@ -169,9 +171,9 @@ const sendDataLettreMotivation = async() => {
   } catch (error) {
     //console.log(error);
   }
-}
+};
 
-const sendDataCV = async() => {
+const sendDataCV = async () => {
   console.log("Uploading the CV");
 
   // Get the file
@@ -193,14 +195,14 @@ const sendDataCV = async() => {
   } catch (error) {
     //console.log(error);
   }
-}
+};
 
-const sendDataLinkedin = async () => {
+const sendDataLinkedIn = async () => {
   console.log("Modifier linkedin");
-  var new_linkedin = document.getElementById("textInputLinkedin").value;
+  var new_linkedin = document.getElementById("textInputLinkedIn").value;
 
-  var body = JSON.stringify({ linkedin: new_linkedin })
-  console.log(body)
+  var body = JSON.stringify({ linkedin: new_linkedin });
+  console.log(body);
 
   const options = {
     method: "PUT",
@@ -217,9 +219,9 @@ const sendDataLinkedin = async () => {
   } catch (error) {
     //console.log(error);
   }
-}
+};
 
-const annuler = async (element) => {
+const annulerAttribution = async (element) => {
   // Utilisation de la méthode DELETE.
   try {
     // Utilisation de la méthode PUT.
@@ -259,19 +261,19 @@ const annuler = async (element) => {
               compte.date_inscription.substring(0, 10) +
               "</h1><div id=" +
               compte.email +
-              " class='mt-2 flex justify-evenly'><button onclick='valider(this)' class='py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150'>OK</button><button onclick='annuler(this)' class='py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150'>ANNULER</button></div></div>";
+              " class='mt-2 flex justify-evenly'><button onclick='validerAttribution(this)' class='py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150'>OK</button><button onclick='annulerAttribution(this)' class='py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150'>ANNULER</button></div></div>";
           });
         }
       } else {
-        document.getElementById("messageErreurMotDePasse").innerHTML = data.message;
+        document.getElementById("messageErreurMDP").innerHTML = data.message;
         setTimeout(() => {
-          document.getElementById("messageErreurMotDePasse").innerHTML = "";
+          document.getElementById("messageErreurMDP").innerHTML = "";
         }, 5000);
       }
     } else {
-      document.getElementById("messageErreurMotDePasse").innerHTML = data.message;
+      document.getElementById("messageErreurMDP").innerHTML = data.message;
       setTimeout(() => {
-        document.getElementById("messageErreurMotDePasse").innerHTML = "";
+        document.getElementById("messageErreurMDP").innerHTML = "";
       }, 5000);
     }
   } catch (erreur) {
@@ -279,7 +281,7 @@ const annuler = async (element) => {
   }
 };
 
-const valider = async (element) => {
+const validerAttribution = async (element) => {
   try {
     // Utilisation de la méthode PUT.
     const response = await fetch("/api/comptes/attribuer/" + element.parentNode.id, {
@@ -319,19 +321,19 @@ const valider = async (element) => {
               compte.date_inscription.substring(0, 10) +
               "</h1><div id=" +
               compte.email +
-              " class='mt-2 flex justify-evenly'><button onclick='valider(this)' class='py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150'>OK</button><button onclick='annuler(this)' class='py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150'>ANNULER</button></div></div>";
+              " class='mt-2 flex justify-evenly'><button onclick='validerAttribution(this)' class='py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150'>OK</button><button onclick='annulerAttribution(this)' class='py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150'>ANNULER</button></div></div>";
           });
         }
       } else {
-        document.getElementById("messageErreurMotDePasse").innerHTML = data.message;
+        document.getElementById("messageErreurMDP").innerHTML = data.message;
         setTimeout(() => {
-          document.getElementById("messageErreurMotDePasse").innerHTML = "";
+          document.getElementById("messageErreurMDP").innerHTML = "";
         }, 5000);
       }
     } else {
-      document.getElementById("messageErreurMotDePasse").innerHTML = data.message;
+      document.getElementById("messageErreurMDP").innerHTML = data.message;
       setTimeout(() => {
-        document.getElementById("messageErreurMotDePasse").innerHTML = "";
+        document.getElementById("messageErreurMDP").innerHTML = "";
       }, 5000);
     }
   } catch (erreur) {

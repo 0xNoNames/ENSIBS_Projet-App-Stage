@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import validator from 'validator';
+import validator from "validator";
 
 import CompteModel from "../../models/compte.js";
 import ValidationModel from "../../models/validation.js";
@@ -30,16 +30,15 @@ export const createCompte = async (req, res) => {
   if (!nom || !prenom || !email || !mot_de_passe || !statut) return res.status(400).json({ message: "Remplissez tous les champs." });
 
   try {
+    if (!validator.isAlpha(nom, "fr-FR", { ignore: "-'" })) return res.status(400).json({ message: "Le nom n'est pas valide" });
 
-    if(!validator.isAlpha(nom, 'fr-FR', {ignore :"-'",})) return res.status(400).json({message: "Le nom n'est pas valide"});
-
-    if(!validator.isAlpha(prenom, 'fr-FR', {ignore :"-'",})) return res.status(400).json({message: "Le nom n'est pas valide"});
+    if (!validator.isAlpha(prenom, "fr-FR", { ignore: "-'" })) return res.status(400).json({ message: "Le nom n'est pas valide" });
 
     const emailRegex = new RegExp("[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
 
     if (!emailRegex.test(email)) return res.status(400).json({ message: "L'adresse mail est mal formée." });
 
-    if(!validator.isEmail(email)) return res.status(400).json({ message: "L'adresse mail n'est pas valide."});
+    if (!validator.isEmail(email)) return res.status(400).json({ message: "L'adresse mail n'est pas valide." });
 
     let email = validator.normalizeEmail(email);
 
@@ -111,7 +110,7 @@ export const updateCompteMail = async (req, res) => {
       expires: new Date(0),
       maxAge: parseInt(process.env.JWT_EXPIRES_IN),
     });
-    res.status(200).json({ message: "OK" });
+    res.status(200).send({ alert: true, message: "Veuillez vérifier votre compte via l'email de vérification qui vous a été envoyé, il expirera après un jour. Si vous n'avez pas reçu l'email de vérification, vérifiez vos spam ou aller sur la page d'AIDE." });
   } catch (erreur) {
     console.log("updateCompteMail() from /controllers/api/comptes.js :", erreur);
     res.status(500).json({ message: "Erreur interne." });
@@ -306,16 +305,13 @@ export const postCompteAideOublie = async (req, res) => {
   });
 };
 
-
-export const updateLinkedin = async (req,res) => {
-  var JSONbody = JSON.parse(req.body)
-  var linkedin = JSONbody.linkedin
-  console.log(req.compte.id)
-  console.log(typeof linkedin)
-
+export const updateLinkedin = async (req, res) => {
+  var JSONbody = JSON.parse(req.body);
+  var linkedin = JSONbody.linkedin;
+  console.log(req.compte.id);
+  console.log(typeof linkedin);
 
   try {
-
     const test = await CompteModel.updateOne({ _id: req.compte.id }, { $set: { link_linkedin: linkedin } });
     console.log(test);
 
@@ -324,4 +320,4 @@ export const updateLinkedin = async (req,res) => {
     console.log("updateCompteLinkedin() from /controllers/api/comptes.js :", erreur);
     res.status(500).json({ message: "Erreur interne." });
   }
-}
+};

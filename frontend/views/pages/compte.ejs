@@ -16,11 +16,11 @@
           <p class="my-5 text-red-200">Votre compte n'est pas encore validé,</br>veuillez attendre qu'un administrateur le valide.</p>
         <% } %>
         <button onClick="ouvrirFormEmail()" class="py-2 px-3 mt-10 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier mon e-mail</button>
-        <button onClick="ouvrirFormMotDePasse()" class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier mon mot de passe</button>
+        <button onClick="ouvrirFormMDP()" class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier mon mot de passe</button>
         <% if (estAttribue && statut != "Administrateur") { %>
           <button onClick="ouvrirFormCV()" class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier CV</button>
-          <button onClick="ouvrirLettreMotivation()" class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier lettre de motivation</button>
-          <button onClick="ouvrirFormLinkedin()" class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier linkedin</button>
+          <button onClick="ouvrirFormLM()" class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier lettre de motivation</button>
+          <button onClick="ouvrirFormLinkedIn()" class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier linkedin</button>
           <button onClick="ouvrirOffres()" class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Offres sauvgardés</button>
           <button onClick="ouvrirSoutenances()" class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Dates entretiens</button>
         <% } %>  
@@ -37,61 +37,63 @@
                 <h1>Statut : <%=compte.statut%></h1> 
                 <h1>Date : <%= compte.date_inscription.toISOString().substring(0,10) %></h1>
                 <div id="<%=compte.email%>" class="mt-2 flex justify-evenly">
-                  <button onclick="valider(this)" class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">OK</button>
-                  <button onclick="annuler(this)" class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">ANNULER</button>
+                  <button onclick="validerAttribution(this)" class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">OK</button>
+                  <button onclick="annulerAttribution(this)" class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">ANNULER</button>
                 </div>
               </div>
             <% }); %>
           </div>
         <% } %>
-
       </div>
     </div>
 
-    <div class="bg-black bg-opacity-25 text-white" id="divMail"  style="display: none">
-      <form id="formMail" class="">
-        <h1>Changement de mail</h1>
+    <!-- POPUP CHANGEMENT DE MAIL -->
+    <div id="popMail" class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50" id="popModificationMail" style="display: none">
+      <form id="formMail" class="flex flex-col">
+        <h1 class="text-4xl mb-8">Changement de mail</h1>
     
-        <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Saisir votre e-mail" id="email">
+        <input type="email" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="mail@domain.net" id="email" required />
 
-        <button type="submit" class="btn">Changer</button>
-        <button type="button" class="btn cancel" onclick="fermerFormEmail()">Close</button>
+        <div class="mt-12 mb-8 flex justify-around">
+        <button class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">Envoyer</button>
+        <button type="button" class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150" onclick="fermerFormEmail()">Quitter</button>
+        </div>
+        <span id="messageErreurMail" class="text-red-300 font-bold text-base text-center"></span>
       </form>
-      
-      <span id="messageErreurMail" class="mt-4 text-red-300 font-bold text-base text-center"></span>
     </div>
 
-    <div class="bg-black bg-opacity-25 text-white" id="divMotDePasse" style="display: none">
-      <form id="formMotDePasse" class="">
+   <!-- POPUP CHANGEMENT DE MDP -->
+    <div id="popMDP" class="bg-black bg-opacity-25 text-white" id="popMDP" style="display: none">
+      <form id="formMDP" class="">
         <h1>Changement d'informations</h1>
         
         <label for="password"><b>Mot de passe</b></label>
         <input type="password" placeholder="Saisir votre mot de passe" id="password">
 
         <button type="submit" class="btn">Changer</button>
-        <button type="button" class="btn cancel" onclick="fermerFormMotDePasse()">Close</button>
+        <button type="button" class="btn cancel" onclick="fermerFormMDP()">Close</button>
       </form>
       
-      <span id="messageErreurMotDePasse" class="mt-4 text-red-300 font-bold text-base text-center"></span>
+      <span id="messageErreurMDP" class="mt-4 text-red-300 font-bold text-base text-center"></span>
     </div>
 
-
-    <div class="bg-black bg-opacity-25 text-white" id="divLettreMotivation"  style="display: none">
-      <form id="formMotivation" class="">
+   <!-- POPUP UPLOAD LM -->
+    <div id="popLM" class="bg-black bg-opacity-25 text-white" id="popLM"  style="display: none">
+      <form id="formLM" class="">
         <h1>Upload lettre de motivation</h1>
     
-        <label for="fileUploadLettreMotivation"><b>Lettre de motivation</b></label>
-        <input type="file" name="fileUploadLettreMotivation" value="fileUploadLettreMotivation" id="fileUploadLettreMotivation">
+        <label for="fileUploadLM"><b>Lettre de motivation</b></label>
+        <input type="file" name="fileUploadLM" value="fileUploadLM" id="fileUploadLM">
 
         <button type="submit" class="btn">Upload</button>
-        <button type="button" class="btn cancel" onclick="fermerLettreMotivation()">Close</button>
+        <button type="button" class="btn cancel" onclick="fermerFormLM()">Close</button>
       </form>
       
-      <span id="messageErreurMail" class="mt-4 text-red-300 font-bold text-base text-center"></span>
+      <span id="messageErreurLM" class="mt-4 text-red-300 font-bold text-base text-center"></span>
     </div>
 
-    <div class="bg-black bg-opacity-25 text-white" id="divCV" style="display: none">
+   <!-- POPUP CHANGEMENT CV -->
+    <div id="popCV" class="bg-black bg-opacity-25 text-white" id="popCV" style="display: none">
       <form id="formCV" class="">
         <h1>Upload CV</h1>
     
@@ -102,21 +104,22 @@
         <button type="button" class="btn cancel" onclick="fermerFormCV()">Close</button>
       </form>
       
-      <span id="messageErreurMail" class="mt-4 text-red-300 font-bold text-base text-center"></span>
+      <span id="messageErreurCV" class="mt-4 text-red-300 font-bold text-base text-center"></span>
     </div>
 
-    <div class="bg-black bg-opacity-25 text-white" id="divLinkedin" style="display: none">
-      <form id="formLinkedin" class="">
-        <h1>Associer Linkedin</h1>
+   <!-- POPUP CHANGEMENT DE LinkedIn -->
+    <div id="popLinkedIn" class="bg-black bg-opacity-25 text-white" id="popLinkedIn" style="display: none">
+      <form id="formLinkedIn" class="">
+        <h1>Associer LinkedIn</h1>
     
-        <label for="textInputLinkedin"><b>Lien Compte Linkedin</b></label>
-        <input type="text" name="textInputLinkedin" value="" id="textInputLinkedin">
+        <label for="textInputLinkedIn"><b>Lien Compte LinkedIn</b></label>
+        <input type="text" name="textInputLinkedIn" value="" id="textInputLinkedIn">
 
         <button type="submit" class="btn">Modifier</button>
-        <button type="button" class="btn cancel" onclick="fermerFormLinkedin()">Close</button>
+        <button type="button" class="btn cancel" onclick="fermerFormLinkedIn()">Close</button>
       </form>
       
-      <span id="messageErreurMail" class="mt-4 text-red-300 font-bold text-base text-center"></span>
+      <span id="messageErreurLinkedIn" class="mt-4 text-red-300 font-bold text-base text-center"></span>
     </div>
 
     <!-- <footer> -->
