@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getOffres, createOffre, updateOffre, deleteOffre,validateOffre } from "../../controllers/api/offres.js";
+import { getOffres, createOffre, updateOffre, deleteOffre, validateOffre } from "../../controllers/api/offres.js";
 import { verifierToken, estEtudiant, estAdministrateur, estVerifie } from "../../middleware/auth.js";
 const router = Router();
 

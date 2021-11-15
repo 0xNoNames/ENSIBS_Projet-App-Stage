@@ -1,65 +1,72 @@
 import CVModel from "../../models/cv.js";
-import CompteModel from "../../models/compte.js"
+import CompteModel from "../../models/compte.js";
 
 export const getCVs = async (req, res) => {
   try {
     const Cvs = await CVModel.find();
     res.status(200).json(Cvs);
-  } catch (error) {
-    res.error(404).json({ message: error.message });
+  } catch (erreur) {
+    res.erreur(404).json({ message: "Erreur interne." });
   }
 };
 
 export const createCV = async (req, res) => {
-  console.log("CV API.JS : upload Unique CV")
+  console.log("CV API.JS : upload Unique CV");
   var binaire = req.body;
-  var id_user = req.compte.id;
+  var id_eleve = req.compte.id;
   var email = req.compte.email;
   var formation = req.compte.statut;
   //New fields
   //var linkedin = req.body.linkedin;
   //var description = req.body.description;
 
-
-
-  // Check if the user has a account in the DB
-  try{
+  try {
     const mongoCompte = await CompteModel.findOne({ email });
 
-    if (!mongoCompte){
-      res.status(400).json({msg :"Compte non trouvé"})
-    } else {
-      const cv = await CVModel.create({binaire,id_eleve:id_user,formation:formation});
-
-      res.status(200).json({msg : "Le CV a bien ete upload"})
+    if (!mongoCompte) {
+      return res.status(400).json({ message: "Aucun compte trouvé." });
     }
-  } catch(erreur){
-    console.log(erreur)
-    res.status(400);
-  }
-  
 
-  
+    const cv = await CVModel.find({ id_eleve });
+
+    if (cv) {
+      await CVModel.updateOne({ id_eleve: id_eleve }, { $set: { binaire: binaire } });
+    } else {
+      await CVModel.create({ binaire, id_eleve: id_user, formation: formation });
+    }
+    res.status(200).json({ message: "Le CV a bien été envoyée." });
+  } catch (erreur) {
+    console.log(erreur);
+    res.erreur(500).json({ message: "Erreur interne." });
+  }
 };
 
-
-export const getStudentCV = async (req, res) => {
-  console.log("CV API.JS : REQUEST Unique CV")
+export const getCV = async (req, res) => {
+  console.log("CV API.JS : REQUEST Unique CV");
   var id_user = req.compte.id;
-  const mongoCompte = await CompteModel.findOne({ id_user });
-  const pdfBinary = await CVModel.findOne({id_user});
-  if (pdfBinary){
+  try {
+    const mongoCompte = await CompteModel.findOne({ email });
+
+    if (!mongoCompte) {
+      return res.status(400).json({ message: "Aucun compte trouvé." });
+    }
+
+    const pdfBinary = await CVModel.findOne({ id_user });
+
+    if (!pdfBinary) {
+      return res.status(400).json({ message: "Pas de CV trouvé." });
+    }
     //console.log("CV API.JS : "+ pdfBinary)
     var username = mongoCompte._id;
     var binary = pdfBinary.binaire;
     //console.log(binary)
     res.contentType("pdf");
-    res.end(binary, 'binary');
-  } else {
-    res.status(400);
+    res.end(binary, "binary");
+  } catch (erreur) {
+    console.log(erreur);
+    res.erreur(404).json({ message: "Erreur interne." });
   }
-  
-}
+};
 
 export const updateCV = (req, res) => {
   res.status(200);

@@ -32,13 +32,13 @@
             <% if (estAttribue && statut !="Administrateur" ) { %>
               <button onClick="ouvrirPopupCV()"
                 class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier
-                CV</button>
+                mon CV</button>
               <button onClick="ouvrirPopupLM()"
                 class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier
-                lettre de motivation</button>
+                ma lettre de motivation</button>
               <button onClick="ouvrirPopupLinkedIn()"
                 class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier
-                linkedin</button>
+                mon URL LinkedIn</button>
               <button onClick="ouvrirOffres()"
                 class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Offres
                 sauvgardés</button>
@@ -85,7 +85,7 @@
       class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
       style="display: none">
       <form id="formMail" class="flex flex-col">
-        <h1 class="text-4xl mb-8">Changement de mail</h1>
+        <h1 class="text-4xl mb-8 whitespace-nowrap">Modifier mon d'e-mail</h1>
 
         <input type="email"
           class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none"
@@ -108,15 +108,19 @@
       style="display: none">
       <form id="formMDP" class="flex flex-col">
 
-        <h1 class="text-4xl mb-8">Changement de mot de passe</h1>
+        <h1 class="text-4xl mb-8 whitespace-nowrap">Modifier mon mot de passe</h1>
 
         <label for="ancienMDP" class="mt-2 self-start text-base">Ancien mot de passe</label>
-        <input type="password" id="ancienMDP" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Minimum 8 caractères" required min="8" />
+        <input type="password" id="ancienMDP"
+          class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none"
+          placeholder="Minimum 8 caractères" required min="8" />
 
         <label for="nouveauMDP" class="mt-6 self-start text-base">Nouveau mot de passe</label>
-        <input type="password" id="nouveauMDP" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" placeholder="Minimum 8 caractères" required min="8" />
+        <input type="password" id="nouveauMDP"
+          class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none"
+          placeholder="Minimum 8 caractères" required min="8" />
 
-        
+
         <div class="mt-12 mb-8 flex justify-around">
           <button
             class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">Envoyer</button>
@@ -126,52 +130,71 @@
         </div>
         <span id="messageErreurMDP" class="text-red-300 font-bold text-base text-center"></span>
       </form>
-
-    </div>
-
-    <!-- POPUP UPLOAD LM -->
-    <div id="popupLM" class="bg-black bg-opacity-25 text-white" style="display: none">
-      <form id="formLM" class="">
-        <h1>Upload lettre de motivation</h1>
-
-        <label for="fileUploadLM"><b>Lettre de motivation</b></label>
-        <input type="file" name="fileUploadLM" value="fileUploadLM" id="fileUploadLM">
-
-        <button type="submit" class="btn">Upload</button>
-        <button type="button" class="btn cancel" onclick="fermerPopup(this)">Close</button>
-      </form>
-
-      <span id="messageErreurLM" class="mt-4 text-red-300 font-bold text-base text-center"></span>
     </div>
 
     <!-- POPUP CHANGEMENT CV -->
-    <div id="popupCV" class="bg-black bg-opacity-25 text-white" style="display: none">
-      <form id="formCV" class="">
-        <h1>Upload CV</h1>
+    <div id="popupCV"
+      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
+      style="display: none">
+      <form id="formCV" class="flex flex-col">
+        <h1 class="text-4xl mb-8 whitespace-nowrap">Modifier mon curriculum vitae</h1>
 
-        <label for="fileUploadCV"><b>CV</b></label>
-        <input type="file" name="fileUploadCV" value="fileUploadCV" id="fileUploadCV">
+        <input class="self-center" type="file" name="fileUploadCV" value="fileUploadCV" id="fileUploadCV"
+          accept="application/pdf" required>
 
-        <button type="submit" class="btn">Upload</button>
-        <button type="button" class="btn cancel" onclick="fermerPopup(this)">Close</button>
+        <div class="mt-12 mb-8 flex justify-around">
+          <button
+            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">Envoyer</button>
+          <button type="button"
+            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150"
+            onclick="fermerPopup(this)">Quitter</button>
+        </div>
+        <span id="messageErreurCV" class="text-red-300 font-bold text-base text-center"></span>
       </form>
-
-      <span id="messageErreurCV" class="mt-4 text-red-300 font-bold text-base text-center"></span>
     </div>
 
-    <!-- POPUP CHANGEMENT DE LinkedIn -->
-    <div id="popupLinkedIn" class="bg-black bg-opacity-25 text-white" style="display: none">
-      <form id="formLinkedIn" class="">
-        <h1>Associer LinkedIn</h1>
+    <!-- POPUP UPLOAD LM -->
+    <div id="popupLM"
+      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
+      style="display: none">
+      <form id="formLM" class="flex flex-col">
+        <h1 class="text-4xl mb-8 whitespace-nowrap">Modifier ma lettre de motivation</h1>
 
-        <label for="textInputLinkedIn"><b>Lien Compte LinkedIn</b></label>
-        <input type="text" name="textInputLinkedIn" value="" id="textInputLinkedIn">
+        <input class="self-center" type="file" name="fileUploadLM" value="fileUploadLM" id="fileUploadLM"
+          accept="application/pdf" required>
 
-        <button type="submit" class="btn">Modifier</button>
-        <button type="button" class="btn cancel" onclick="fermerPopup(this)">Close</button>
+        <div class="mt-12 mb-8 flex justify-around">
+          <button
+            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">Envoyer</button>
+          <button type="button"
+            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150"
+            onclick="fermerPopup(this)">Quitter</button>
+        </div>
+        <span id="messageErreurLM" class="text-red-300 font-bold text-base text-center"></span>
       </form>
+    </div>
 
-      <span id="messageErreurLinkedIn" class="mt-4 text-red-300 font-bold text-base text-center"></span>
+
+    <!-- POPUP CHANGEMENT DE LinkedIn -->
+    <div id="popupLinkedIn"
+      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
+      style="display: none">
+      <form id="formLinkedIn" class="flex flex-col">
+        <h1 class="text-4xl mb-8 whitespace-nowrap">Modifier mon URL LinkedIn</h1>
+
+        <input type="url"
+          class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none"
+          placeholder="https://www.linkedin.com/in/utilisateur" id="textInputLinkedIn" required />
+
+        <div class="mt-12 mb-8 flex justify-around">
+          <button
+            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">Envoyer</button>
+          <button type="button"
+            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150"
+            onclick="fermerPopup(this)">Quitter</button>
+        </div>
+        <span id="messageErreurLinkedIn" class="text-red-300 font-bold text-base text-center"></span>
+      </form>
     </div>
 
     <!-- <footer> -->

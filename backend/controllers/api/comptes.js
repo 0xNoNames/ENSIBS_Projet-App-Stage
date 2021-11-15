@@ -25,7 +25,7 @@ export const createCompte = async (req, res) => {
     return res.redirect("/compte");
   }
 
-  const { nom, prenom, email, mot_de_passe, statut } = req.body;
+  var { nom, prenom, email, mot_de_passe, statut } = req.body;
 
   if (!nom || !prenom || !email || !mot_de_passe || !statut) return res.status(400).json({ message: "Remplissez tous les champs." });
 
@@ -40,7 +40,7 @@ export const createCompte = async (req, res) => {
 
     if (!validator.isEmail(email)) return res.status(400).json({ message: "L'adresse mail n'est pas valide." });
 
-    let email = validator.normalizeEmail(email);
+    email = validator.normalizeEmail(email);
 
     const mongoCompte = await CompteModel.findOne({ email });
 
@@ -48,7 +48,7 @@ export const createCompte = async (req, res) => {
 
     if (mot_de_passe < 8) return res.status(400).json({ message: "Le mot de passe doit faire minimum 8 caractères." });
 
-    let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
+    const passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
 
     if (!passRegex.test(mot_de_passe)) return res.status(400).json({ message: "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffre et un caractère spécial." });
 
@@ -323,16 +323,19 @@ export const postCompteAideOublie = async (req, res) => {
 };
 
 export const updateLinkedin = async (req, res) => {
-  var JSONbody = JSON.parse(req.body);
-  var linkedin = JSONbody.linkedin;
-  console.log(req.compte.id);
-  console.log(typeof linkedin);
+  const JSONbody = JSON.parse(req.body);
+  const linkedin = JSONbody.linkedin;
 
   try {
-    const test = await CompteModel.updateOne({ _id: req.compte.id }, { $set: { link_linkedin: linkedin } });
-    console.log(test);
+    const mongoCompte = await CompteModel.findOne({ email: req.compte.email });
 
-    res.status(200).json({ message: "OK" });
+    if (!mongoCompte) {
+      return res.status(400).json({ message: "Aucun compte trouvé." });
+    }
+
+    const test = await CompteModel.updateOne({ _id: req.compte.id }, { $set: { linkedin: linkedin } });
+
+    res.status(200).send({ alert: true, message: "Votre lien LinkedIn a bien été modifié." });
   } catch (erreur) {
     console.log("updateCompteLinkedin() from /controllers/api/comptes.js :", erreur);
     res.status(500).json({ message: "Erreur interne." });

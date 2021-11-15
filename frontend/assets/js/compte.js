@@ -20,22 +20,42 @@ const supprimerCompte = async () => {
 
 const ouvrirPopupMail = () => {
   document.getElementById("popupMail").style.display = "block";
+  document.getElementById("popupMDP").style.display = "none";
+  document.getElementById("popupCV").style.display = "none";
+  document.getElementById("popupLM").style.display = "none";
+  document.getElementById("popupLinkedIn").style.display = "none";
 };
 
 const ouvrirPopupMDP = () => {
   document.getElementById("popupMDP").style.display = "block";
+  document.getElementById("popupMail").style.display = "none";
+  document.getElementById("popupCV").style.display = "none";
+  document.getElementById("popupLM").style.display = "none";
+  document.getElementById("popupLinkedIn").style.display = "none";
 };
 
 const ouvrirPopupCV = () => {
   document.getElementById("popupCV").style.display = "block";
-};
-
-const ouvrirPopupLinkedIn = () => {
-  document.getElementById("popupLinkedIn").style.display = "block";
+  document.getElementById("popupMail").style.display = "none";
+  document.getElementById("popupMDP").style.display = "none";
+  document.getElementById("popupLM").style.display = "none";
+  document.getElementById("popupLinkedIn").style.display = "none";
 };
 
 const ouvrirPopupLM = () => {
   document.getElementById("popupLM").style.display = "block";
+  document.getElementById("popupMail").style.display = "none";
+  document.getElementById("popupMDP").style.display = "none";
+  document.getElementById("popupCV").style.display = "none";
+  document.getElementById("popupLinkedIn").style.display = "none";
+};
+
+const ouvrirPopupLinkedIn = () => {
+  document.getElementById("popupLinkedIn").style.display = "block";
+  document.getElementById("popupMail").style.display = "none";
+  document.getElementById("popupMDP").style.display = "none";
+  document.getElementById("popupCV").style.display = "none";
+  document.getElementById("popupLM").style.display = "none";
 };
 
 const fermerPopup = (element) => {
@@ -55,20 +75,7 @@ formMail.addEventListener("submit", (event) => {
 
 formMDP.addEventListener("submit", (event) => {
   event.preventDefault();
-  let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
-  if (formMDP.nouveauMDP.value.lenght < 8) {
-    document.getElementById("messageErreurMDP").innerHTML = "Le mot de passe doit faire au moins 8 caractères.";
-    setTimeout(() => {
-      document.getElementById("messageErreurMDP").innerHTML = "";
-    }, 5000);
-  } else if (!passRegex.test(formMDP.nouveauMDP.value)) {
-    document.getElementById("messageErreurMDP").innerHTML = "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial.";
-    setTimeout(() => {
-      document.getElementById("messageErreurMDP").innerHTML = "";
-    }, 5000);
-  } else {
-    sendDataMDP();
-  }
+  sendDataMDP();
 });
 
 formLM.addEventListener("submit", (event) => {
@@ -114,6 +121,14 @@ const sendDataMail = async () => {
 
 const sendDataMDP = async () => {
   try {
+    let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
+
+    if (formMDP.nouveauMDP.value.lenght < 8) {
+      throw Error("Le mot de passe doit faire au moins 8 caractères.");
+    } else if (!passRegex.test(formMDP.nouveauMDP.value)) {
+      throw Error("Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial.");
+    }
+
     const response = await fetch("/api/comptes/motdepasse/", {
       method: "PUT",
       body: JSON.stringify({ ancienMDP: formMDP.ancienMDP.value, nouveauMDP: formMDP.nouveauMDP.value }),
@@ -134,79 +149,103 @@ const sendDataMDP = async () => {
       }, 5000);
     }
   } catch (erreur) {
-    console.log(erreur);
-  }
-};
-
-const sendDataLM = async () => {
-  console.log("Uploading lettre de motivation");
-
-  // Get the file
-  var input = document.getElementById("fileUploadLM");
-  var data_file = input.files[0];
-
-  const options = {
-    method: "POST",
-    mode: "cors",
-    credentials: "include",
-    body: data_file,
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  };
-
-  try {
-    const response = await fetch("/api/motivation", options);
-    const response_data = await response.json();
-    console.log(response_data);
-  } catch (error) {
-    //console.log(error);
+    document.getElementById("messageErreurMDP").innerHTML = erreur.message;
+    setTimeout(() => {
+      document.getElementById("messageErreurMDP").innerHTML = "";
+    }, 5000);
   }
 };
 
 const sendDataCV = async () => {
-  console.log("Uploading the CV");
-
-  // Get the file
   var input = document.getElementById("fileUploadCV");
   var data_file = input.files[0];
 
-  const options = {
-    method: "POST",
-    mode: "cors",
-    credentials: "include",
-    body: data_file,
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  };
+  try {
+    if (data_file.size > 15999999) {
+      throw Error("Fichier trop gros, maximum 16 Mo.");
+    }
+
+    const response = await fetch("/api/cvs", {
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      body: data_file,
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    });
+    const data = await response.json();
+
+    document.getElementById("messageErreurCV").innerHTML = data.message;
+    setTimeout(() => {
+      document.getElementById("messageErreurCV").innerHTML = "";
+    }, 5000);
+  } catch (erreur) {
+    document.getElementById("messageErreurCV").innerHTML = erreur.message;
+    setTimeout(() => {
+      document.getElementById("messageErreurCV").innerHTML = "";
+    }, 5000);
+  }
+};
+
+const sendDataLM = async () => {
+  var input = document.getElementById("fileUploadLM");
+  var data_file = input.files[0];
 
   try {
-    const response = await fetch("/api/cvs", options);
-    const response_data = await response.json();
-    console.log(response_data);
-  } catch (error) {
-    //console.log(error);
+    if (data_file.size > 15999999) {
+      throw Error("Fichier trop gros, maximum 16 Mo.");
+    }
+
+    const response = await fetch("/api/motivation", {
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      body: data_file,
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    });
+    const data = await response.json();
+
+    document.getElementById("messageErreurLM").innerHTML = data.message;
+    setTimeout(() => {
+      document.getElementById("messageErreurLM").innerHTML = "";
+    }, 5000);
+  } catch (erreur) {
+    document.getElementById("messageErreurLM").innerHTML = erreur.message;
+    setTimeout(() => {
+      document.getElementById("messageErreurLM").innerHTML = "";
+    }, 5000);
   }
 };
 
 const sendDataLinkedIn = async () => {
-  console.log("Modifier linkedin");
-  var new_linkedin = document.getElementById("textInputLinkedIn").value;
+  var linkedin = document.getElementById("textInputLinkedIn").value;
 
-  var body = JSON.stringify({ linkedin: new_linkedin });
-  console.log(body);
-
-  const options = {
-    method: "PUT",
-    mode: "cors",
-    credentials: "include",
-    body: body,
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  };
+  const linkedinRegex = RegExp("http(s)?://([w]+.)?linkedin.com/in/[A-z0-9_-]+/?");
 
   try {
-    const response = await fetch("/api/comptes/linkedin", options);
-    const response_data = await response.json();
-    console.log(response_data);
-  } catch (error) {
-    //console.log(error);
+    if (linkedin == "" || !linkedinRegex.test(linkedin)) {
+      throw Error("Veuillez saisir votre lien de profil LinkedIn.");
+    }
+
+    var body = JSON.stringify({ linkedin: linkedin });
+
+    const response = await fetch("/api/comptes/linkedin", {
+      method: "PUT",
+      mode: "cors",
+      credentials: "include",
+      body: body,
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    });
+    const data = await response.json();
+
+    document.getElementById("messageErreurLinkedIn").innerHTML = data.message;
+    setTimeout(() => {
+      document.getElementById("messageErreurLinkedIn").innerHTML = "";
+    }, 5000);
+  } catch (erreur) {
+    document.getElementById("messageErreurLinkedIn").innerHTML = erreur.message;
+    setTimeout(() => {
+      document.getElementById("messageErreurLinkedIn").innerHTML = "";
+    }, 5000);
   }
 };
 

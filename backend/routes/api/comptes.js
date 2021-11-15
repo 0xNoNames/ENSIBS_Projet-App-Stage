@@ -13,9 +13,9 @@ import {
   postCompteAideOublie,
   attribuerCompte,
   getAttribuerComptes,
-  updateLinkedin
+  updateLinkedin,
 } from "../../controllers/api/comptes.js";
-import { verifierToken, estVerifie, estAdministrateur } from "../../middleware/auth.js";
+import { verifierToken, estVerifie, estAdministrateur, estEtudiantEntreprise } from "../../middleware/auth.js";
 
 const router = Router();
 
@@ -87,7 +87,7 @@ router.put("/motdepasse", verifierToken, estVerifie, updateCompteMotDePasse);
  * @desc    Mettre à jour le mot de passe d'un utilisateur
  * @access  Private
  */
-router.put("/linkedin", verifierToken, estVerifie, updateLinkedin);
+router.put("/linkedin", verifierToken, estVerifie, estEtudiantEntreprise, updateLinkedin);
 
 /**
  * @route   DELETE /api/comptes

@@ -67,7 +67,6 @@ app.use("/api/cvs", cvsRoutesAPI);
 app.use("/api/soutenances", soutenancesRoutesAPI);
 app.use("/api/motivation", motivationRoutesAPI);
 
-
 // Serve static assets if in production
 // if (process.env.NODE_ENV === "production") {
 //     // Set static folder
@@ -109,7 +108,7 @@ app.use("/compte", compteRoutes);
 // Page des offres
 app.use("/offres", offresRoutes);
 
-app.use("/motivation",motivationRoutes)
+app.use("/motivation", motivationRoutes);
 
 // Page d'erreur 404 (mettre en dernière route)
 app.get("*", verifierToken, (req, res) => {

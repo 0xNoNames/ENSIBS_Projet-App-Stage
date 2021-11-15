@@ -14,7 +14,7 @@ const CompteSchema = new Schema({
   estVerifie: { type: Boolean, default: false },
   estAttribue: { type: Boolean, default: false },
   date_inscription: { type: Date, default: Date.now },
-  link_linkedin : {type:String}
+  linkedin: { type: String },
 });
 
 const Compte = model("compte", CompteSchema);
