@@ -3,7 +3,7 @@ const { Schema, model } = pkg;
 
 const MotivationSchema = new Schema({
   id_eleve: { type: Object, required: true },
-  binaire : {type:Buffer},
+  binaire: { type: Buffer },
   formation: {
     type: String,
     enum: ["CyberLog", "CyberData"],

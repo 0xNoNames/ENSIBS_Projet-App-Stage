@@ -27,8 +27,6 @@ const sendData = async () => {
   }
 };
 
-
-
 window.addEventListener("load", () => {
   // Linking the function to the form
   var form = document.getElementById("uploadMotivation");

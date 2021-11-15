@@ -1,3 +1,1 @@
-window.addEventListener("load", async () => {
-	
-});
+window.addEventListener("load", async () => {});

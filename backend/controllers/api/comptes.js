@@ -323,9 +323,6 @@ export const postCompteAideOublie = async (req, res) => {
 };
 
 export const updateLinkedin = async (req, res) => {
-  const JSONbody = JSON.parse(req.body);
-  const linkedin = JSONbody.linkedin;
-
   try {
     const mongoCompte = await CompteModel.findOne({ email: req.compte.email });
 
@@ -333,7 +330,7 @@ export const updateLinkedin = async (req, res) => {
       return res.status(400).json({ message: "Aucun compte trouvé." });
     }
 
-    const test = await CompteModel.updateOne({ _id: req.compte.id }, { $set: { linkedin: linkedin } });
+    await CompteModel.updateOne({ _id: req.compte.id }, { $set: { linkedin: req.body.linkedin } });
 
     res.status(200).send({ alert: true, message: "Votre lien LinkedIn a bien été modifié." });
   } catch (erreur) {

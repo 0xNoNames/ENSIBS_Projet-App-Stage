@@ -16,7 +16,7 @@ const sendData = async () => {
     method: "POST",
     mode: "cors",
     credentials: "include",
-    body: {data_file, linkedin, description},
+    body: { data_file, linkedin, description },
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
   };
 
