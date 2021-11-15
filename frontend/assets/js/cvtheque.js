@@ -36,12 +36,12 @@ window.addEventListener("load", () => {
   });
 
   // Linking the function to the form
-  var form = document.getElementById("form");
-
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    sendData();
-  });
+  //var form = document.getElementById("form");
+//
+  //form.addEventListener("submit", (event) => {
+  //  event.preventDefault();
+  //  sendData();
+  //});
 });
 
 // Function for fecting the api
