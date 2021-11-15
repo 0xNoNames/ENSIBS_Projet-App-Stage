@@ -18,44 +18,28 @@ const supprimerCompte = async () => {
   }
 };
 
-const ouvrirFormEmail = () => {
-  document.getElementById("popMail").style.display = "block";
+const ouvrirPopupMail = () => {
+  document.getElementById("popupMail").style.display = "block";
 };
 
-const fermerFormEmail = () => {
-  document.getElementById("popMail").style.display = "none";
+const ouvrirPopupMDP = () => {
+  document.getElementById("popupMDP").style.display = "block";
 };
 
-const ouvrirFormMDP = () => {
-  document.getElementById("popMDP").style.display = "block";
+const ouvrirPopupCV = () => {
+  document.getElementById("popupCV").style.display = "block";
 };
 
-const fermerFormMDP = () => {
-  document.getElementById("popMDP").style.display = "none";
+const ouvrirPopupLinkedIn = () => {
+  document.getElementById("popupLinkedIn").style.display = "block";
 };
 
-const ouvrirFormCV = () => {
-  document.getElementById("popCV").style.display = "block";
+const ouvrirPopupLM = () => {
+  document.getElementById("popupLM").style.display = "block";
 };
 
-const fermerFormCV = () => {
-  document.getElementById("popCV").style.display = "none";
-};
-
-const ouvrirFormLM = () => {
-  document.getElementById("popLM").style.display = "block";
-};
-
-const fermerFormLM = () => {
-  document.getElementById("popLM").style.display = "none";
-};
-
-const ouvrirFormLinkedIn = () => {
-  document.getElementById("popLinkedIn").style.display = "block";
-};
-
-const fermerFormLinkedIn = () => {
-  document.getElementById("popLinkedIn").style.display = "none";
+const fermerPopup = (element) => {
+  element.parentNode.parentNode.parentNode.style.display = "none";
 };
 
 const formMail = document.getElementById("formMail");
@@ -72,18 +56,19 @@ formMail.addEventListener("submit", (event) => {
 formMDP.addEventListener("submit", (event) => {
   event.preventDefault();
   let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
-  if (formMDP.password.value.lenght < 8) {
-    document.getElementById("messageErreur").innerHTML = "Le mot de passe doit faire au moins 8 caractères.";
+  if (formMDP.nouveauMDP.value.lenght < 8) {
+    document.getElementById("messageErreurMDP").innerHTML = "Le mot de passe doit faire au moins 8 caractères.";
     setTimeout(() => {
-      document.getElementById("messageErreur").innerHTML = "";
+      document.getElementById("messageErreurMDP").innerHTML = "";
     }, 5000);
-  } else if (!passRegex.test(formMDP.password.value)) {
-    document.getElementById("messageErreur").innerHTML = "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial.";
+  } else if (!passRegex.test(formMDP.nouveauMDP.value)) {
+    document.getElementById("messageErreurMDP").innerHTML = "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial.";
     setTimeout(() => {
-      document.getElementById("messageErreur").innerHTML = "";
+      document.getElementById("messageErreurMDP").innerHTML = "";
     }, 5000);
+  } else {
+    sendDataMDP();
   }
-  sendDataMDP();
 });
 
 formLM.addEventListener("submit", (event) => {
@@ -131,13 +116,17 @@ const sendDataMDP = async () => {
   try {
     const response = await fetch("/api/comptes/motdepasse/", {
       method: "PUT",
-      body: JSON.stringify({ mot_de_passe: formMDP.password.value }),
+      body: JSON.stringify({ ancienMDP: formMDP.ancienMDP.value, nouveauMDP: formMDP.nouveauMDP.value }),
       mode: "cors",
       credentials: "include",
     });
     const data = await response.json();
     if (response.status == 200) {
-      window.location.replace("/compte/connexion");
+      if (data.alert) {
+        if (confirm(data.message) == true) {
+          window.location.replace("/compte/connexion");
+        }
+      }
     } else {
       document.getElementById("messageErreurMDP").innerHTML = data.message;
       setTimeout(() => {

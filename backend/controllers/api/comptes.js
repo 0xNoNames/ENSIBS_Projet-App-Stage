@@ -110,7 +110,9 @@ export const updateCompteMail = async (req, res) => {
       expires: new Date(0),
       maxAge: parseInt(process.env.JWT_EXPIRES_IN),
     });
-    res.status(200).send({ alert: true, message: "Veuillez vérifier votre compte via l'email de vérification qui vous a été envoyé, il expirera après un jour. Si vous n'avez pas reçu l'email de vérification, vérifiez vos spam ou aller sur la page d'AIDE." });
+    res
+      .status(200)
+      .send({ alert: true, message: "Veuillez vérifier votre compte via l'email de vérification qui vous a été envoyé, il expirera après un jour. Si vous n'avez pas reçu l'email de vérification, vérifiez vos spam ou aller sur la page d'AIDE." });
   } catch (erreur) {
     console.log("updateCompteMail() from /controllers/api/comptes.js :", erreur);
     res.status(500).json({ message: "Erreur interne." });
@@ -122,20 +124,35 @@ export const updateCompteMotDePasse = async (req, res) => {
     return res.status(400).json({ message: "Vous n'êtes pas connecté." });
   }
 
-  const nouveauMotDePasse = req.body.mot_de_passe;
-
-  if (nouveauMotDePasse < 8) return res.status(400).json({ message: "Le mot de passe doit faire minimum 8 caractères." });
-
-  let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
-
-  if (!passRegex.test(nouveauMotDePasse)) return res.status(400).json({ message: "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial." });
-
-  const hash = await bcrypt.hash(nouveauMotDePasse, 12);
-
   try {
+    const ancienMDP = req.body.ancienMDP;
+    const nouveauMDP = req.body.nouveauMDP;
+
+    const mongoCompte = await CompteModel.findOne({ _id: req.compte.id });
+
+    if (!mongoCompte) return res.status(400).json({ message: "Pas de compte, veuillez vous reconnecter." });
+
+    const verifMotDePasse = await bcrypt.compare(ancienMDP, mongoCompte.mot_de_passe);
+
+    if (!verifMotDePasse) return res.status(400).json({ message: "Mauvais mot de passe." });
+
+    if (nouveauMDP < 8) return res.status(400).json({ message: "Le mot de passe doit faire minimum 8 caractères." });
+
+    let passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])");
+
+    if (!passRegex.test(nouveauMDP)) return res.status(400).json({ message: "Le mot de passe doit contenir au moins une miniscule, une majuscule, un chiffres et un caractère spécial." });
+
+    const hash = await bcrypt.hash(nouveauMDP, 12);
+
     await CompteModel.updateOne({ _id: req.compte.id }, { $set: { mot_de_passe: hash } });
 
-    res.status(200).json({ message: "OK" });
+    res.cookie("token", "", {
+      httpOnly: true,
+      secure: true,
+      expires: new Date(0),
+      maxAge: parseInt(process.env.JWT_EXPIRES_IN),
+    });
+    res.status(200).send({ alert: true, message: "Votre mot de passe a bien été modifié, veuillez vous reconnecter." });
   } catch (erreur) {
     console.log("updateCompteMotDePasse() from /controllers/api/comptes.js :", erreur);
     res.status(500).json({ message: "Erreur interne." });
