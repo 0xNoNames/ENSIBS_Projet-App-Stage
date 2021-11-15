@@ -13,6 +13,21 @@ export const getOffres = async (req, res) => {
   }
 };
 
+
+export const getOffreUnique = async (req,res) => {
+  var id = req.params.id;
+
+  try{
+    const offre = await OffreModel.findOne({id:id});
+
+    var binary = offre.binaire;
+    res.contentType("pdf");
+    res.end(binary, "binary");
+  } catch (e) {
+    res.status(400).json({ msg: e.message });
+  }
+}
+
 export const createOffre = async (req, res) => {
   var binaire = req.body;
   var id_user = req.compte.id;

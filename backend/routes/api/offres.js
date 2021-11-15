@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getOffres, createOffre, updateOffre, deleteOffre, validateOffre } from "../../controllers/api/offres.js";
+import { getOffres, createOffre, updateOffre, deleteOffre, validateOffre,getOffreUnique } from "../../controllers/api/offres.js";
 import { verifierToken, estEtudiant, estAdministrateur, estVerifie } from "../../middleware/auth.js";
 const router = Router();
 
@@ -9,6 +9,13 @@ const router = Router();
  * @access  Etudiant
  */
 router.get("/", verifierToken, estVerifie, estEtudiant, getOffres);
+
+/**
+ * @route   GET /api/offres
+ * @desc    Récupérer une offre de stage unqiue 
+ * @access  Etudiant
+ */
+router.get("/:id", verifierToken, estVerifie, estEtudiant, getOffreUnique);
 
 /**
  * @route   POST /api/offres

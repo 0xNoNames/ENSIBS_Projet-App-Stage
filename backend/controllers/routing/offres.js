@@ -2,11 +2,11 @@ import OffreModel from "../../models/offre.js";
 
 export const getOffresPage = async (req, res) => {
   try {
-    var offres;
+    var offresValides;
     if (req.compte.statut == "administrateur") {
-      offres = await OffreModel.find();
+      offresValides = await OffreModel.find({estValide: true});
     } else {
-      offres = await OffreModel.find({ statut: req.compte.statut });
+      offresValides = await OffreModel.find({ statut: req.compte.statut,estValide:true });
     }
 
     var offresNonValide = await OffreModel.find({ estValide: false });
@@ -14,7 +14,7 @@ export const getOffresPage = async (req, res) => {
     res.render("pages/offres", {
       estConnecte: true,
       page: "Offres",
-      offres: offres,
+      offresValides: offresValides,
       prenom: req.compte.prenom,
       statut: req.compte.statut,
       estAttribue: req.compte.estAttribue,
@@ -25,3 +25,20 @@ export const getOffresPage = async (req, res) => {
     res.status(500).json({ message: "Erreur interne." });
   }
 };
+
+
+
+export const getOffreUniquePage = async (req,res) => {
+  var id = req.params.id
+
+  const offre = await OffreModel.findOne({id: id});
+
+  res.render("pages/offreUnique", {
+      estConnecte: true,
+      page: "OffreUnique",
+      prenom: req.compte.prenom,
+      statut: req.compte.statut,
+      estAttribue: req.compte.estAttribue,
+      offre : offre,
+    });
+}

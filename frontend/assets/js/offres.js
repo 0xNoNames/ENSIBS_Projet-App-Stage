@@ -15,6 +15,21 @@ const valider = async (id) => {
   }
 };
 
+const ouvrirFenetreOffre = (event) =>{
+  var listelement = event.path;
+
+  var div;
+  for (var i = 0; i < listelement.length; i++) {
+    try{
+      if (listelement[i].getAttribute("class").includes("buttonAfficherOffre")){
+        div = listelement[i]
+      }
+    } catch (erreur){}
+  }
+
+  window.location.href = "/offres/" + div.id;
+}
+
 window.addEventListener("load", async () => {
   // Linking the function to the form
   var form = document.getElementById("form");
@@ -26,10 +41,12 @@ window.addEventListener("load", async () => {
   });
 });
 
+
+
 // Link les boutons validate avec la fonction qui fait l'appel api pour valider les offres
-var classname = document.getElementsByClassName("buttonValidateOffre");
-for (var i = 0; i < classname.length; i++) {
-  classname[i].addEventListener(
+var classnameValiderOffre = document.getElementsByClassName("buttonValidateOffre");
+for (var i = 0; i < classnameValiderOffre.length; i++) {
+  classnameValiderOffre[i].addEventListener(
     "click",
     (event) => {
       valider(event.path[0].parentNode.id);
@@ -37,6 +54,24 @@ for (var i = 0; i < classname.length; i++) {
     false
   );
 }
+
+// Link les boutons validate avec la fonction qui fait l'appel api pour valider les offres
+var classnameValiderOffre = document.getElementsByClassName("buttonAfficherOffre");
+for (var i = 0; i < classnameValiderOffre.length; i++) {
+  classnameValiderOffre[i].addEventListener(
+    "click",
+    (event) => {
+      ouvrirFenetreOffre(event);
+    },
+    false
+  );
+}
+
+
+
+
+
+
 
 const sendData = async () => {
   console.log("Uploading the offer");

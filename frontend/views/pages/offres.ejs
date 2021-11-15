@@ -12,56 +12,75 @@
     <div class="mt-32 flex justify-center items-center">
       <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
         <p class="text-4xl text-white">PAGE OFFRES</p>
-        <form id="form" class="flex flex-col py-8 px-8 text-left text-white rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50" enctype="multipart/form-data">
-
-          <label for="nom_entreprise">Nom entreprise : </label>
-          <input type="text" id="nom_entreprise" name="nom_entreprise"><br>
-
-          <label for="nom_poste">Nom poste : </label>
-          <input type="text" id="nom_poste" name="nom_poste" value="poste"><br>
-
-          <label for="lieu_poste">Lieu poste : </label>
-          <input type="text" id="lieu_poste" name="lieu_poste" value="Lieu"><br>               
-
-          <input type="radio" id="checkBoxCyberData" name="drone" value="CyberData" checked>
-          <label for="huey">CyberData</label>
-
-          <input type="radio" id="checkBoxCyberLog" name="drone" value="CyberLog">
-          <label for="huey">CyberLog</label><br>
-
-          <input type="file" name="fileupload" value="fileupload" id="fileupload"><br>
-
-          <input  type="submit" id="submitButtonId" name="submit">
-
-        </form>
-      </div>
-    </div>
 
 
-    <div class="mt-32 flex justify-center items-center">
-      <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl text-white">Offres non validés</p>
+        <% if (statut == "Administrateur" || statut == "Entreprise") { %> 
+          <div id="divFormUploadOffre">
+            <form id="form" class="flex flex-col py-8 px-8 text-left text-white rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50" enctype="multipart/form-data">
 
-        <% offresNonValide.forEach(function(offre) { %>
-          <div id="<%=offre.id %>">
-            <p> Nom entreprise : <%=offre.nom_entreprise %></p>
-            <p> Nom poste : <%= offre.nom_poste %> </p>
-            <!-- TODO : pdf de l'offre-->
-            <p> Formation : <%= offre.formation %> </p>
+              <label for="nom_entreprise">Nom entreprise : </label>
+              <input type="text" id="nom_entreprise" name="nom_entreprise"><br>
 
-            <button class="buttonValidateOffre">Validate</button>
+              <label for="nom_poste">Nom poste : </label>
+              <input type="text" id="nom_poste" name="nom_poste" value="poste"><br>
+
+              <label for="lieu_poste">Lieu poste : </label>
+              <input type="text" id="lieu_poste" name="lieu_poste" value="Lieu"><br>               
+
+              <input type="radio" id="checkBoxCyberData" name="drone" value="CyberData" checked>
+              <label for="huey">CyberData</label>
+
+              <input type="radio" id="checkBoxCyberLog" name="drone" value="CyberLog">
+              <label for="huey">CyberLog</label><br>
+
+              <input type="file" name="fileupload" value="fileupload" id="fileupload"><br>
+
+              <input  type="submit" id="submitButtonId" name="submit">
+
+            </form>
           </div>
-          
-          
-        <% }); %>
+        <% }; %>
+        
       </div>
     </div>
 
 
-    <% offres.forEach(function(offre) { %>
-      <h1><%=offre.id_entreprise %></h1>
-      <!--<iframe src='/api/offres/<%=offre.id_entreprise%>/pdf' width="13%"> -->     
-    <% }); %>
+
+    <% if (statut == "Administrateur") { %> 
+      <div class="mt-32 flex justify-center items-center">
+        <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+          <p class="text-4xl text-white">Offres non validés</p>
+
+          <% offresNonValide.forEach(function(offre) { %>
+            <div id="<%=offre.id %>">
+              <p> Nom entreprise : <%=offre.nom_entreprise %></p>
+              <p> Nom poste : <%= offre.nom_poste %> </p>
+              <!-- TODO : pdf de l'offre-->
+              <p> Formation : <%= offre.formation %> </p>
+
+              <button class="buttonValidateOffre">Validate</button>
+            </div>
+            
+            
+          <% }); %>
+        </div>
+      </div>
+    <% }; %>
+
+    <div>
+      
+    <div class="mt-32 flex justify-center items-center py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+      <p class="text-4xl text-white">Offres</p>
+        
+      <% offresValides.forEach(function(offre) { %>
+        <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50 buttonAfficherOffre" id="<%=offre.id %>" >
+            <h1> <%=offre.nom_entreprise %> </h1>
+            <p> <%=offre.nom_poste %></p>
+            <p> <%=offre.lieu_poste %></p>
+            <!--<iframe src='/api/offres/<%=offre.id_entreprise%>/pdf' width="13%"> -->
+        </div>
+      <% }); %>
+    </div>
 
     <script src="/static/js/offres.js" type="module"></script>
 
