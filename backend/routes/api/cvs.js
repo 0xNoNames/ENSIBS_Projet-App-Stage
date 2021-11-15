@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getCVs, createCV, updateCV, deleteCV, deleteAnyCV, getCV } from "../../controllers/api/cvtheques.js";
-import { verifierToken, estVerifie, estEntreprise, estEtudiant, estAdministrateur } from "../../middleware/auth.js";
+import { verifierToken, estVerifie, estEntreprise, estEtudiant, estAdministrateur,estElevePropre } from "../../middleware/auth.js";
 
 const router = Router();
 
@@ -16,7 +16,7 @@ router.get("/", verifierToken, estVerifie, estEntreprise, getCVs);
  * @desc Recupérer le CV associé à l'id
  * @acces Private
  */
-router.get("/:id/pdf", verifierToken, estVerifie, estEntreprise, getCV);
+router.get("/:id/pdf", verifierToken, estVerifie, estElevePropre, getCV);
 
 /**
  * @route   POST /api/cvs

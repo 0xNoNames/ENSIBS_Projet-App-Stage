@@ -1,5 +1,7 @@
 import dotenv from "dotenv";
 import CompteModel from "../../models/compte.js";
+import CVModel from "../../models/cv.js";
+import MotivationModel from "../../models/motivation.js";
 
 dotenv.config({ path: "../.env" });
 
@@ -44,6 +46,9 @@ export const getComptePage = async (req, res) => {
       comptes: comptesAttribuer,
     });
   } else {
+    // Statut n'est pas admin
+    const cv = await CVModel.findOne({id_eleve:req.compte.id})
+    const motivation = await MotivationModel.findOne({id_eleve:req.compte.id})
     res.render("pages/compte", {
       estConnecte: true,
       page: "Aide",
@@ -53,6 +58,8 @@ export const getComptePage = async (req, res) => {
       statut: req.compte.statut,
       estAttribue: req.compte.estAttribue,
       comptes: "",
+      cv:cv,
+      motivation : motivation,
     });
   }
 };

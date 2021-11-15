@@ -165,6 +165,22 @@ export const estEtudiantEntreprise = (req, res, next) => {
   }
 };
 
+// Permet a un eleve d'acceder à la page de son CV 
+export const estElevePropre = (req,res,next) => {
+  if (req.compte.estAttribue === true && req.estConnecte === true && (req.compte.statut == "Administrateur" || req.compte.statut == "Entreprise" || req.compte.id == req.params.id)) {
+    return next();
+  } else {
+    console.error("AUTH.JS : Statut entreprise nécéssaire.");
+    return res.render("pages/erreur401", {
+      estConnecte: true,
+      page: "Erreur 401",
+      prenom: req.compte.prenom,
+      statut: req.compte.statut,
+      estAttribue: req.compte.estAttribue,
+    });
+  }
+}
+
 export default {
   verifierToken,
   estVerifie,
@@ -173,4 +189,5 @@ export default {
   estEtudiant,
   estCyberdata,
   estCyberlog,
+  estElevePropre,
 };

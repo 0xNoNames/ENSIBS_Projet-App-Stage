@@ -203,6 +203,7 @@ const sendDataLM = async () => {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
     const data = await response.json();
+    console.log(data)
 
     document.getElementById("messageErreurLM").innerHTML = data.message;
     setTimeout(() => {

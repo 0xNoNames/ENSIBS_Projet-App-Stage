@@ -78,6 +78,31 @@
                   </div>
                   <% } %>
       </div>
+
+
+      <% if (statut=="CyberLog" || statut =="CyberData"){%>
+      <div class="p-10 flex flex-col justify-center items-center text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+        <p>Mon CV : </p>
+        <% if (cv) {%>
+          <iframe src='/api/cvs/<%=cv.id_eleve%>/pdf'></iframe>
+        <% } else { %>
+          <p>Aucun CV</p>
+        <% } %>
+      </div>
+      <% } %>
+    </div>
+
+    <% if (statut=="CyberLog" || statut =="CyberData"){%>
+      <div class="p-10 flex flex-col justify-center items-center text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+        <p>Ma lettre de motivation : </p>
+        <% if (cv) {%>
+          <iframe src='/api/cvs/<%=cv.id_eleve%>/pdf'></iframe>
+        <% } else { %>
+          <p>Aucun CV</p>
+        <% } %>
+      </div>
+      <p><%= %></p>
+      <% } %>
     </div>
 
     <!-- POPUP CHANGEMENT DE MAIL -->

@@ -15,7 +15,8 @@ export const postMotivation = async (req, res) => {
       return res.status(400).json({ message: "Aucun compte trouvé." });
     }
 
-    const motivation = await MotivationModel.find({ id_eleve });
+    const motivation = await MotivationModel.findOne({ id_eleve });
+    console.log(motivation)
     if (motivation) {
       await MotivationModel.updateOne({ id_eleve: id_eleve }, { $set: { binaire: binaire } });
     } else {
@@ -28,3 +29,33 @@ export const postMotivation = async (req, res) => {
     res.status(500).json({ message: "Erreur interne." });
   }
 };
+
+
+export const getUniqueMotivation = async (req,res) => {
+  console.log("CV MOTIVATION.JS : REQUEST Unique CV");
+  var id_user = req.compte.id;
+  var email = req.compte.email;
+
+  try {
+    const mongoCompte = await MotivationModel.findOne({ email });
+
+    if (!mongoCompte) {
+      return res.status(400).json({ message: "Aucun compte trouvé." });
+    }
+
+    const pdfBinary = await MotivationModel.findOne({ id_user });
+
+    if (!pdfBinary) {
+      return res.status(400).json({ message: "Pas de CV trouvé." });
+    }
+    //console.log("CV API.JS : "+ pdfBinary)
+    var username = mongoCompte._id;
+    var binary = pdfBinary.binaire;
+    //console.log(binary)
+    res.contentType("pdf");
+    res.end(binary, "binary");
+  } catch (erreur) {
+    console.log(erreur);
+    res.erreur(404).json({ message: "Erreur interne." });
+  }
+}
