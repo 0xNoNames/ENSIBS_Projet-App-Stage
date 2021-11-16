@@ -6,7 +6,9 @@ const getEvenements = async () => {
   };
 
   try {
+    console.log("FETCH")
     const response = await fetch("/api/soutenances", options);
+    console.log(response)
     const response_data = await response.json();
     return response_data;
   } catch (error) {
@@ -16,12 +18,15 @@ const getEvenements = async () => {
 
 const generateCalendar = async () => {
   // On va chercher la div dans le HTML
+  console.log("GENERATING CALENDAR")
   let calendarEl = document.getElementById("calendrier");
 
   // Recuperer la liste des evenements
   var events = await getEvenements();
+
   var jsonEvent = JSON.parse(events);
   var evenements = jsonEvent.result;
+  console.log(evenements)
 
   // On instancie le calendrier
   var calendar = new FullCalendar.Calendar(calendarEl, {
