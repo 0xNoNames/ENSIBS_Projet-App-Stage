@@ -22,10 +22,8 @@
            value="2021-11-13"
            min="2018-01-01" max="2030-12-31">
 
-          <% if (statut == "CyberLog") { %>
-           <label for="nom_text_input">Titre de la soutenance </label>
-           <input type="text" name="nom_text_input" id="nom_text_input">
-          <% } %>
+          <label for="nom_text_input">Titre de la soutenance </label>
+          <input type="text" name="nom_text_input" id="nom_text_input">
 
           <select name="lieux" id="lieux-select">
             <option value="">Choisissez un lieu pour la soutenance--</option>
@@ -38,10 +36,8 @@
 
           <input type="time" id="hour_input" name="appt" min="08:00" max="18:00" required>
 
-          <% if (statut == "CyberLog") { %>
-            <label for="confidentiel_checkbox">Soutenance confidentiel </label>
-            <input type="checkbox" id="confidentiel_checkbox" name="confidentiel_checkbox"><br>
-          <% } %>
+          <label for="confidentiel_checkbox">Soutenance confidentiel </label>
+          <input type="checkbox" id="confidentiel_checkbox" name="confidentiel_checkbox"><br>
 
           <input  type="submit" id="submitButtonId" name="submit">
         </form>

@@ -82,7 +82,7 @@ const sendData = async () => {
     mode: "cors",
     credentials: "include",
     body: body,
-    //headers : headers
+    headers : headers
   };
 
   try {
