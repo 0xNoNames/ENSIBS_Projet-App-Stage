@@ -6,7 +6,7 @@ import EntretienModel from "../../models/entretien.js"
 export const getSoutenances = async (req, res) => {
   console.log("GETTING SOUTENANCES");
   if(req.compte.statut == "CyberData") {
-    const entretiens = await EntretienModel.find({});
+    const entretiens = await EntretienModel.find();
 
     var result_entretiens = [];
     for(const entretien of entretiens) {
@@ -14,7 +14,7 @@ export const getSoutenances = async (req, res) => {
         const user = await CompteModel.findOne({ id: entretien.id_organisateur });
         var title = user.nom;
 
-        var date = soutenance.date;
+        var date = entretien.date;
         var dateString = date.toISOString();
 
         // format "2016-02-18T23:59:48.039Z"
