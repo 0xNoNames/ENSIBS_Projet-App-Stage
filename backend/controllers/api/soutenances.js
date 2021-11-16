@@ -26,11 +26,12 @@ export const getSoutenances = async (req, res) => {
         var id = entretien.id_organisateur;
 
         var entretienResult = { title: title, start: start, end: endDate, id: id };
+        result_entretiens.push(entretienResult);
       } catch(erreur) {
         console.log(erreur);
       }
     }
-    res.status(200).json(JSON.stringify({ result: result_soutenances }));
+    res.status(200).json(JSON.stringify({ result: result_entretiens }));
   } else if(req.compte.statut == "CyberLog") {
     const soutenances = await SoutenanceModel.find({});
 
