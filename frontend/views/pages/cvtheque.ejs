@@ -12,35 +12,23 @@
     <!-- </header> -->
     <div class="mt-32 flex text-white justify-center items-center">
         <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-            <p class="text-4xl">Page CVTHÈQUE</p>
-        </div>
-        <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
             <% cvs.forEach(function(cv) { %>
             <% comptes.forEach(function(compte) { %>
             <% if (compte.id == cv.id_eleve) { %>
             <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50 classnameOuvrirCV" id="<%=cv.id_eleve %>" >
-                
-                    <h1>Prenom :
-                        <%=compte.prenom %>
-                    </h1>
-                    <h1>Nom :
-                        <%=compte.nom %>
-                    </h1>
-                    <h1>Formation :
-                        <%=compte.formation %>
-                    </h1>
-                    <h1>Linkedin :
-                        <%=compte.linkedin %>
-                    </h1>
-                    <h1>Link CV</h1>
-
-                    <iframe src='/api/cvs/<%=cv.id_eleve%>/pdf' width="13%">
+                <h1>Prenom :<%=compte.prenom %></h1>
+                <h1>Nom : <%=compte.nom %></h1>
+                <h1>Formation :<%=compte.formation %></h1>
+                <h1>Linkedin :<%=compte.linkedin %></h1>
+                <h1>Link CV</h1>
+                <iframe src='/api/cvs/<%=cv.id_eleve%>/pdf' width="15%">
             </div>
             <% } %>
             <% }); %>
             <% }); %>
         </div>
     </div>
+    
     <!-- <footer> -->
     <%- include('../partials/footer'); %>
     <!--</footer> -->

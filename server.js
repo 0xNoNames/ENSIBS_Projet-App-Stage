@@ -36,8 +36,6 @@ import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-console.log(__dirname);
-
 app.set("view engine", "ejs");
 app.set("views", "./frontend/views");
 
@@ -46,8 +44,9 @@ app.use("/static", express.static(path.join(__dirname, "/frontend/assets")));
 // -- -- -- -- -- -- -- -- --  -- MIDDLEWARES -- -- -- -- -- -- -- -- --  -- \\
 
 app.use(cors());
-app.use(express.json({ type: "text/plain" }));
-app.use(express.raw({ type: "application/x-www-form-urlencoded" }));
+app.use(express.json({ type: "text/plain", limit: "16mb" }));
+app.use(express.raw({ type: "application/x-www-form-urlencoded", limit: "16mb" }));
+
 // -- -- -- -- -- -- -- -- --  -- DATABASE -- -- -- -- -- -- -- -- --  -- \\
 
 // Configuration de Mongo

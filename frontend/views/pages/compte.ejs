@@ -11,14 +11,16 @@
     <!-- </header> -->
 
     <div class="m-12 flex justify-center items-center text-white">
-      <div
-        class="p-10 w-2/5 flex flex-col justify-center items-center text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl">
-          <%=prenom%>
-            <%=nom%></br>
-              <%=statut%></br>
-                <%=email%>
-        </p>
+      <div class="p-10 w-2/5 flex flex-col justify-center items-center text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+
+      <div class="px-5 py-8 flex flex-col items-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+
+        <img src="/static/img/profil.jpg" alt="icone profile" class="mb-2 rounded-full border border-white border-opacity-50 hover:cursor-pointer hover:opacity-90"
+                                    style="width: 128px; height: 128px" />
+        <p class="text-3xl mb-5"><%=prenom%> <%=nom%></p>
+        <p class="text-xl font-light">Statut : <%=statut%></p>
+        <p class="text-xl font-light"><%=email%></p>
+        </div>
         <% if (!estAttribue) { %>
           <p class="my-5 text-red-200">Votre compte n'est pas encore validé,</br>veuillez attendre qu'un administrateur
             le valide.</p>
@@ -82,7 +84,7 @@
 
     <!-- POPUP CHANGEMENT DE MAIL -->
     <div id="popupMail"
-      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
+      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-white text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
       style="display: none">
       <form id="formMail" class="flex flex-col">
         <h1 class="text-4xl mb-8 whitespace-nowrap">Modifier mon d'e-mail</h1>
@@ -104,7 +106,7 @@
 
     <!-- POPUP CHANGEMENT DE MDP -->
     <div id="popupMDP"
-      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
+      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-white text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
       style="display: none">
       <form id="formMDP" class="flex flex-col">
 
@@ -134,13 +136,13 @@
 
     <!-- POPUP CHANGEMENT CV -->
     <div id="popupCV"
-      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
+      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-white text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
       style="display: none">
       <form id="formCV" class="flex flex-col">
         <h1 class="text-4xl whitespace-nowrap">Modifier mon curriculum vitae</h1>
 
         <% if (statut=="CyberLog" || statut =="CyberData"){%>
-          <div class="p-5 my-8 space-y-2 mx-32 flex flex-col justify-center items-center text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+          <div class="p-5 my-8 font-light space-y-2 mx-32 flex flex-col justify-center items-center text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
             <p>Mon CV : </p>
             <% if (cv) {%>
               <iframe src='/api/cvs/<%=cv.id_eleve%>/pdf'></iframe>
@@ -166,7 +168,7 @@
 
     <!-- POPUP UPLOAD LM -->
     <div id="popupLM"
-      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
+      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 text-white flex flex-col text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
       style="display: none">
       <form id="formLM" class="flex flex-col">
         <h1 class="text-4xl whitespace-nowrap">Modifier ma lettre de motivation</h1>
@@ -199,7 +201,7 @@
 
     <!-- POPUP CHANGEMENT DE LinkedIn -->
     <div id="popupLinkedIn"
-      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
+      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-white text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
       style="display: none">
       <form id="formLinkedIn" class="flex flex-col">
         <h1 class="text-4xl mb-8 whitespace-nowrap">Modifier mon URL LinkedIn</h1>
