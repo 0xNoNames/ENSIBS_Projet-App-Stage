@@ -10,6 +10,8 @@ export const getSoutenancesPage = async (req, res) => {
     var page = "Entretiens";
     var data = await EntretienModel.find();
   }
+
+  var lieux = [{nom:"D0010"}]
   res.render("pages/soutenances", {
     estConnecte: true,
     page: page,
@@ -17,6 +19,7 @@ export const getSoutenancesPage = async (req, res) => {
     statut: req.compte.statut,
     estAttribue: req.compte.estAttribue,
     data: data,
+    lieux:lieux,
   });
 };
 

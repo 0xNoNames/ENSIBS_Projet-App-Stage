@@ -131,7 +131,6 @@ export const createSoutenance = async (req, res) => {
   var hour = json.hour;
   var confidentiel_value = json.confidentiel;
   var nom_soutenance = json.nom_soutenance;
-  console.log(date)
 
 
   try {
@@ -159,7 +158,6 @@ export const createSoutenance = async (req, res) => {
   var hours = hour.slice(0, 2);
   var minutes = hour.slice(3, 5);
   var date = new Date(year, monthIndex, day, hours, minutes);
-
   try {
     // verifier si le compte existe
     const mongoCompte = await CompteModel.findOne({ email });
@@ -167,12 +165,13 @@ export const createSoutenance = async (req, res) => {
     if (!mongoCompte) {
       res.status(400).json({ msg: "Compte non trouvé" });
     } else {
-      if(req.compte.formation == "CyberLog") {
+      if(req.compte.statut == "CyberLog") {
         const soutenance = await SoutenanceModel.create({ id_organisateur: id, date: date, lieu: lieu, confidentiel: confidentiel, nom_soutenance: nom_soutenance });
         console.log("Le soutenance a bien ete upload");
 
         res.status(200).json({ msg: "La soutenance a bien ete upload" });
-      } else if(req.compte.formation == "CyberData") {
+      } else if(req.compte.statut == "CyberData") {
+
         const entretien = await EntretienModel.create({id_organisateur: id, date: date, lieu: lieu})
         console.log("L'entretien a bien ete upload");
 

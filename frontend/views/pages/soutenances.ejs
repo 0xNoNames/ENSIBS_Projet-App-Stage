@@ -27,8 +27,8 @@
           <select name="lieux" id="lieux-select">
             <option value="">Choisissez un lieu pour la soutenance--</option>
             
-            <% data.forEach(function(elem) { %>
-              <option value="<%=elem.nom %>"><%=elem.nom %></option>
+            <% lieux.forEach(function(lieu) { %>
+              <option value="<%=lieu.nom %>"><%=lieu.nom %></option>
             <% }); %>
 
           </select>
