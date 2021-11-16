@@ -59,7 +59,6 @@ export const createCompte = async (req, res) => {
     const validation = await ValidationModel.create({ _compteId: compte._id, token: crypto.randomBytes(16).toString("hex") });
 
     await envoyerMail(
-      res,
       email,
       "Mail de vérification - ENSIBS",
       "Bonjour MM./M. " + compte.nom + ",\n\n" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : \nhttp://" + req.headers.host + "/api/comptes/valider/" + compte.id + "/" + validation.token + "\n\nMerci!\n"
@@ -98,7 +97,6 @@ export const updateCompteMail = async (req, res) => {
     validation = await ValidationModel.create({ _compteId: req.compte._id, token: crypto.randomBytes(16).toString("hex") });
 
     await envoyerMail(
-      res,
       req.body.email,
       "Mail de vérification - ENSIBS",
       "Bonjour MM./M. " + req.compte.nom + ",\n\n" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : \nhttp://" + req.headers.host + "/api/comptes/valider/" + req.compte.id + "/" + validation.token + "\n\nMerci!\n"
@@ -174,7 +172,6 @@ export const deleteAnyCompte = async (req, res) => {
   try {
     await CompteModel.deleteOne({ email: req.params.email });
     await envoyerMail(
-      res,
       req.params.email,
       "Votre compte a été supprimé par un administrateur - ENSIBS",
       "Bonjour MM./M.,\n\nVotre compte a été supprimé par un administrateur, veuillez recréer un compte ou contacter un administrateur via le formulaire de contact du site."
@@ -189,7 +186,7 @@ export const deleteAnyCompte = async (req, res) => {
 export const attribuerCompte = async (req, res) => {
   try {
     await CompteModel.updateOne({ email: req.params.email }, { $set: { estAttribue: true } });
-    await envoyerMail(res, req.params.email, "Votre compte a été validé - ENSIBS", "Bonjour MM./M.,\n\nVotre compte a été validé par un administrateur, connectez-vous pour ajouter votre CV via la page Compte.\n\nMerci!\n");
+    await envoyerMail(req.params.email, "Votre compte a été validé - ENSIBS", "Bonjour MM./M.,\n\nVotre compte a été validé par un administrateur, connectez-vous pour ajouter votre CV via la page Compte.\n\nMerci!\n");
     res.status(200).send({ message: "OK" });
   } catch (erreur) {
     console.log("attribuerCompte() from /controllers/api/comptes.js : ", erreur);
@@ -305,7 +302,6 @@ export const postCompteAideValidation = async (req, res) => {
   validation = await ValidationModel.create({ _compteId: compte._id, token: crypto.randomBytes(16).toString("hex") });
 
   await envoyerMail(
-    res,
     req.body.email,
     "Mail de vérification ENSIBS",
     "Bonjour MM./M. " + compte.nom + ",\n\n" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : \nhttp://" + req.headers.host + "/api/comptes/valider/" + compte.id + "/" + validation.token + "\n\nMerci!\n"

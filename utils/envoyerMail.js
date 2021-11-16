@@ -3,13 +3,13 @@ import dotenv from "dotenv";
 
 dotenv.config({ path: "../.env" });
 
-const envoyerMail = async (res, email, subject, text) => {
+const envoyerMail = async (email, subject, text) => {
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       host: process.env.HOST,
       port: 465,
-      // secure: true,
+      secure: true,
       auth: {
         user: process.env.EMAIL,
         pass: process.env.PASSWORD,
@@ -25,7 +25,7 @@ const envoyerMail = async (res, email, subject, text) => {
     console.log("L'email a été envoyé.");
   } catch (erreur) {
     console.log("L'email n'a pas été envoyé.", erreur);
-    return Error("Technical Issue!, Please click on resend for verify your Email.");
+    return Error("Erreur interne.");
   }
 };
 

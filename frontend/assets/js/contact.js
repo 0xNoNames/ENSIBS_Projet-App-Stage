@@ -1,34 +1,32 @@
 window.addEventListener("load", () => {
-  const envoyerFormulaire = async () => {
+  const envoyerMailContact = async () => {
     try {
-      const response = await fetch("/api/comptes/connexion", {
+      const response = await fetch("/api/contact/", {
         method: "POST",
-        body: JSON.stringify({ email: form.email.value, mot_de_passe: form.password.value }),
+        body: JSON.stringify({ nom: formContact.nomContact.value, email: formContact.emailContact.value, message: formContact.messageContact.value }),
         mode: "cors",
         credentials: "include",
       });
       const data = await response.json();
 
-      if (response.status != "200") {
+      if (data) {
         document.getElementById("messageErreur").innerHTML = data.message;
         setTimeout(() => {
           document.getElementById("messageErreur").innerHTML = "";
-        }, 5000);
-      } else {
-        window.location.href = "/compte";
+        }, 4000);
       }
     } catch (erreur) {
-      document.getElementById("messageErreur").innerHTML = erreur.message;
+      document.getElementById("messageErreur").innerHTML = erreur;
       setTimeout(() => {
         document.getElementById("messageErreur").innerHTML = "";
-      }, 5000);
+      }, 4000);
     }
   };
 
-  var form = document.getElementById("form");
+  const formContact = document.getElementById("formContact");
 
-  form.addEventListener("submit", (event) => {
+  formContact.addEventListener("submit", (event) => {
     event.preventDefault();
-    envoyerFormulaire();
+    envoyerMailContact();
   });
 });

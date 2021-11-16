@@ -76,15 +76,15 @@ router.post("/aide/oublie", postCompteAideOublie);
 router.put("/email", verifierToken, estVerifie, updateCompteMail);
 
 /**
- * @route   PUT /api/comptes/pwd
+ * @route   PUT /api/comptes/motdepasse
  * @desc    Mettre à jour le mot de passe d'un utilisateur
  * @access  Private
  */
 router.put("/motdepasse", verifierToken, estVerifie, updateCompteMotDePasse);
 
 /**
- * @route   PUT /api/comptes/pwd
- * @desc    Mettre à jour le mot de passe d'un utilisateur
+ * @route   PUT /api/comptes/linkedin
+ * @desc    Mettre à jour le compte LinkedIn d'un utilisateur
  * @access  Private
  */
 router.put("/linkedin", verifierToken, estVerifie, estEtudiantEntreprise, updateLinkedin);

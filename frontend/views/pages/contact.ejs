@@ -9,63 +9,70 @@
     <%- include('../partials/navbar'); %>
     <!-- </header> -->
 
-    <div class="mt-32 flex justify-center items-center">
-      <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <input type="text" id="mail" required>
-        <input type="text" id="objet" required>
-        <input type="text" id="contenu" required>
-        <input type="button"
-          value="Envoyer le mail">
-      </div>
-    </div>
+    <div class="my-12 space-y-20 flex flex-col justify-center items-center">
+      <div class="py-10 px-10 mx-32 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+        <form id="formContact" class="flex flex-col py-10 px-8 text-left text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50">
+          <h1 class="mb-5 text-white text-lg text-center">Avez-vous une question ?</h1>
 
-    <div class="mt-32 flex justify-center items-center">
-      <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl text-white">ENSIBS - Responsable Relation Entreprises</p>
-        <p class="text-4xl text-white">Loïc Louer</p>
-        <p class="text-4xl text-white">loic.louer@univ-ubs.fr</p>
-        <p class="text-4xl text-white">06 98 73 32 21</p>
-      </div>
-    </div>
+          <label for="nomContact" class="mt-6 text-lg">Nom</label>
+          <input type="text" placeholder="Nom" id="nomContact" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" required />
 
-    <div class="mt-32 flex justify-center items-center">
-      <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl text-white">ENSIBS - Responsable Pédagogique Sciences des données et cybersécurité</p>
-        <p class="text-4xl text-white">Loïc Louer</p>
-        <p class="text-4xl text-white">loic.louer@univ-ubs.fr</p>
-        <p class="text-4xl text-white">06 98 73 32 21</p>
-      </div>
-    </div>
+          <label for="emailContact" class="mt-6 text-lg">E-mail</label>
+          <input type="email" placeholder="mail@domain.net" id="emailContact" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" required />
 
-    <div class="mt-32 flex justify-center items-center">
-      <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl text-white">ENSIBS - Responsable Pédagogique Cybersécurité du logiciel</p>
-        <p class="text-4xl text-white">Salah Sadou</p>
-        <p class="text-4xl text-white">salah.sadou@univ-ubs.fr</p>
-        <p class="text-4xl text-white">02 97 01 71 76</p>
-      </div>
-    </div>
+          <label for="messageContact" class="mt-6 text-lg">Message</label>
+          <textarea type="text" placeholder="Votre message" id="messageContact" class="w-104 mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" required></textarea>
 
-    <div class="mt-32 flex justify-center items-center">
-      <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl text-white">ENSIBS - Représentant des élèves Sciences des données et cybersécurité</p>
-        <p class="text-4xl text-white">Nicolas Blanchard</p>
-        <p class="text-4xl text-white">blanchard.e1800074@etud.univ-ubs.fr</p>
-        <p class="text-4xl text-white">06 81 16 07 60</p>
+          <button class="p-3 mx-32 mt-8 text-lg font-semibold bg-green-ensibs text-white rounded shadow-2xl bg-opacity-75 hover:bg-opacity-100">Envoyer le mail</button>
+        </form>
       </div>
-    </div>
+      
+      <span id="messageErreur" class="mt-4 text-red-300 font-bold text-base text-center"></span>
 
-    <div class="mt-32 flex justify-center items-center">
-      <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl text-white">ENSIBS - Représentant des élèves Cybersécurité du logiciel</p>
-        <p class="text-4xl text-white">Nicolas Blanchard</p>
-        <p class="text-4xl text-white">blanchard.e1800074@etud.univ-ubs.fr</p>
-        <p class="text-4xl text-white">06 81 16 07 60</p>
+      <div class="py-10 px-10 space-y-10 text-white text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+        <h1 class="text-4xl mb-10">CONTACTS ÉCOLE</h1>
+
+        <div class="py-8 px-6 space-y-2 rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+          <p>ENSIBS - Responsable Relation Entreprises</p>
+          <p>Loïc Louer</p>
+          <p>loic.louer@univ-ubs.fr</p>
+          <p>06 98 73 32 21</p>
+        </div>
+
+        <div class="py-8 px-6 space-y-2 rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+          <p>ENSIBS - Responsable Pédagogique Sciences des données et cybersécurité</p>
+          <p>Loïc Louer</p>
+          <p>loic.louer@univ-ubs.fr</p>
+          <p>06 98 73 32 21</p>
+        </div>
+
+        <div class="py-8 px-6 space-y-2 rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+          <p>ENSIBS - Responsable Pédagogique Cybersécurité du logiciel</p>
+          <p>Salah Sadou</p>
+          <p>salah.sadou@univ-ubs.fr</p>
+          <p>02 97 01 71 76</p>
+        </div>
+
+        <div class="py-8 px-6 space-y-2 rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+          <p>ENSIBS - Représentant des élèves Sciences des données et cybersécurité</p>
+          <p>Nicolas Blanchard</p>
+          <p>blanchard.e1800074@etud.univ-ubs.fr</p>
+          <p>06 81 16 07 60</p>
+        </div>
+
+        <div class="py-8 px-6 space-y-2 rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+          <p>ENSIBS - Représentant des élèves Cybersécurité du logiciel</p>
+          <p>Nicolas Blanchard</p>
+          <p>blanchard.e1800074@etud.univ-ubs.fr</p>
+          <p>06 81 16 07 60</p>
+        </div>
       </div>
     </div>
 
     <!-- <footer> -->
     <%- include('../partials/footer'); %>
     <!--</footer> -->
+
+    <script src="/static/js/contact.js"></script>
   </body>
 </html>

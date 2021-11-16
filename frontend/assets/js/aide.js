@@ -16,7 +16,10 @@ window.addEventListener("load", () => {
         }, 4000);
       }
     } catch (erreur) {
-      console.log(erreur);
+      document.getElementById("messageErreur").innerHTML = erreur.message;
+      setTimeout(() => {
+        document.getElementById("messageErreur").innerHTML = "";
+      }, 4000);
     }
   };
 
@@ -37,7 +40,10 @@ window.addEventListener("load", () => {
         }, 4000);
       }
     } catch (erreur) {
-      console.log(erreur);
+      document.getElementById("messageErreur").innerHTML = erreur.message;
+      setTimeout(() => {
+        document.getElementById("messageErreur").innerHTML = "";
+      }, 4000);
     }
   };
 
