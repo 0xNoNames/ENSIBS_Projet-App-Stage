@@ -1,96 +1,207 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <%- include('../partials/head'); %>
-  </head>
 
-  <body>
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body>
     <!-- <header> -->
     <%- include('../partials/navbar'); %>
-    <!-- </header> -->
+        <!-- </header> -->
 
-    <div class="mt-12 mx-12 flex justify-center items-center flex-lig">
-      <div class="m-10 py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl text-white">Présentation de l'école</p>
-      </div>
-    </div>
-    <div class="mt-12 mx-12 flex justify-center items-center flex-col">
-      <div class="m-10 py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl text-white">
-          Implantée au sein de l'Université de Bretagne-Sud, l’École Nationale Supérieure d’Ingénieurs de Bretagne-Sud (ENSIBS) propose cinq spécialités  :
-        </p> 
-        <p class="text-4xl text-white">
-          A Lorient : 
-          Génie Civil 4.0, Génie Industriel 4.0, Mécatronique
-        </br>
-          A Vannes :
-          Cyberdéfense, Cybersécurité du logiciel
-        </p>
-        <p class="text-4xl text-white">
-          Située sur deux campus, l'ENSIBS accueille au sein de ses propres bâtiments et notamment à Lorient, dans ses locaux neufs et modernes, de l’enseignement, des laboratoires de recherche et des activités de transfert et de valorisation.
-          L’École entretient des liens forts avec les entreprises, les groupes industriels, son réseau d’anciens animé avec l’Association des diplômés et forme des ingénieurs aptes à innover et entreprendre. Membre de la Conférence des Directeurs des Grandes Écoles de Bretagne (CDGEB), elle participe au développement de la formation et bénéficie de la synergie avec les Grandes Écoles de la région. 
-          Les élèves suivent une formation équilibrée entre cours, travaux dirigés et pratiques qui mêlent enseignements scientifiques, technologiques et en sciences humaines et sociales. L'enseignement met l'accent sur la polyvalence et la pluridisciplinarité. L'ingénieur est formé(e) à la conduite de projet, au management, au travail en réseau.
-        </p>
-      </div>
-    </div>
-    <div class="mt-12 mx-12 flex justify-center items-center flex-lig">
-      <div class="m-10 py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl text-white">Sur un socle commun en Cybersécurité du logiciel, l’ENSIBS propose des formations sous deux statuts différents avec des orientations spécifiques : Cybersécurité du logiciel sous le statut étudiant et Sciences des données et cybersécurité sous le statut apprenti </p>
-      </div>
-    </div>
-    <div class="mt-12 mx-12 flex justify-center items-center flex-lig">
-      <div class="m-10 py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl text-white">L’ingénieur en science des données et cybersécurité combine des compétences venant de l’informatique, des statistiques, de l’intelligence artificielle, des méthodes de chiffrement et de la cybersécurité le tout dans une orientation «big data» et calcul intensif. Il est en mesure de maîtriser un double enjeu : sécuriser les données et leur traitement mais également apporter la puissance de la science des données à la cybersécurité.</p>
-      </div>
-      <div class="m-10 py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl text-white">L’ingénieur en cybersécurité du logiciel formé à l’ENSIBS est un ingénieur informaticien capable de comprendre et prendre en compte les risques liés aux vulnérabilités logicielles et de proposer et mettre en place des systèmes répondant à de fortes exigences en terme de sécurité et de sûreté. Il apporte la sécurité par conception (Secure by design). La formation cybersécurité du logiciel est labellisée SecNumedu.</p>
-      </div>
-    </div>
+        <div class="m-12 text-white mx-12 flex flex-col justify-center items-center">
+            <div
+                class="mx-32 py-12 px-12 space-y-16 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
 
-    <div class="mt-12 mx-12 flex justify-center items-center flex-lig">
-      <div class="m-10 py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl text-white">Vie étudiante</p>
-      </div>
-    </div>
+                <div
+                    class="py-12 px-12 space-y-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+                    <h1 class="text-4xl">Les deux campus de l'ENSIBS</h1>
+                    <p>Implantée au sein de l'Université de Bretagne-Sud, l’École Nationale Supérieure d’Ingénieurs de
+                        Bretagne-Sud (ENSIBS) propose cinq spécialités sur deux campus :</p>
+                    <div class="flex flex-row space-x-10 justify-center">
+                        <div
+                            class="py-5 px-5 space-y-1 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+                            <p class="text-xl">LORIENT</p><br>
+                            <p>Génie Civil 4.0</p>
+                            <p>Génie Industriel 4.0</p>
+                            <p>Mécatronique</p>
+                        </div>
+                        <div
+                            class="py-5 px-5 space-y-1 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+                            <p class="text-xl">VANNES</p><br>
+                            <p>Cyberdéfense</p>
+                            <p>Cybersécurité du logiciel</p>
+                        </div>
+                    </div>
+                    <p class="text-justify">
+                        Située sur deux campus, l'ENSIBS accueille au sein de ses propres bâtiments et notamment à
+                        Lorient, dans ses locaux neufs et modernes, de l’enseignement, des laboratoires de recherche et
+                        des activités de transfert et de valorisation.</br>
+                        </br>L’École entretient des liens forts avec les entreprises, les groupes industriels, son
+                        réseau d’anciens animé avec l’Association des diplômés et forme des ingénieurs aptes à innover
+                        et entreprendre. Membre de la Conférence des Directeurs
+                        des Grandes Écoles de Bretagne (CDGEB), elle participe au développement de la formation et
+                        bénéficie de la synergie avec les Grandes Écoles de la région.
+                        </br>
+                        </br> Les élèves suivent une formation équilibrée entre cours,travaux dirigés et pratiques qui
+                        mêlent enseignements scientifiques, technologiques et en sciences humaines et sociales.
+                        L'enseignement met l'accent sur la polyvalence et
+                        la pluridisciplinarité. L'ingénieur est formé(e) à la conduite de projet, au management, au
+                        travail en réseau.
+                    </p>
+                </div>
 
 
-    <div class="mt-12 mx-12 flex justify-center items-center flex-lig">
-      <div class="m-10 py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl text-white">Les étudiants de l'ENSIBS ont accès à une vie étudiante riche et animée grâce aux nombreuses associations du campus de l'UBS, notamment celles de l'ENSIBS</p>
-        <p class="text-4xl text-white">BDE de l’ENSIBS
-          <img src="/static/img/logo-bde.png" alt="Logo BDE" style="width:128px;height:128px;">
-        </p>
-        
-        <p class="text-4xl text-white">
-          Le BDE de l'ENSIBS, l'École Nationale d'Ingénieurs de Bretagne Sud de Lorient et Vannes, permet aux étudiants de l'école de se réunir aux travers différentes activités (tournois, quizz, galas...) afin de former une cohésion au sein des différentes promotions. Les étudiants de toute l'UBS sont aussi conviées à de nombreux événements (le gala, le ski, l'ENSIBeach...).
-        </p>
+                <div
+                    class="m-10 py-10 px-10 space-y-10 rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+                    <h1 class="text-4xl">Les cursus en cybersécurité à Vannes</h1>
+                    <p>
+                        Sur un socle commun en Cybersécurité du logiciel, l’ENSIBS propose des formations sous deux
+                        statuts différents avec des orientations spécifiques : Conception logicielle et cybersécurité
+                        sous le statut étudiant ainsi que sciences des données et cybersécurité
+                        sous le statut apprenti.
+                    </p>
 
-        <p class="text-4xl text-white">HACK2G2
-          <img src="/static/img/logo-hack2g2.png" alt="Logo HACK2G2" style="width:128px;height:128px;">
-        </p>
-        <p class="text-4xl text-white">L’association a pour objet le partage de connaissances autour de la sécurité informatique et du numérique ainsi que la gestion du hacklab de l'Université de Bretagne Sud (UBS). L'association mènera dans ce cadre les activités suivantes :
-          L'approfondissement de sujets concernant la sécurité
-          Démocratisation de connaissances en informatique auprès d’un public étudiant, néophyte ou non
-          Le stockage et la gestion des immobilisations (matérielles et immatérielles) du hacklab (OpenLab de l’IUT de Vannes)</p>
-        <p class="text-4xl text-white">ViewUp
-          <img src="/static/img/logo-viewup.png" alt="Logo ViewUp" style="width:128px;height:128px;">
-        </p>
-        <p class="text-4xl text-white">L'association professionnalisante ViewUp a pour objectifs de faire des projets pour les entreprises et les particuliers. Elles forment ses membres à gérer des projets et la partie administrative d'une entreprise en se gérant comme telle. ViewUp est répartie sur les campus de Lorient et Vannes et est ouverte à tous les étudiants de l'UBS, que ce soit en tant qu'administrateur ou en tant que consultant.</p>
-        
-        <p class="text-4xl text-white">Donk'esport
-          <img src="/static/img/logo-donkesport.png" alt="Logo Donk'esport" style="width:128px;height:128px;">
-        </p>
-        <p class="text-4xl text-white">Donk'esport est LE club e-sport de l'ENSIBS ! Sa mission ? Satisfaire ta passion pour les jeux vidéos.</p>
-        <p class="text-4xl text-white">Le D20</p>
-        <p class="text-4xl text-white">Le D20 est le club de jeu de rôle et de jeu de société de l'ENSIBS</p>
+                    <div class="flex flex-row space-x-10 m-10">
+                        <div
+                            class="py-10 px-10 rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+                            <h1 class="text-4xl">Statut étudiant</h1>
+                            </br>
 
-      </div>
-    </div>
+                            <h1 class="text-2xl">Conception logicielle et cybersécurité</h1>
+                            </br>
 
+                            <p class="text-justify">
+                                L’ingénieur en science des données et cybersécurité combine des compétences venant de
+                                l’informatique, des statistiques, de l’intelligence artificielle, des méthodes de
+                                chiffrement et de la cybersécurité le tout dans une orientation «big data» et calcul
+                                intensif. Il est en mesure de maîtriser un double enjeu : sécuriser les données et leur
+                                traitement mais également apporter la puissance de la science des données à la
+                                cybersécurité.
+                            </p>
+                        </div>
+                        <div
+                            class="py-10 px-10 rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+                            <h1 class="text-4xl">Statut apprenti</h1>
+                            </br>
+                            <h1 class="text-2xl">Sciences des données et cybersécurité</h1>
+                            </br>
 
+                            <p class="text-justify">
+                                L’ingénieur en cybersécurité du logiciel formé à l’ENSIBS est un ingénieur informaticien
+                                capable de comprendre et prendre en compte les risques liés aux vulnérabilités
+                                logicielles et de proposer et mettre en place des systèmes répondant à de fortes
+                                exigences
+                                en terme de sécurité et de sûreté. Il apporte la sécurité par conception (Secure by
+                                design). La formation cybersécurité du logiciel est labellisée SecNumedu.
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- <footer> -->
-    <%- include('../partials/footer'); %>
-    <!--</footer> -->
-  </body>
+                <div
+                    class="py-10 px-10 space-y-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+                    <h1 class="text-4xl">Vie étudiante</h1>
+                    <p>Les étudiants de l'ENSIBS ont accès à une vie étudiante riche et animée grâce aux nombreuses
+                        associations du campus de l'UBS, notamment celles de l'ENSIBS</p>
+
+                    <div class="flex flex-col space-y-10 m-10">
+                        <div
+                            class="py-10 px-10 flex flex-col space-y-5 rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+                            <h1 class="text-xl">Bureau des étudiants de l’ENSIBS</h1>
+                            <div class="flex flex-row space-x-8 justify-center align-middle items-center">
+                                <img src="/static/img/logo-bde.png" alt="Logo BDE"
+                                    style="width: 128px; height: 128px" />
+                                <p class="text-justify">
+                                    Le BDE de l'ENSIBS, l'École Nationale d'Ingénieurs de Bretagne Sud de Lorient et
+                                    Vannes, permet aux étudiants de l'école de se réunir aux travers différentes
+                                    activités (tournois, quizz, galas...) afin de former une cohésion au sein des
+                                    différentes promotions.
+                                    Les étudiants de toute l'UBS sont aussi conviées à de nombreux événements (le gala,
+                                    le ski, l'ENSIBeach...).
+                                </p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="py-10 px-10 flex flex-col space-y-5 rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+                            <h1 class="text-xl">HACK2G2</h1>
+                            <div class="flex flex-row space-x-8 justify-center align-middle items-center">
+                                <img class="bg-white" src="/static/img/logo-hack2g2.png" alt="Logo HACK2G2"
+                                    style="width: 128px; height: 128px" />
+                                <p class="text-justify">
+                                    L’association a pour objet le partage de connaissances autour de la sécurité
+                                    informatique et du numérique ainsi que la gestion du hacklab de l'Université de
+                                    Bretagne Sud (UBS). L'association mènera dans ce cadre les activités suivantes :
+                                    L'approfondissement
+                                    de sujets concernant la sécurité Démocratisation de connaissances en informatique
+                                    auprès d’un public étudiant, néophyte ou non Le stockage et la gestion des
+                                    immobilisations (matérielles et immatérielles) du hacklab
+                                    (OpenLab de l’IUT de Vannes)
+                                </p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="py-10 px-10 flex flex-col space-y-5 rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+                            <h1 class="text-xl">ViewUp</h1>
+                            <div class="flex flex-row space-x-8 justify-center align-middle items-center">
+                                <img src="/static/img/logo-viewup.png" alt="Logo ViewUp"
+                                    style="width: 128px; height: 128px" />
+                                <p class="text-justify">
+                                    L'association professionnalisante ViewUp a pour objectifs de faire des projets pour
+                                    les entreprises et les particuliers. Elles forment ses membres à gérer des projets
+                                    et la partie administrative d'une entreprise en se gérant comme telle. ViewUp est
+                                    répartie
+                                    sur les campus de Lorient et Vannes et est ouverte à tous les étudiants de l'UBS,
+                                    que ce soit en tant qu'administrateur ou en tant que consultant.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="py-10 px-10 flex flex-col space-y-5 rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+                            <h1 class="text-xl">Donk'esport</h1>
+                            <div class="flex flex-row space-x-8 justify-center align-middle items-center">
+                                <img class="bg-white" src="/static/img/logo-donkesport.png" alt="Logo Donk'esport"
+                                    style="width: 128px; height: 128px" />
+                                <p class="text-justify">
+                                    L’association a pour objet le partage de connaissances autour de la sécurité
+                                    informatique et du numérique ainsi que la gestion du hacklab de l'Université de
+                                    Bretagne Sud (UBS). L'association mènera dans ce cadre les activités suivantes :
+                                    L'approfondissement
+                                    de sujets concernant la sécurité Démocratisation de connaissances en informatique
+                                    auprès d’un public étudiant, néophyte ou non Le stockage et la gestion des
+                                    immobilisations (matérielles et immatérielles) du hacklab
+                                    (OpenLab de l’IUT de Vannes)</br>
+                                    </br>
+                                    Donk'esport est LE club e-sport de l'ENSIBS ! Sa mission ? Satisfaire ta passion
+                                    pour les jeux vidéos.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="py-10 px-10 flex flex-col space-y-5 rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+                            <h1 class="text-xl">Le D20</h1>
+                            <div class="flex flex-row self-start space-x-8 justify-center align-middle items-center">
+                                <img class="bg-white" src="/static/img/logo-d20.png" alt="Logo Donk'esport"
+                                    style="width: 128px; height: 128px" />
+                                <p class="text-justify">
+                                    Le D20 est le club de jeu de rôle et de jeu de société de l'ENSIBS.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- <footer> -->
+        <%- include('../partials/footer'); %>
+            <!--</footer> -->
+</body>
+
 </html>
