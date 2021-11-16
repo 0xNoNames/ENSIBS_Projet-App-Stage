@@ -61,7 +61,7 @@ export const getSoutenances = async (req, res) => {
     }
   }
   res.status(200).json(JSON.stringify({ result: result_soutenances }));
-  } else if(req.compte.statut == "Administrateur") {
+  } else if(req.compte.statut == "Administrateur" || req.compte.statut == "Entreprise") {
 
     const soutenances = await SoutenanceModel.find({});
     const entretiens = await EntretienModel.find({});
