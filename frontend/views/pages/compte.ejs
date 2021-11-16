@@ -78,30 +78,6 @@
                   </div>
                   <% } %>
       </div>
-
-
-      <% if (statut=="CyberLog" || statut =="CyberData"){%>
-      <div class="p-10 flex flex-col justify-center items-center text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p>Mon CV : </p>
-        <% if (cv) {%>
-          <iframe src='/api/cvs/<%=cv.id_eleve%>/pdf'></iframe>
-        <% } else { %>
-          <p>Aucun CV</p>
-        <% } %>
-      </div>
-      <% } %>
-    </div>
-
-    <% if (statut=="CyberLog" || statut =="CyberData"){%>
-      <div class="p-10 flex flex-col justify-center items-center text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p>Ma lettre de motivation : </p>
-        <% if (motivation) {%>
-          <iframe src='/api/motivation/<%=cv.id_eleve%>'></iframe>
-        <% } else { %>
-          <p>Aucune lettre de motivation</p>
-        <% } %>
-      </div>
-      <% } %>
     </div>
 
     <!-- POPUP CHANGEMENT DE MAIL -->
@@ -161,8 +137,19 @@
       class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
       style="display: none">
       <form id="formCV" class="flex flex-col">
-        <h1 class="text-4xl mb-8 whitespace-nowrap">Modifier mon curriculum vitae</h1>
+        <h1 class="text-4xl whitespace-nowrap">Modifier mon curriculum vitae</h1>
 
+        <% if (statut=="CyberLog" || statut =="CyberData"){%>
+          <div class="p-5 my-8 space-y-2 mx-32 flex flex-col justify-center items-center text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+            <p>Mon CV : </p>
+            <% if (cv) {%>
+              <iframe src='/api/cvs/<%=cv.id_eleve%>/pdf'></iframe>
+            <% } else { %>
+              <p>Aucun CV</p>
+            <% } %>
+          </div>
+          <% } %>
+          
         <input class="self-center" type="file" name="fileUploadCV" value="fileUploadCV" id="fileUploadCV"
           accept="application/pdf" required>
 
@@ -182,7 +169,18 @@
       class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
       style="display: none">
       <form id="formLM" class="flex flex-col">
-        <h1 class="text-4xl mb-8 whitespace-nowrap">Modifier ma lettre de motivation</h1>
+        <h1 class="text-4xl whitespace-nowrap">Modifier ma lettre de motivation</h1>
+
+        <% if (statut=="CyberLog" || statut =="CyberData"){%>
+          <div class="p-5 my-8 mx-32 space-y-2 flex flex-col justify-center items-center text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+            <p>Ma lettre de motivation : </p>
+            <% if (motivation) {%>
+              <iframe src='/api/motivation/<%=cv.id_eleve%>'></iframe>
+            <% } else { %>
+              <p>Aucune lettre de motivation</p>
+            <% } %>
+          </div>
+          <% } %>
 
         <input class="self-center" type="file" name="fileUploadLM" value="fileUploadLM" id="fileUploadLM"
           accept="application/pdf" required>
