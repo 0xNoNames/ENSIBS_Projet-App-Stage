@@ -1,14 +1,42 @@
 import validator from "validator";
 import SoutenanceModel from "../../models/soutenance.js";
 import CompteModel from "../../models/compte.js";
+import EntretienModel from "../../models/entretien.js"
 
 export const getSoutenances = async (req, res) => {
   console.log("GETTING SOUTENANCES");
-  const soutenances = await SoutenanceModel.find({});
+  if(req.compte.formation == "CyberData") {
+    const entretiens = await EntretienModel.find({});
 
-  var result_soutenances = [];
+    var result_entretiens = [];
+    for(const entretien of entretiens) {
+      try {
+        const user = await CompteModel.findOne({ id: entretien.id_organisateur });
+        var title = user.nom;
 
-  for (const soutenance of soutenances) {
+        var date = soutenance.date;
+        var dateString = date.toISOString();
+
+        // format "2016-02-18T23:59:48.039Z"
+        var start = dateString.replace("T", " ").slice(0, -5);
+
+        var endDate = date.setHours(date.getHours() + 1);
+        var end = dateString.replace("T", " ").slice(0, -5);
+
+        var id = entretien.id_organisateur;
+
+        var entretienResult = { title: title, start: start, end: endDate, id: id };
+      } catch(erreur) {
+        console.log(erreur);
+      }
+    }
+    res.status(200).json(JSON.stringify({ result: result_soutenances }));
+  } else if(req.compte.formation == "CyberLog") {
+    const soutenances = await SoutenanceModel.find({});
+
+    var result_soutenances = [];
+
+    for (const soutenance of soutenances) {
     try {
       const user = await CompteModel.findOne({ id: soutenance.id_organisateur });
       var title = user.nom;
@@ -32,6 +60,7 @@ export const getSoutenances = async (req, res) => {
     }
   }
   res.status(200).json(JSON.stringify({ result: result_soutenances }));
+  }
 };
 
 export const createSoutenance = async (req, res) => {
@@ -75,35 +104,22 @@ export const createSoutenance = async (req, res) => {
     if (!mongoCompte) {
       res.status(400).json({ msg: "Compte non trouvé" });
     } else {
-      const cv = await SoutenanceModel.create({ id_organisateur: id, date: date, lieu: lieu, confidentiel: confidentiel, nom_soutenance: nom_soutenance });
-      console.log("Le soutenance a bien ete upload");
+      if(req.compte.formation == "CyberLog") {
+        const soutenance = await SoutenanceModel.create({ id_organisateur: id, date: date, lieu: lieu, confidentiel: confidentiel, nom_soutenance: nom_soutenance });
+        console.log("Le soutenance a bien ete upload");
 
-      res.status(200).json({ msg: "Le CV a bien ete upload" });
+        res.status(200).json({ msg: "La soutenance a bien ete upload" });
+      } else if(req.compte.formation == "CyberData") {
+        const entretien = await EntretienModel.create({id_organisateur: id, date: date, lieu: lieu})
+        console.log("L'entretien a bien ete upload");
+
+        res.status(200).json({ msg: "L'entretien a bien ete upload" });
+      }
     }
   } catch (erreur) {
     console.log(erreur);
     res.status(400);
   }
-
-  /*
-      const newSoutenance = new Soutenance({
-          name,
-          email,
-          password: hash
-        });
-        
-      const savedUser = await newUser.save();
-  
-       
-  
-        res.status(200).json({
-          token,
-          user: {
-            id: savedUser.id,
-            name: savedUser.name,
-            email: savedUser.email
-          }
-        }); */
 
   res.status(200);
 };
