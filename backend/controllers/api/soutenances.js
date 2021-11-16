@@ -5,7 +5,7 @@ import EntretienModel from "../../models/entretien.js"
 
 export const getSoutenances = async (req, res) => {
   console.log("GETTING SOUTENANCES");
-  if(req.compte.formation == "CyberData") {
+  if(req.compte.statut == "CyberData") {
     const entretiens = await EntretienModel.find({});
 
     var result_entretiens = [];
@@ -31,7 +31,7 @@ export const getSoutenances = async (req, res) => {
       }
     }
     res.status(200).json(JSON.stringify({ result: result_soutenances }));
-  } else if(req.compte.formation == "CyberLog") {
+  } else if(req.compte.statut == "CyberLog") {
     const soutenances = await SoutenanceModel.find({});
 
     var result_soutenances = [];
