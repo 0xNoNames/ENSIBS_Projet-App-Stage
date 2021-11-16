@@ -12,8 +12,8 @@
 
     <div class="m-12 flex justify-center items-center text-white">
       <div
-        class="p-10 flex flex-col justify-center items-center text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl text-white">
+        class="p-10 w-2/5 flex flex-col justify-center items-center text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+        <p class="text-4xl">
           <%=prenom%>
             <%=nom%></br>
               <%=statut%></br>
@@ -24,39 +24,39 @@
             le valide.</p>
           <% } %>
             <button onClick="ouvrirPopupMail()"
-              class="py-2 px-3 mt-10 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier
+              class="py-2 px-3 mt-10 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 rounded-full transition duration-150">Modifier
               mon e-mail</button>
             <button onClick="ouvrirPopupMDP()"
-              class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier
+              class="py-2 px-3 mt-3 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 rounded-full transition duration-150">Modifier
               mon mot de passe</button>
             <% if (estAttribue && statut !="Administrateur" ) { %>
               <button onClick="ouvrirPopupCV()"
-                class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier
+                class="py-2 px-3 mt-3 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 rounded-full transition duration-150">Modifier
                 mon CV</button>
               <button onClick="ouvrirPopupLM()"
-                class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier
+                class="py-2 px-3 mt-3 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 rounded-full transition duration-150">Modifier
                 ma lettre de motivation</button>
               <button onClick="ouvrirPopupLinkedIn()"
-                class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Modifier
+                class="py-2 px-3 mt-3 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 rounded-full transition duration-150">Modifier
                 mon URL LinkedIn</button>
               <button onClick="ouvrirOffres()"
-                class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Offres
+                class="py-2 px-3 mt-10 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 rounded-full transition duration-150">Offres
                 sauvgardés</button>
               <button onClick="ouvrirSoutenances()"
-                class="py-2 px-3 mt-2 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 text-white rounded-full transition duration-150">Dates
+                class="py-2 px-3 mt-3 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 rounded-full transition duration-150">Dates
                 entretiens</button>
               <% } %>
 
                 <button onClick="supprimerCompte()"
-                  class="py-2 px-3 mt-10 bg-red-800 bg-opacity-50 hover:bg-opacity-70 text-white rounded-full transition duration-150">Supprimer
-                  le compte</button>
+                  class="py-2 px-3 mt-10 bg-red-800 bg-opacity-50 hover:bg-opacity-70 rounded-full transition duration-150">Supprimer
+                  mon compte</button>
 
                 <% if (statut=="Administrateur" && comptes !="" ) { %>
                   <div id="compteAttribuer"
-                    class="flex flex-wrap mt-10 p-6 text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50">
+                    class="flex flex-wrap mt-10 p-6 rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50">
                     <% comptes.forEach((compte)=> { %>
                       <div
-                        class="flex flex-col m-2 py-6 px-8 text-left text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50">
+                        class="flex flex-col m-2 py-6 px-8 text-left rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50">
                         <h1>Prenom : <%=compte.prenom%>
                         </h1>
                         <h1>Nom : <%=compte.nom%>
@@ -69,9 +69,9 @@
                         </h1>
                         <div id="<%=compte.email%>" class="mt-2 flex justify-evenly">
                           <button onclick="validerAttribution(this)"
-                            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">OK</button>
+                            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 rounded transition duration-150">OK</button>
                           <button onclick="annulerAttribution(this)"
-                            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">ANNULER</button>
+                            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 rounded transition duration-150">ANNULER</button>
                         </div>
                       </div>
                       <% }); %>
@@ -82,7 +82,7 @@
 
     <!-- POPUP CHANGEMENT DE MAIL -->
     <div id="popupMail"
-      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
+      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
       style="display: none">
       <form id="formMail" class="flex flex-col">
         <h1 class="text-4xl mb-8 whitespace-nowrap">Modifier mon d'e-mail</h1>
@@ -93,9 +93,9 @@
 
         <div class="mt-12 mb-8 flex justify-around">
           <button
-            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">Envoyer</button>
+            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 rounded transition duration-150">Envoyer</button>
           <button type="button"
-            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150"
+            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 rounded transition duration-150"
             onclick="fermerPopup(this)">Quitter</button>
         </div>
         <span id="messageErreurMail" class="text-red-300 font-bold text-base text-center"></span>
@@ -104,7 +104,7 @@
 
     <!-- POPUP CHANGEMENT DE MDP -->
     <div id="popupMDP"
-      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
+      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
       style="display: none">
       <form id="formMDP" class="flex flex-col">
 
@@ -123,9 +123,9 @@
 
         <div class="mt-12 mb-8 flex justify-around">
           <button
-            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">Envoyer</button>
+            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 rounded transition duration-150">Envoyer</button>
           <button type="button"
-            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150"
+            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 rounded transition duration-150"
             onclick="fermerPopup(this)">Quitter</button>
         </div>
         <span id="messageErreurMDP" class="text-red-300 font-bold text-base text-center"></span>
@@ -134,7 +134,7 @@
 
     <!-- POPUP CHANGEMENT CV -->
     <div id="popupCV"
-      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
+      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
       style="display: none">
       <form id="formCV" class="flex flex-col">
         <h1 class="text-4xl whitespace-nowrap">Modifier mon curriculum vitae</h1>
@@ -155,9 +155,9 @@
 
         <div class="mt-12 mb-8 flex justify-around">
           <button
-            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">Envoyer</button>
+            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 rounded transition duration-150">Envoyer</button>
           <button type="button"
-            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150"
+            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 rounded transition duration-150"
             onclick="fermerPopup(this)">Quitter</button>
         </div>
         <span id="messageErreurCV" class="text-red-300 font-bold text-base text-center"></span>
@@ -166,7 +166,7 @@
 
     <!-- POPUP UPLOAD LM -->
     <div id="popupLM"
-      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
+      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
       style="display: none">
       <form id="formLM" class="flex flex-col">
         <h1 class="text-4xl whitespace-nowrap">Modifier ma lettre de motivation</h1>
@@ -187,9 +187,9 @@
 
         <div class="mt-12 mb-8 flex justify-around">
           <button
-            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">Envoyer</button>
+            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 rounded transition duration-150">Envoyer</button>
           <button type="button"
-            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150"
+            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 rounded transition duration-150"
             onclick="fermerPopup(this)">Quitter</button>
         </div>
         <span id="messageErreurLM" class="text-red-300 font-bold text-base text-center"></span>
@@ -199,7 +199,7 @@
 
     <!-- POPUP CHANGEMENT DE LinkedIn -->
     <div id="popupLinkedIn"
-      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
+      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
       style="display: none">
       <form id="formLinkedIn" class="flex flex-col">
         <h1 class="text-4xl mb-8 whitespace-nowrap">Modifier mon URL LinkedIn</h1>
@@ -210,9 +210,9 @@
 
         <div class="mt-12 mb-8 flex justify-around">
           <button
-            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150">Envoyer</button>
+            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 rounded transition duration-150">Envoyer</button>
           <button type="button"
-            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 text-white rounded transition duration-150"
+            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 rounded transition duration-150"
             onclick="fermerPopup(this)">Quitter</button>
         </div>
         <span id="messageErreurLinkedIn" class="text-red-300 font-bold text-base text-center"></span>
