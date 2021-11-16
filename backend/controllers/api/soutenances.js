@@ -61,6 +61,64 @@ export const getSoutenances = async (req, res) => {
     }
   }
   res.status(200).json(JSON.stringify({ result: result_soutenances }));
+  } else if(req.compte.statut == "Administrateur") {
+
+    const soutenances = await SoutenanceModel.find({});
+    const entretiens = await EntretienModel.find({});
+
+    var result_soutenances = [];
+
+    for (const soutenance of soutenances) {
+      try {
+        const user = await CompteModel.findOne({ id: soutenance.id_organisateur });
+        var title = user.nom;
+
+        var date = soutenance.date;
+        var dateString = date.toISOString();
+
+        // format "2016-02-18T23:59:48.039Z"
+        var start = dateString.replace("T", " ").slice(0, -5);
+
+        var endDate = date.setHours(date.getHours() + 1);
+        var end = dateString.replace("T", " ").slice(0, -5);
+
+        var id = soutenance.id_organisateur;
+
+        var soutenanceResult = { title: title, start: start, end: endDate, id: id };
+
+        result_soutenances.push(soutenanceResult);
+      } catch (erreur) {
+        console.log(erreur);
+      }
+    }
+
+    for (const ent of entretiens) {
+      try {
+        const user = await CompteModel.findOne({ id: ent.id_organisateur });
+        var title = user.nom;
+
+        var date = ent.date;
+        var dateString = date.toISOString();
+
+        // format "2016-02-18T23:59:48.039Z"
+        var start = dateString.replace("T", " ").slice(0, -5);
+
+        var endDate = date.setHours(date.getHours() + 1);
+        var end = dateString.replace("T", " ").slice(0, -5);
+
+        var id = ent.id_organisateur;
+
+        var soutenanceResult = { title: title, start: start, end: endDate, id: id };
+
+        result_soutenances.push(soutenanceResult);
+      } catch (erreur) {
+        console.log(erreur);
+      }
+    }
+
+    res.status(200).json(JSON.stringify({ result: result_soutenances }));
+    
+
   }
 };
 
