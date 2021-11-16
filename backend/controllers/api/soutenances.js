@@ -66,17 +66,21 @@ export const getSoutenances = async (req, res) => {
 
 export const createSoutenance = async (req, res) => {
   // Get the values in the requests
-  var date = req.body.date;
-  var lieu = req.body.lieu;
-  var hour = req.body.hour;
-  var confidentiel_value = req.body.confidentiel;
-  var nom_soutenance = req.body.nom_soutenance;
+  var json = JSON.parse(req.body)
+
+  var date = json.date;
+  var lieu = json.lieu;
+  var hour = json.hour;
+  var confidentiel_value = json.confidentiel;
+  var nom_soutenance = json.nom_soutenance;
+  console.log(date)
+
 
   try {
     if (!lieu === undefined && !validator.isAlphanumeric(lieu, "fr-FR", { ignore: " '-_" })) res.status(400).json({ message: "Le nom du lieu contient des caracteres non valides" });
 
-    if (!validator.isNumeric(date, { ignore: "-" })) res.status(400).json({ message: "La date contient des caracteres non valide" });
-    if (!validator.isNumeric(hour, { ignore: ":" })) res.status(400).json({ message: "L'heure contient des caracteres non valide" });
+    //if (!validator.isNumeric(date, { ignore: "-" })) res.status(400).json({ message: "La date contient des caracteres non valide" });
+    //if (!validator.isNumeric(hour, { ignore: ":" })) res.status(400).json({ message: "L'heure contient des caracteres non valide" });
   } catch (erreur) {
     console.log(erreur);
   }
