@@ -29,9 +29,11 @@
         
       </div>
       <!-- CV -->
+      <% if (statut != "CyberLog" && statut != "CyberData"){%>
       <div >
         <iframe src='/api/cvs/<%=eleve.id%>/pdf' width="63%" height="600px">
       </div>
+      <% } %>
 
     <script src="/static/js/soutenanceUnique.js" type="module"></script>
 

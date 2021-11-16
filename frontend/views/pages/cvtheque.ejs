@@ -18,7 +18,7 @@
             <% cvs.forEach(function(cv) { %>
             <% comptes.forEach(function(compte) { %>
             <% if (compte.id == cv.id_eleve) { %>
-            <div>
+            <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50 classnameOuvrirCV" id="<%=cv.id_eleve %>" >
                 
                     <h1>Prenom :
                         <%=compte.prenom %>

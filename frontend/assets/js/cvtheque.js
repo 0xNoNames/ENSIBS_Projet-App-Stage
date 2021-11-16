@@ -1,3 +1,22 @@
+// Function for fecting the api
+const getCV = async () => {
+  const options = {
+    method: "GET",
+    mode: "cors",
+    credentials: "include",
+  };
+  return 1;
+
+  /* On effectue la requête */
+  try {
+    const response = await fetch("/api/cvs", options);
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const sendData = async () => {
   console.log("Uploading the CV");
 
@@ -42,23 +61,34 @@ window.addEventListener("load", () => {
   //  event.preventDefault();
   //  sendData();
   //});
+
+  var classnameOuvrirCV = document.getElementsByClassName("classnameOuvrirCV");
+  for (var i = 0; i < classnameOuvrirCV.length; i++) {
+    classnameOuvrirCV[i].addEventListener(
+      "click",
+      (event) => {
+        ouvrirCV(event);
+      },
+      false
+    );
+  }
 });
 
-// Function for fecting the api
-const getCV = async () => {
-  const options = {
-    method: "GET",
-    mode: "cors",
-    credentials: "include",
-  };
-  return 1;
 
-  /* On effectue la requête */
-  try {
-    const response = await fetch("/api/cvs", options);
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.log(error);
+
+const ouvrirCV = async  (event) => {
+  var listelement = event.path;
+
+  var div;
+  for (var i = 0; i < listelement.length; i++) {
+    try{
+      if (listelement[i].getAttribute("class").includes("classnameOuvrirCV")){
+        div = listelement[i]
+      }
+    } catch (erreur){}
   }
-};
+  var url = "api/cvs/" + div.id +"/pdf";
+  window.open(url, '_blank').focus();
+}
+
+
