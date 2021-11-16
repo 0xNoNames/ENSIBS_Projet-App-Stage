@@ -2,7 +2,7 @@ import MotivationModel from "../../models/motivation.js";
 import CompteModel from "../../models/compte.js";
 
 export const postMotivation = async (req, res) => {
-  var binaire = req.body.data_file;
+  var binaire = req.body;
   var id_eleve = req.compte.id;
   var email = req.compte.email;
   var formation = req.compte.statut;
