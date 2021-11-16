@@ -60,6 +60,7 @@ export const getComptePage = async (req, res) => {
       comptes: "",
       cv:cv,
       motivation : motivation,
+      linkedin : req.compte.linkedin,
     });
   }
 };
