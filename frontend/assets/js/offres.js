@@ -8,38 +8,38 @@ const validerOffre = async (id) => {
     const data = await response.json;
 
     if (response.status == 200) {
-      const responseOffres = await fetch("/api/offres/", {
-        method: "GET",
-        mode: "cors",
-        credentials: "include",
-      });
-      const offres = await responseOffres.json();
-      if (response.status == 200) {
-        window.location.href = "/offres";
-        // // Supprime tous les éléments de la division "compteAttribuer".
-        // document.getElementById("offresAValider").innerHTML = "";
-        // document.getElementById("offresAValider").className = "hidden";
+      window.location.href = "/offres";
+      // const responseOffres = await fetch("/api/offres/", {
+      //   method: "GET",
+      //   mode: "cors",
+      //   credentials: "include",
+      // });
+      // const offres = await responseOffres.json();
+      // if (response.status == 200) {
+      // // Supprime tous les éléments de la division "compteAttribuer".
+      // document.getElementById("offresAValider").innerHTML = "";
+      // document.getElementById("offresAValider").className = "hidden";
 
-        // // Ajoute à la division "compteAttribuer" chaque nouveaux éléments.
-        // console.log(offres.length);
-        // if (offres.length != 0) {
-        //   offres.forEach((offre) => {
-        //     // if ()
-        //     document.getElementById("offresAValider").className = "flex flex-wrap";
-        //     document.getElementById("offresAValider").innerHTML +=
-        //       "<div class='py-5 px-5 m-2 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50 buttonAfficherOffre'><h1>Nom de l'entreprise class='text-xl' : " +
-        //       offre.nom_entreprise +
-        //       "</h1><h1>Intitulé du poste : " +
-        //       offre.nom_poste +
-        //       "</h1><h1>Lieu du poste : " +
-        //       offre.lieu_poste +
-        //       "</h1><p class='my-4'>" +
-        //       offre.description_poste +
-        //       "</h1><h1>Date : " +
-        //       offre.date.substring(0, 10) +
-        //       "</h1>" + "<div id='" + offre.id + "' class='flex mt-5 flex-row justify-center space-x-5'><button class='buttonOuvrirOffre p-2 bg-green-ensibs rounded shadow-2xl bg-opacity-75 hover:bg-opacity-100'>OUVRIR</button><button class='buttonSupprimerOffre p-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 rounded'</button>SUPPRIMER</button>"
-        //   });
-      }
+      // // Ajoute à la division "compteAttribuer" chaque nouveaux éléments.
+      // console.log(offres.length);
+      // if (offres.length != 0) {
+      //   offres.forEach((offre) => {
+      //     // if ()
+      //     document.getElementById("offresAValider").className = "flex flex-wrap";
+      //     document.getElementById("offresAValider").innerHTML +=
+      //       "<div class='py-5 px-5 m-2 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50 buttonAfficherOffre'><h1>Nom de l'entreprise class='text-xl' : " +
+      //       offre.nom_entreprise +
+      //       "</h1><h1>Intitulé du poste : " +
+      //       offre.nom_poste +
+      //       "</h1><h1>Lieu du poste : " +
+      //       offre.lieu_poste +
+      //       "</h1><p class='my-4'>" +
+      //       offre.description_poste +
+      //       "</h1><h1>Date : " +
+      //       offre.date.substring(0, 10) +
+      //       "</h1>" + "<div id='" + offre.id + "' class='flex mt-5 flex-row justify-center space-x-5'><button class='buttonOuvrirOffre p-2 bg-green-ensibs rounded shadow-2xl bg-opacity-75 hover:bg-opacity-100'>OUVRIR</button><button class='buttonSupprimerOffre p-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 rounded'</button>SUPPRIMER</button>"
+      //   });
+      // }
       // } else {
       //   document.getElementById("messageErreurAdmin").innerHTML = data.message;
       //   setTimeout(() => {

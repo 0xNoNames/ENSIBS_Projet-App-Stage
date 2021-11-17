@@ -90,13 +90,13 @@ export const deleteOffre = async (req, res) => {
     if (!offre) throw Error("Pas d'offre trouvée");
     if (req.compte.statut === "Entreprise") {
       if (offre.id_entreprise == req.compte.id) {
-        const removed = await offre.remove();
+        const removed = await offre.deleteOne();
         if (!removed) throw Error("Quelque chose s'est mal passé en essayant de supprimer l'offre.");
       } else {
         return res.status(400).json({ message: "Vous n'êtes pas autorisé a supprimer cette offre." })
       }
     } else {
-      const removed = await offre.remove();
+      const removed = await offre.deleteOne();
       if (!removed) throw Error("Quelque chose s'est mal passé en essayant de supprimer l'offre.");
     }
 
@@ -109,7 +109,8 @@ export const deleteOffre = async (req, res) => {
 
 export const validateOffre = async (req, res) => {
   try {
-    const test = await OffreModel.updateOne({ id: req.body.id }, { $set: { estValide: true } });
+    const offre = await OffreModel.findById({ _id: req.params.id });
+    await offre.updateOne({ estValide: true })
     return res.status(200).json({ message: "L'offre a été validée." });
   } catch (erreur) {
     console.log("ERROR controller/api/offres.js validateOffre() : " + erreur);
