@@ -16,6 +16,7 @@ export const postMotivation = async (req, res) => {
     }
 
     const motivation = await MotivationModel.findOne({ id_eleve });
+
     if (motivation) {
       await MotivationModel.updateOne({ id_eleve: id_eleve }, { $set: { binaire: binaire } });
     } else {

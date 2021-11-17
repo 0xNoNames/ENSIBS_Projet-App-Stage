@@ -161,8 +161,8 @@ const sendDataCV = async () => {
   var data_file = input.files[0];
 
   try {
-    if (data_file.size > 15999999) {
-      throw Error("Fichier trop gros, maximum 16 Mo.");
+    if (data_file.size > 5000000) {
+      throw Error("Fichier trop gros, maximum 5 Mo.");
     }
 
     const response = await fetch("/api/cvs", {
@@ -191,11 +191,11 @@ const sendDataLM = async () => {
   var data_file = input.files[0];
 
   try {
-    if (data_file.size > 15999999) {
-      throw Error("Fichier trop gros, maximum 16 Mo.");
+    if (data_file.size > 5000000) {
+      throw Error("Fichier trop gros, maximum 5 Mo.");
     }
 
-    const response = await fetch("/api/motivation", {
+    const response = await fetch("/api/motivations", {
       method: "POST",
       mode: "cors",
       credentials: "include",
@@ -203,7 +203,7 @@ const sendDataLM = async () => {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
     const data = await response.json();
-    console.log(data)
+    console.log(data);
 
     document.getElementById("messageErreurLM").innerHTML = data.message;
     setTimeout(() => {
