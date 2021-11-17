@@ -9,83 +9,94 @@
     <%- include('../partials/navbar'); %>
     <!-- </header> -->
 
-    <div class="mt-32 text-white flex justify-center items-center">
-      <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl">PAGE OFFRES</p>
-
-
+    <div class="m-12 space-y-20 text-white flex flex-col justify-center items-center">
         <% if (statut == "Administrateur" || statut == "Entreprise") { %> 
-          <div id="divFormUploadOffre">
-            <form id="form" class="flex flex-col py-8 px-8 text-left rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50" enctype="multipart/form-data">
+          <div id="divFormUploadOffre" class="flex flex-col py-8 px-8 text-left rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+            <h1 class="text-4xl mb-10 text-center">Publier une offre</h1>
+            <form id="formOffres" class="flex flex-col py-10 px-8 text-left rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50" enctype="multipart/form-data">
+                <label for="nom_entreprise" class="mt-6 text-lg">Nom de l'entreprise</label>
+                <input type="text" placeholder="Nom de l'entreprise" id="nom_entreprise" name="nom_entreprise" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" required />
 
-              <label for="nom_entreprise">Nom entreprise : </label>
-              <input type="text" id="nom_entreprise" name="nom_entreprise"><br>
+                <label for="nom_poste" class="mt-6 text-lg">Intitulé du poste</label>
+                <input type="text" placeholder="Intitulé du poste" id="nom_poste" name="nom_poste" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" required />      
+                
+                <label for="lieu_poste" class="mt-6 text-lg">Lieu du poste</label>
+                <input type="text" placeholder="Lieu du poste" id="lieu_poste" name="lieu_poste" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" required />
 
-              <label for="nom_poste">Nom poste : </label>
-              <input type="text" id="nom_poste" name="nom_poste" value="poste"><br>
-
-              <label for="lieu_poste">Lieu poste : </label>
-              <input type="text" id="lieu_poste" name="lieu_poste" value="Lieu"><br>               
-
-              <input type="radio" id="checkBoxCyberData" name="drone" value="CyberData" checked>
-              <label for="huey">CyberData</label>
-
-              <input type="radio" id="checkBoxCyberLog" name="drone" value="CyberLog">
-              <label for="huey">CyberLog</label><br>
-
-              <input type="file" name="fileupload" value="fileupload" id="fileupload"><br>
-
-              <input  type="submit" id="submitButtonId" name="submit">
-
-            </form>
-          </div>
-        <% }; %>
-        
-      </div>
-    </div>
+                <label for="description_poste" class="mt-6 text-lg">Lieu du poste</label>
+                <textarea type="text" placeholder="Description du poste" id="description_poste" name="description_poste" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" required></textarea>
 
 
+                <label for="statut" class="mt-6 text-lg">Statut</label>
+                <div class="flex flex-row text-center justify-evenly text-lg">
+                  <label class="inline-flex items-center">
+                    <input id="CyberLog" type="radio" class="h-6 w-6" name="statut" value="CyberLog" required />
+                    <span class="ml-2">CYBERLOG</span>
+                  </label>
 
-    <% if (statut == "Administrateur") { %> 
-      <div class="mt-32 flex justify-center items-center">
-        <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-          <p class="text-4xl">Offres non validés</p>
+                  <label class="inline-flex items-center">
+                    <input id="CyberData" type="radio" class="h-6 w-6" name="statut" value="CyberData" required />
+                    <span class="ml-2">CYBERDATA</span>
+                  </label>
+                </div>
 
-          <% offresNonValide.forEach(function(offre) { %>
-            <div id="<%=offre.id %>">
-              <p> Nom entreprise : <%=offre.nom_entreprise %></p>
-              <p> Nom poste : <%= offre.nom_poste %> </p>
-              <!-- TODO : pdf de l'offre-->
-              <p> Formation : <%= offre.formation %> </p>
+                <label for="pdf_poste" class="mt-6 text-lg">PDF du poste</label>
+                <input id="pdf_poste" name="pdf_poste"  class="mt-8 self-center" type="file" name="fileupload" value="fileupload" id="fileupload" accept="application/pdf">
 
-              <button class="buttonValidateOffre">Validate</button>
+                <button class="p-3 mx-32 mt-8 text-lg font-semibold bg-green-ensibs rounded shadow-2xl bg-opacity-75 hover:bg-opacity-100">Envoyer l'offre</button>
+              </form>
+              <span id="messageErreurCreation" class="mt-8 text-red-300 font-bold text-base text-center"></span>
             </div>
-            
-            
+          <% }; %>
+
+          
+    <% if (statut == "Administrateur" && offresNonValide.length != 0) { %> 
+      <div class="flex flex-col p-6 mt-10 rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50">
+        <h1 class="self-center text-4xl mb-4">Offres à valider</h1>
+        <div id="offresAValider" class="flex flex-wrap">
+          <% offresNonValide.forEach(function(offre) { %>
+            <div class="flex flex-col m-2 py-6 px-8 text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50">
+              <div id="<%=offre.id %>">
+                <h1 class="text-xl"> Nom entreprise : <%=offre.nom_entreprise %></h1>
+                <h1> Nom poste : <%= offre.nom_poste %> </h1>
+                <h1> Formation : <%= offre.formation %> </h1>
+                <p class="mt-4"><%= offre.description%></p>
+                <button class="buttonOuvrirOffre mt-4 py-1 px-2 bg-green-ensibs shadow-2xl bg-opacity-75 hover:bg-opacity-100 rounded">OUVIR</button>
+                <div id="<%=offre.id%>" class="mt-4 flex space-x-5 items-center align-middle justify-center">
+                  <button class="buttonValidateOffre py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 rounded">VALIDER</button>
+                  <button class="buttonAnnulerOffre py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 rounded">ANNULER</button>
+                </div>
+              </div>
+            </div>
           <% }); %>
         </div>
+        <span id="messageErreurAdmin" class="mt-8 text-red-300 font-bold text-base text-center"></span>
       </div>
-    <% }; %>
+      <% } %>
 
-    <div>
-      
-    <div class="mt-32 flex justify-center items-center py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-      <p class="text-4xl">Offres</p>
-        
-      <% offresValides.forEach(function(offre) { %>
-        <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50 buttonAfficherOffre" id="<%=offre.id %>" >
-            <h1> <%=offre.nom_entreprise %> </h1>
-            <p> <%=offre.nom_poste %></p>
-            <p> <%=offre.lieu_poste %></p>
-            <!--<iframe src='/api/offres/<%=offre.id_entreprise%>/pdf' width="13%"> -->
-        </div>
-      <% }); %>
+      <div class="flex flex-col p-6 mt-10 rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50">
+        <h1 class="self-center text-4xl mb-4"><%if (statut == "Entreprise") { %>Mes offres<% } else { %>Offres<% } %></h1>
+        <div id="offresAValider" class="flex flex-wrap">
+          <% if (offresValides.length == 0) { %> <h1>Aucune offre publié</h1><% } %>
+          <% offresValides.forEach(function(offre) { %>
+            <div class="py-5 px-5 m-2 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50 buttonAfficherOffre" >
+                <h1 class="text-xl">Nom de l'entreprise : <%=offre.nom_entreprise %></h1>
+                <h1>Intitulé du poste : <%=offre.nom_poste %></h1>
+                <h1>Lieu du poste : <%=offre.lieu_poste %></h1>
+                <p class="my-4"><%= offre.description%></p>
+                <% if (statut == "Entreprise") { %> <p> <% if (offre.estValide) { %>Validée par un administrateur<% } else { %>En attendre de validation<% } } %></p>
+                <div id="<%=offre.id%>" class="flex mt-5 flex-row justify-center space-x-5">
+                  <button class="buttonOuvrirOffre p-2 bg-green-ensibs rounded shadow-2xl bg-opacity-75 hover:bg-opacity-100">OUVRIR</button>
+                  <% if (statut == "Entreprise" || statut == "Administrateur" ) { %> <button class="buttonSupprimerOffre p-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 rounded"</button>SUPPRIMER</button> <% } %>
+                </div>
+          </div>
+          <% }); %>
     </div>
 
     <script src="/static/js/offres.js" type="module"></script>
 
     <!-- <footer> -->
-    <%- include('../partials/footer'); %>
+    <%- include("../partials/footer"); %>
     <!--</footer> -->
   </body>
 </html>

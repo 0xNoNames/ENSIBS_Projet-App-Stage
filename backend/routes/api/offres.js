@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getOffres, createOffre, updateOffre, deleteOffre, validateOffre,getOffreUnique } from "../../controllers/api/offres.js";
-import { verifierToken, estEtudiant, estAdministrateur, estVerifie } from "../../middleware/auth.js";
+import { getOffres, createOffre, updateOffre, deleteOffre, updateAnyOffre, validateOffre, getOffre } from "../../controllers/api/offres.js";
+import { verifierToken, estEtudiant, estAdministrateur, estVerifie, estEntreprise } from "../../middleware/auth.js";
 const router = Router();
 
 /**
@@ -11,25 +11,25 @@ const router = Router();
 router.get("/", verifierToken, estVerifie, estEtudiant, getOffres);
 
 /**
- * @route   GET /api/offres
- * @desc    Récupérer une offre de stage unqiue 
+ * @route   GET /api/offres/:id
+ * @desc    Récupérer une offre de stage
  * @access  Etudiant
  */
-router.get("/:id", verifierToken, estVerifie, estEtudiant, getOffreUnique);
+router.get("/:id", verifierToken, estVerifie, estEtudiant, getOffre);
 
 /**
  * @route   POST /api/offres
  * @desc    Créer une offre de stage
  * @access  Administrateur
  */
-router.post("/", verifierToken, estVerifie, estAdministrateur, createOffre);
+router.post("/", verifierToken, estVerifie, estEntreprise, createOffre);
 
 /**
- * @route   PUT /api/offres
+ * @route   PUT /api/offres/:id
  * @desc    Mettre à jour une offre de stage
  * @access  Administrateur
  */
-router.put("/", verifierToken, estVerifie, estAdministrateur, updateOffre);
+router.put("/:id", verifierToken, estVerifie, estAdministrateur, updateAnyOffre);
 
 /**
  * @route   PUT /api/offres/validate/:id
@@ -41,8 +41,15 @@ router.put("/validate/:id", verifierToken, estVerifie, estAdministrateur, valida
 /**
  * @route   DELETE /api/offres/:id
  * @desc    Supprimer une offre de stage
- * @access  Administrateur
+ * @access  Entreprise
  */
-router.delete("/:id", verifierToken, estVerifie, estAdministrateur, deleteOffre);
+router.delete("/:id", verifierToken, estVerifie, estEntreprise, deleteOffre);
+
+/**
+ * @route   PUT /api/offres
+ * @desc    Mettre à jour son offre de stage
+ * @access  Entreprise
+ */
+router.put("/", verifierToken, estVerifie, estEntreprise, updateOffre);
 
 export default router;

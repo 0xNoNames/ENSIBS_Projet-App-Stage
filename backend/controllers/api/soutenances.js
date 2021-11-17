@@ -4,12 +4,11 @@ import CompteModel from "../../models/compte.js";
 import EntretienModel from "../../models/entretien.js"
 
 export const getSoutenances = async (req, res) => {
-  console.log("GETTING SOUTENANCES");
-  if(req.compte.statut == "CyberData") {
+  if (req.compte.statut == "CyberData") {
     const entretiens = await EntretienModel.find();
 
     var result_entretiens = [];
-    for(const entretien of entretiens) {
+    for (const entretien of entretiens) {
       try {
         const user = await CompteModel.findOne({ id: entretien.id_organisateur });
         var title = user.nom;
@@ -27,41 +26,41 @@ export const getSoutenances = async (req, res) => {
 
         var entretienResult = { title: title, start: start, end: endDate, id: id };
         result_entretiens.push(entretienResult);
-      } catch(erreur) {
+      } catch (erreur) {
         console.log(erreur);
       }
     }
     res.status(200).json(JSON.stringify({ result: result_entretiens }));
-  } else if(req.compte.statut == "CyberLog") {
+  } else if (req.compte.statut == "CyberLog") {
     const soutenances = await SoutenanceModel.find({});
 
     var result_soutenances = [];
 
     for (const soutenance of soutenances) {
-    try {
-      const user = await CompteModel.findOne({ id: soutenance.id_organisateur });
-      var title = user.nom;
+      try {
+        const user = await CompteModel.findOne({ id: soutenance.id_organisateur });
+        var title = user.nom;
 
-      var date = soutenance.date;
-      var dateString = date.toISOString();
+        var date = soutenance.date;
+        var dateString = date.toISOString();
 
-      // format "2016-02-18T23:59:48.039Z"
-      var start = dateString.replace("T", " ").slice(0, -5);
+        // format "2016-02-18T23:59:48.039Z"
+        var start = dateString.replace("T", " ").slice(0, -5);
 
-      var endDate = date.setHours(date.getHours() + 1);
-      var end = dateString.replace("T", " ").slice(0, -5);
+        var endDate = date.setHours(date.getHours() + 1);
+        var end = dateString.replace("T", " ").slice(0, -5);
 
-      var id = soutenance.id_organisateur;
+        var id = soutenance.id_organisateur;
 
-      var soutenanceResult = { title: title, start: start, end: endDate, id: id };
+        var soutenanceResult = { title: title, start: start, end: endDate, id: id };
 
-      result_soutenances.push(soutenanceResult);
-    } catch (erreur) {
-      console.log(erreur);
+        result_soutenances.push(soutenanceResult);
+      } catch (erreur) {
+        console.log(erreur);
+      }
     }
-  }
-  res.status(200).json(JSON.stringify({ result: result_soutenances }));
-  } else if(req.compte.statut == "Administrateur" || req.compte.statut == "Entreprise") {
+    res.status(200).json(JSON.stringify({ result: result_soutenances }));
+  } else if (req.compte.statut == "Administrateur" || req.compte.statut == "Entreprise") {
 
     const soutenances = await SoutenanceModel.find({});
     const entretiens = await EntretienModel.find({});
@@ -117,7 +116,7 @@ export const getSoutenances = async (req, res) => {
     }
 
     res.status(200).json(JSON.stringify({ result: result_soutenances }));
-    
+
 
   }
 };
@@ -158,25 +157,25 @@ export const createSoutenance = async (req, res) => {
   var hours = hour.slice(0, 2);
   var hoursint = parseInt(hours);
   var minutes = hour.slice(3, 5);
-  date = new Date(year, monthIndex-1, day, hoursint+1, minutes);
+  date = new Date(year, monthIndex - 1, day, hoursint + 1, minutes);
   try {
     // verifier si le compte existe
     const mongoCompte = await CompteModel.findOne({ email });
 
     if (!mongoCompte) {
-      res.status(400).json({ msg: "Compte non trouvé" });
+      res.status(400).json({ message: "Compte non trouvé" });
     } else {
-      if(req.compte.statut == "CyberLog") {
+      if (req.compte.statut == "CyberLog") {
         const soutenance = await SoutenanceModel.create({ id_organisateur: id, date: date, lieu: lieu, confidentiel: confidentiel, nom_soutenance: nom_soutenance });
         console.log("Le soutenance a bien ete upload");
 
-        res.status(200).json({ msg: "La soutenance a bien ete upload" });
-      } else if(req.compte.statut == "CyberData") {
+        res.status(200).json({ message: "La soutenance a bien ete upload" });
+      } else if (req.compte.statut == "CyberData") {
 
-        const entretien = await EntretienModel.create({id_organisateur: id, date: date, lieu: lieu})
+        const entretien = await EntretienModel.create({ id_organisateur: id, date: date, lieu: lieu })
         console.log("L'entretien a bien ete upload");
 
-        res.status(200).json({ msg: "L'entretien a bien ete upload" });
+        res.status(200).json({ message: "L'entretien a bien ete upload" });
       }
     }
   } catch (erreur) {

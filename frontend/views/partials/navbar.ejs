@@ -16,11 +16,11 @@
         <%if (estConnecte && estAttribue) { %>
           <a href="/" class="py-4 px-2 text-lg <% if (page == "Accueil") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">ACCUEIL</a>
 
-          <% if (statut == "Administrateur") { %> 
+          <% if (statut == "Administrateur" || statut == "Entreprise") { %> 
             <a href="/cvtheque" class="py-4 px-3 text-lg <% if (page == "CVthèque") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">CVTHÈQUE</a>
             <% } %> 
 
-          <% if (statut == "Administrateur") { %> 
+          <% if (statut == "Administrateur" || statut == "Entreprise") { %> 
             <a href="/offres" class="py-4 px-3 text-lg <% if (page == "Offres") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">OFFRES</a>
             <% } %> 
 
@@ -34,10 +34,6 @@
 
           <% if (statut == "CyberData") { %>
              <a href="/offres" class="py-4 px-3 text-lg <% if (page == "Offres") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">OFFRES D'ALTERNANCE</a>
-              <% } %> 
-
-          <% if (statut == "Entreprise") { %>
-             <a href="/cvtheque" class="py-4 px-3 text-lg <% if (page == "CVthèque") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">CVTHÈQUE</a>
               <% } %> 
 
           <% if (statut == "Entreprise" || statut == "CyberLog") { %>

@@ -272,11 +272,15 @@ const annulerAttribution = async (element) => {
         // Supprime tous les éléments de la division "compteAttribuer".
         document.getElementById("compteAttribuer").className = "hidden";
         document.getElementById("compteAttribuer").innerHTML = "";
+        document.getElementById("compteH1").className = "hidden";
+        document.getElementById("compteH1").innerHTML = "";
 
         // Ajoute à la division "compteAttribuer" chaque nouveaux éléments.
         if (comptes.length != 0) {
           comptes.forEach((compte) => {
-            document.getElementById("compteAttribuer").className = "flex flex-wrap mt-10 p-6 text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50";
+            document.getElementById("compteH1").className = "flex flex-wrap";
+            document.getElementById("compteH1").innerHTML = "Offres à valider"
+            document.getElementById("compteAttribuer").className = "visible";
             document.getElementById("compteAttribuer").innerHTML +=
               "<div class='flex flex-col m-2 py-6 px-8 text-left text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50'><h1>Prenom : " +
               compte.prenom +
@@ -336,7 +340,7 @@ const validerAttribution = async (element) => {
         console.log(comptes.length);
         if (comptes.length != 0) {
           comptes.forEach((compte) => {
-            document.getElementById("compteAttribuer").className = "flex flex-wrap mt-10 p-6 text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50";
+            document.getElementById("compteAttribuer").className = "visible";
             document.getElementById("compteAttribuer").innerHTML +=
               "<div class='flex flex-col m-2 py-6 px-8 text-left text-white rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50'><h1>Prenom : " +
               compte.prenom +

@@ -2,11 +2,12 @@ import OffreModel from "../../models/offre.js";
 
 export const getOffresPage = async (req, res) => {
   try {
-    var offresValides;
-    if (req.compte.statut == "administrateur") {
-      offresValides = await OffreModel.find({estValide: true});
+    if (req.compte.statut == "Administrateur") {
+      var offresValides = await OffreModel.find({ estValide: true });
+    } else if (req.compte.statut == "Entreprise") {
+      var offresValides = await OffreModel.find({ id_entreprise: req.compte.id });
     } else {
-      offresValides = await OffreModel.find({ statut: req.compte.statut,estValide:true });
+      var offresValides = await OffreModel.find({ formation: req.compte.statut, estValide: true });
     }
 
     var offresNonValide = await OffreModel.find({ estValide: false });
@@ -26,19 +27,15 @@ export const getOffresPage = async (req, res) => {
   }
 };
 
-
-
-export const getOffreUniquePage = async (req,res) => {
-  var id = req.params.id
-
-  const offre = await OffreModel.findOne({id: id});
+export const getOffreUniquePage = async (req, res) => {
+  const offre = await OffreModel.findOne({ id: req.params.id });
 
   res.render("pages/offreUnique", {
-      estConnecte: true,
-      page: "OffreUnique",
-      prenom: req.compte.prenom,
-      statut: req.compte.statut,
-      estAttribue: req.compte.estAttribue,
-      offre : offre,
-    });
-}
+    estConnecte: true,
+    page: "OffreUnique",
+    prenom: req.compte.prenom,
+    statut: req.compte.statut,
+    estAttribue: req.compte.estAttribue,
+    offre: offre,
+  });
+};
