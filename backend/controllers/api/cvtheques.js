@@ -21,7 +21,7 @@ export const createCV = async (req, res) => {
   //var description = req.body.description;
 
   try {
-    const mongoCompte = await CompteModel.findOne({ email });
+    const mongoCompte = await CompteModel.findOne({ id_eleve });
 
     if (!mongoCompte) {
       return res.status(400).json({ message: "Aucun compte trouvé." });

@@ -6,7 +6,7 @@ import EntretienModel from "../../models/entretien.js"
 export const getSoutenances = async (req, res) => {
   console.log("GETTING SOUTENANCES");
   if(req.compte.statut == "CyberData") {
-    const entretiens = await EntretienModel.find({});
+    const entretiens = await EntretienModel.find();
 
     var result_entretiens = [];
     for(const entretien of entretiens) {
@@ -14,7 +14,7 @@ export const getSoutenances = async (req, res) => {
         const user = await CompteModel.findOne({ id: entretien.id_organisateur });
         var title = user.nom;
 
-        var date = soutenance.date;
+        var date = entretien.date;
         var dateString = date.toISOString();
 
         // format "2016-02-18T23:59:48.039Z"
@@ -131,7 +131,6 @@ export const createSoutenance = async (req, res) => {
   var hour = json.hour;
   var confidentiel_value = json.confidentiel;
   var nom_soutenance = json.nom_soutenance;
-  console.log(date)
 
 
   try {
@@ -155,11 +154,11 @@ export const createSoutenance = async (req, res) => {
   // Create the Date Object
   var year = date.slice(0, 4);
   var monthIndex = date.slice(5, 7);
-  var day = date.slice(9, 10);
+  var day = date.slice(8, 10);
   var hours = hour.slice(0, 2);
+  var hoursint = parseInt(hours);
   var minutes = hour.slice(3, 5);
-  var date = new Date(year, monthIndex, day, hours, minutes);
-
+  date = new Date(year, monthIndex-1, day, hoursint+1, minutes);
   try {
     // verifier si le compte existe
     const mongoCompte = await CompteModel.findOne({ email });
@@ -167,12 +166,13 @@ export const createSoutenance = async (req, res) => {
     if (!mongoCompte) {
       res.status(400).json({ msg: "Compte non trouvé" });
     } else {
-      if(req.compte.formation == "CyberLog") {
+      if(req.compte.statut == "CyberLog") {
         const soutenance = await SoutenanceModel.create({ id_organisateur: id, date: date, lieu: lieu, confidentiel: confidentiel, nom_soutenance: nom_soutenance });
         console.log("Le soutenance a bien ete upload");
 
         res.status(200).json({ msg: "La soutenance a bien ete upload" });
-      } else if(req.compte.formation == "CyberData") {
+      } else if(req.compte.statut == "CyberData") {
+
         const entretien = await EntretienModel.create({id_organisateur: id, date: date, lieu: lieu})
         console.log("L'entretien a bien ete upload");
 

@@ -10,6 +10,8 @@ export const getSoutenancesPage = async (req, res) => {
     var page = "Entretiens";
     var data = await EntretienModel.find();
   }
+
+  var lieux = [{nom:"D0010"}]
   res.render("pages/soutenances", {
     estConnecte: true,
     page: page,
@@ -17,13 +19,16 @@ export const getSoutenancesPage = async (req, res) => {
     statut: req.compte.statut,
     estAttribue: req.compte.estAttribue,
     data: data,
+    lieux:lieux,
   });
 };
 
 export const getUniqueSoutenancePage = async (req, res) => {
-  const soutenance = await SoutenanceModel.findOne({ id_organisateur: req.params.id });
   const eleve_soutenance = await CompteModel.findOne({ id: req.params.id });
-  //console.log("SOUTENANCE ROUTING COUNROLLER  : " + soutenance)
+  var soutenance = await SoutenanceModel.findOne({ id_organisateur: req.params.id });;
+  if (!soutenance){
+    soutenance = await EntretienModel.findOne({ id_organisateur: req.params.id });
+  }
 
   res.render("pages/soutenanceUnique", {
     estConnecte: true,
