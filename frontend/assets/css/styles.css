@@ -6,6 +6,15 @@ body {
   overflow: overlay;
 }
 
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+::-webkit-datetime-edit- {
+  color: transparent;
+}
+
+
 /* -- -- -- -- -- -- -- -- -- -- -- -- SCROLLBAR -- -- -- -- -- -- -- -- -- -- -- -- */
 
 /* width */

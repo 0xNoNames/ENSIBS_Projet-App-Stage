@@ -2,7 +2,7 @@
 <html lang="fr">
   <head>
     <%- include('../partials/head'); %>
-    <link rel="stylesheet" href="static/fullcalendar/main.css">
+    <link rel="stylesheet" href="static/fullcalendar/main.css" />
     <script src="static/fullcalendar/main.js"></script>
   </head>
 
@@ -11,45 +11,58 @@
     <%- include('../partials/navbar'); %>
     <!-- </header> -->
 
-    <div class="mt-32 text-white flex justify-center items-center">
+    <div class="m-12 space-y-24 text-white flex flex-col justify-center items-center">
       <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl">PAGE SOUTENANCES</p>
-
+        <h1 class="text-4xl mb-10 text-center">Créer une soutenance</h1>
         <form id="form" class="flex flex-col py-8 px-8 text-left rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50" enctype="multipart/form-data">
           <!-- Start Date -->
-          <input type="date" id="date_soutenances" name="date_soutenances"
-           value="2021-11-13"
-           min="2018-01-01" max="2030-12-31">
+          <label for="date_soutenances" class="text-lg">Date de la soutenance</label>
+          <input
+            class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none"
+            style="fill: white"
+            type="date"
+            id="date_soutenances"
+            name="date_soutenances"
+            value="2021-11-13"
+            min="2021-01-01"
+            max="2030-12-31"
+            required
+          />
 
-          <label for="nom_text_input">Titre de la soutenance </label>
-          <input type="text" name="nom_text_input" id="nom_text_input">
+          <label for="nom_text_input" class="mt-6 text-lg">Titre de la soutenance</label>
+          <input type="text" placeholder="Titre de la soutenance" id="nom_text_input" name="nom_text_input" class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" required />
 
-          <select name="lieux" id="lieux-select">
-            <option value="">Choisissez un lieu pour la soutenance--</option>
-            
+          <label for="" class="mt-6 text-lg">Lieu de la soutenance</label>
+          <select class="mt-2 p-3 bg-black bg-opacity-10 rounded hover:bg-opacity-40 focus-within:bg-opacity-40 focus-within:outline-none" name="lieu-select" id="lieu-select" required>
+            <option value="">Choisissez un lieu pour la soutenance</option>
             <% lieux.forEach(function(lieu) { %>
-              <option value="<%=lieu.nom %>"><%=lieu.nom %></option>
+            <option value="<%=lieu.nom %>"><%=lieu.nom %></option>
             <% }); %>
-
           </select>
 
-          <input type="time" id="hour_input" name="appt" min="08:00" max="18:00" required>
+          <label for="nom_text_input" class="mt-6 text-lg">Heure de la soutenance</label>
+          <input class="mt-2 p-3 bg-black bg-opacity-10 rounded focus-within:bg-opacity-40 focus-within:outline-none" type="time" placeholder="HH:mm" id="hour_input" name="appt" min="08:00" max="18:00" required step="60" />
 
-          <label for="confidentiel_checkbox">Soutenance confidentiel </label>
-          <input type="checkbox" id="confidentiel_checkbox" name="confidentiel_checkbox"><br>
+          <label for="confidentiel_checkbox" class="mt-6 text-lg">Soutenance confidentielle ?</label>
+          <div class="flex flex-row mt-2 text-center justify-evenly text-lg">
+            <label class="inline-flex items-center">
+              <input id="oui" type="radio" class="h-6 w-6" name="confidentiel_checkbox" value="oui" required />
+              <span class="ml-2">OUI</span>
+            </label>
 
-          <input  type="submit" id="submitButtonId" name="submit">
+            <label class="inline-flex items-center">
+              <input id="non" type="radio" class="h-6 w-6" name="confidentiel_checkbox" value="non" checked required />
+              <span class="ml-2">NON</span>
+            </label>
+          </div>
+
+          <button class="p-3 mx-32 mt-8 text-lg font-semibold bg-green-ensibs rounded shadow-2xl bg-opacity-75 hover:bg-opacity-100">Envoyer la soutenance</button>
         </form>
-
- 
       </div>
-      <div id="calendrier"></div>
-
+      <div class="w-screen px-32" id="calendrier"></div>
     </div>
 
-
     <script src="/static/js/soutenances.js" type="module"></script>
-
 
     <!-- <footer> -->
     <%- include('../partials/footer'); %>
