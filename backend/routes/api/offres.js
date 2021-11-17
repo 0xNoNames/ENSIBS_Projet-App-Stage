@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getOffres, createOffre, updateOffre, deleteOffre, updateAnyOffre, validateOffre, getOffre } from "../../controllers/api/offres.js";
-import { verifierToken, estEtudiant, estAdministrateur, estVerifie, estEntreprise } from "../../middleware/auth.js";
+import { verifierToken, estEtudiant, estAdministrateur, estVerifie, estEntreprise, estEtudiantEntreprise } from "../../middleware/auth.js";
 const router = Router();
 
 /**
@@ -15,7 +15,7 @@ router.get("/", verifierToken, estVerifie, estEtudiant, getOffres);
  * @desc    Récupérer une offre de stage
  * @access  Etudiant
  */
-router.get("/:id", verifierToken, estVerifie, estEtudiant, getOffre);
+router.get("/:id", verifierToken, estVerifie, estEtudiantEntreprise, getOffre);
 
 /**
  * @route   POST /api/offres

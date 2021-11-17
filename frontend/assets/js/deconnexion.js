@@ -7,8 +7,6 @@ const deconnexion = async () => {
     });
     const data = await response;
 
-    console.log(response.status);
-
     if (response.status == 200) {
       window.location.href = "/compte/connexion";
     } else {
@@ -18,3 +16,8 @@ const deconnexion = async () => {
     console.log(erreur);
   }
 };
+
+const boutonDeconnexion = document.getElementById("boutonDeconnexion");
+boutonDeconnexion.addEventListener("click", () => {
+  deconnexion()
+}, false);

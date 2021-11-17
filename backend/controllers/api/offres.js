@@ -1,6 +1,8 @@
 import validator from "validator";
 import OffreModel from "../../models/offre.js";
 import CompteModel from "../../models/offre.js";
+import mongoose from "mongoose";
+
 
 export const getOffres = async (req, res) => {
   try {
@@ -17,16 +19,21 @@ export const getOffres = async (req, res) => {
 };
 
 export const getOffre = async (req, res) => {
+
   try {
-    const offre = await OffreModel.findOne({ id: req.params.id });
+    const offre = await OffreModel.findById(req.params.id);
 
     if (!offre) {
       return res.status(400).send({ message: "Aucune offre trouvée" });
     }
 
-    var binary = offre.binaire;
+    if (offre.binaire == "" || offre.binaire == null) {
+      return res.status(400).send("Pas de PDF pour cette offre.");
+    }
+
     res.contentType("pdf");
-    res.end(binary, "binary");
+    res.status(200)
+    res.end(offre.binaire, "binary");
   } catch (erreur) {
     console.log("ERROR controller/api/offres.js getOffre() : " + erreur);
     return res.status(400).json({ message: "Erreur interne" });

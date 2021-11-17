@@ -205,6 +205,7 @@ export const getAttribuerComptes = async (req, res) => {
 };
 
 export const deleteCompteDeconnexion = async (req, res) => {
+  console.log("XDDDDDDD");
   if (req.estConnecte) {
     res.cookie("token", "", {
       httpOnly: true,

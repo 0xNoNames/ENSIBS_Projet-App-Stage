@@ -28,7 +28,19 @@ export const getOffresPage = async (req, res) => {
 };
 
 export const getOffreUniquePage = async (req, res) => {
-  const offre = await OffreModel.findOne({ id: req.params.id });
+  var offre = await OffreModel.findOne({ _id: req.params.id });
+
+  if (req.compte.statut === "Entreprise") {
+    if (offre.id_entreprise != req.compte.id) {
+      return res.render("pages/erreur401", {
+        estConnecte: true,
+        page: "Erreur 401",
+        prenom: req.compte.prenom,
+        statut: req.compte.statut,
+        estAttribue: req.compte.estAttribue,
+      });
+    }
+  }
 
   res.render("pages/offreUnique", {
     estConnecte: true,

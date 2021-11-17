@@ -201,7 +201,8 @@ for (var i = 0; i < classnameOuvrirOffre.length; i++) {
 
 const sendData = async () => {
   // Get the file
-  const input = document.getElementById("fileupload");
+  const input = document.getElementById("pdf_poste");
+  console.log(input);
   if (input != null) {
     var data_file = input.files[0];
     let formData = new FormData();

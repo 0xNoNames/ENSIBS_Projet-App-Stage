@@ -57,10 +57,12 @@
           <% offresNonValide.forEach(function(offre) { %>
             <div class="flex flex-col m-2 py-6 px-8 text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50">
               <div id="<%=offre.id %>">
-                <h1 class="text-xl"> Nom entreprise : <%=offre.nom_entreprise %></h1>
-                <h1> Nom poste : <%= offre.nom_poste %> </h1>
-                <h1> Formation : <%= offre.formation %> </h1>
-                <p class="mt-4"><%= offre.description%></p>
+                <h1 class="text-xl"> Nom de l'entreprise : <%=offre.nom_entreprise %></h1>
+                <h1>Intitulé : <%= offre.nom_poste %></h1>
+                <h1>Formation : <%= offre.formation %></h1>
+                <h1>Date de création : <%=offre.date.toISOString().substring(0,10) %></h1>
+                <h1 class="mt-4">Description</h1>
+                <p class="max-h-48 max-w-sm text-justify whitespace-pre-wrap overflow-y-auto"><%=offre.description %></p>
                 <button class="buttonOuvrirOffre mt-4 py-1 px-2 bg-green-ensibs shadow-2xl bg-opacity-75 hover:bg-opacity-100 rounded">OUVIR</button>
                 <div id="<%=offre.id%>" class="mt-4 flex space-x-5 items-center align-middle justify-center">
                   <button class="buttonValidateOffre py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 rounded">VALIDER</button>
@@ -79,11 +81,14 @@
         <div id="offresAValider" class="flex flex-wrap">
           <% if (offresValides.length == 0) { %> <h1>Aucune offre publié</h1><% } %>
           <% offresValides.forEach(function(offre) { %>
-            <div class="py-5 px-5 m-2 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50 buttonAfficherOffre" >
+            <div class="py-5 px-5 m-2 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50" >
                 <h1 class="text-xl">Nom de l'entreprise : <%=offre.nom_entreprise %></h1>
-                <h1>Intitulé du poste : <%=offre.nom_poste %></h1>
-                <h1>Lieu du poste : <%=offre.lieu_poste %></h1>
-                <p class="my-4"><%= offre.description%></p>
+                <h1>Intitulé : <%=offre.nom_poste %></h1>
+                <h1>Lieu : <%=offre.lieu_poste %></h1>
+                <h1>Formation : <%= offre.formation %></h1>
+                <h1>Date de création : <%=offre.date.toISOString().substring(0,10) %></h1>
+                <h1 class="mt-4">Description</h1>
+                <p class="max-h-48 max-w-sm text-justify whitespace-pre-wrap overflow-y-auto"><%=offre.description %></p>
                 <% if (statut == "Entreprise") { %> <p> <% if (offre.estValide) { %>Validée par un administrateur<% } else { %>En attendre de validation<% } } %></p>
                 <div id="<%=offre.id%>" class="flex mt-5 flex-row justify-center space-x-5">
                   <button class="buttonOuvrirOffre p-2 bg-green-ensibs rounded shadow-2xl bg-opacity-75 hover:bg-opacity-100">OUVRIR</button>

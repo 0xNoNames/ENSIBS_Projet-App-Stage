@@ -9,18 +9,22 @@
     <%- include('../partials/navbar'); %>
     <!-- </header> -->
 
-    <div class="mt-32 text-white flex justify-center items-center">
-      <div class="py-10 px-10 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
-        <p class="text-4xl">PAGE OFFRES UNIQUE</p>
-        <p>Nom de l'entreprise : <%=offre.nom_entreprise %></p>
-        <p>Nom du poste : <%=offre.nom_poste %></p>
-        <p>Lieu du post :<%=offre.lieu_poste %></p>
-        
-      </div>
-      <iframe src='/api/offres/<%=offre.id%>' width="80%">
+    <div class="mt-12 text-white flex flex-col justify-center items-center">
+        <div id="<%=offre.id%>" class="offreUnique py-5 px-5 text-center rounded shadow-2xl backdrop-blur-lg backdrop-saturate-125 bg-black bg-opacity-20 border border-white border-opacity-50">
+          <h1 class="text-xl">Nom de l'entreprise : <%=offre.nom_entreprise %></h1>
+          <h1>Intitulé : <%=offre.nom_poste %></h1>
+          <h1>Lieu : <%=offre.lieu_poste %></h1>
+          <h1>Formation : <%= offre.formation %></h1>
+          <h1>Date de création : <%=offre.date.toISOString().substring(0,10) %></h1>
+          <h1 class="mt-4">Description</h1>
+          <p class="max-h-48 max-w-sm text-justify whitespace-pre-wrap overflow-y-auto"><%=offre.description %></p>
+        </div>
+        <% if (offre.binaire.length > 0) { %>
+        <iframe src='/api/offres/<%=offre.id%>' class="w-9/12 h-screen m-10 text-white">
+          <% } else { %>
+            <p class="text-2xl m-10">PAS DE PDF POUR CETTE OFFRE.</p>
+            <% } %>
     </div>
-
-    <script src="/static/js/offreUnique.js" type="module"></script>
 
     <!-- <footer> -->
     <%- include('../partials/footer'); %>
