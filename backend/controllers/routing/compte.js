@@ -47,8 +47,8 @@ export const getComptePage = async (req, res) => {
     });
   } else {
     // Statut n'est pas admin
-    const cv = await CVModel.findOne({id_eleve:req.compte.id})
-    const motivation = await MotivationModel.findOne({id_eleve:req.compte.id})
+    const cv = await CVModel.findOne({ id_eleve: req.compte.id });
+    const motivation = await MotivationModel.findOne({ id_eleve: req.compte.id });
     res.render("pages/compte", {
       estConnecte: true,
       page: "Aide",
@@ -58,9 +58,9 @@ export const getComptePage = async (req, res) => {
       statut: req.compte.statut,
       estAttribue: req.compte.estAttribue,
       comptes: "",
-      cv:cv,
-      motivation : motivation,
-      linkedin : req.compte.linkedin,
+      cv: cv,
+      motivation: motivation,
+      linkedin: req.compte.linkedin,
     });
   }
 };

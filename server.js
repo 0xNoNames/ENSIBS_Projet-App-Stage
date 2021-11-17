@@ -65,7 +65,7 @@ app.use("/api/offres", offresRoutesAPI);
 app.use("/api/comptes", comptesRoutesAPI);
 app.use("/api/cvs", cvsRoutesAPI);
 app.use("/api/soutenances", soutenancesRoutesAPI);
-app.use("/api/motivation", motivationRoutesAPI);
+app.use("/api/motivations", motivationRoutesAPI);
 app.use("/api/contact", contactRoutesAPI);
 
 // Serve static assets if in production

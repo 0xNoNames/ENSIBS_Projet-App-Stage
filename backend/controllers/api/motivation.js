@@ -16,7 +16,6 @@ export const postMotivation = async (req, res) => {
     }
 
     const motivation = await MotivationModel.findOne({ id_eleve });
-    console.log(motivation)
     if (motivation) {
       await MotivationModel.updateOne({ id_eleve: id_eleve }, { $set: { binaire: binaire } });
     } else {
@@ -30,8 +29,7 @@ export const postMotivation = async (req, res) => {
   }
 };
 
-
-export const getUniqueMotivation = async (req,res) => {
+export const getMotivation = async (req, res) => {
   console.log("CV MOTIVATION.JS : REQUEST Unique CV");
   var id_user = req.compte.id;
   var email = req.compte.email;
@@ -58,4 +56,4 @@ export const getUniqueMotivation = async (req,res) => {
     console.log(erreur);
     res.erreur(404).json({ message: "Erreur interne." });
   }
-}
+};
