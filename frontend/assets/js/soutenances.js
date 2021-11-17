@@ -72,7 +72,6 @@ const sendData = async () => {
   var confidentiel = document.getElementById("confidentiel_checkbox").value;
 
   var body = JSON.stringify({ date: date, lieu: lieu, hour: hour, confidentiel: confidentiel, nom_soutenance: nom_soutenance });
-  console.log(body);
 
   var headers = {
     "Content-Type": "application/x-www-form-urlencoded",

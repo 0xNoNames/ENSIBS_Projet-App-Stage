@@ -154,10 +154,11 @@ export const createSoutenance = async (req, res) => {
   // Create the Date Object
   var year = date.slice(0, 4);
   var monthIndex = date.slice(5, 7);
-  var day = date.slice(9, 10);
+  var day = date.slice(8, 10);
   var hours = hour.slice(0, 2);
+  var hoursint = parseInt(hours);
   var minutes = hour.slice(3, 5);
-  var date = new Date(year, monthIndex, day, hours, minutes);
+  date = new Date(year, monthIndex-1, day, hoursint+1, minutes);
   try {
     // verifier si le compte existe
     const mongoCompte = await CompteModel.findOne({ email });
