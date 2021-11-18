@@ -327,7 +327,7 @@ export const updateLinkedin = async (req, res) => {
     if (!mongoCompte) {
       return res.status(400).json({ message: "Aucun compte trouvé." });
     }
-    await CompteModel.updateOne({ _id: req.compte.id }, { $set: { linkedin: json.linkedin } });
+    await CompteModel.updateOne({ _id: req.compte.id }, { push: { off: json.linkedin } });
 
     res.status(200).send({ alert: true, message: "Votre lien LinkedIn a bien été modifié." });
   } catch (erreur) {
@@ -335,3 +335,15 @@ export const updateLinkedin = async (req, res) => {
     res.status(500).json({ message: "Erreur interne." });
   }
 };
+
+
+export const postSauvegardeOffre = async (req,res) => {
+  var id_offre = req.body.id;
+  try{
+    await CompteModel.updateOne({ _id: req.compte.id }, { $set: { offres_sauvegardees: id_offre } });
+    res.status(200).send({ alert: true, message: "L'offre a bien été sauvegardé." });
+  } catch(erreur){
+    console.log("updateCompteLinkedin() from /controllers/api/comptes.js :", erreur);
+    res.status(500).json({ message: "Erreur interne." });
+  }
+}

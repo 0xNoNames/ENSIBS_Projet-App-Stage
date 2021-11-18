@@ -41,7 +41,6 @@ export const getOffreUniquePage = async (req, res) => {
       });
     }
   }
-
   res.render("pages/offreUnique", {
     estConnecte: true,
     page: "OffreUnique",

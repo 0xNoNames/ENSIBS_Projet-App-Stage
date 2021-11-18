@@ -15,6 +15,7 @@ const CompteSchema = new Schema({
   estAttribue: { type: Boolean, default: false },
   date_inscription: { type: Date, default: Date.now },
   linkedin: { type: String },
+  offres_sauvegardees : {type : [Object]},
 });
 
 const Compte = model("compte", CompteSchema);

@@ -19,7 +19,6 @@ export const getOffres = async (req, res) => {
 };
 
 export const getOffre = async (req, res) => {
-
   try {
     const offre = await OffreModel.findById(req.params.id);
 

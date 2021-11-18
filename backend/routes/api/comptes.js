@@ -14,8 +14,9 @@ import {
   attribuerCompte,
   getAttribuerComptes,
   updateLinkedin,
+  postSauvegardeOffre,
 } from "../../controllers/api/comptes.js";
-import { verifierToken, estVerifie, estAdministrateur, estEtudiantEntreprise } from "../../middleware/auth.js";
+import { verifierToken, estVerifie, estAdministrateur,estEtudiant, estEtudiantEntreprise } from "../../middleware/auth.js";
 
 const router = Router();
 
@@ -116,5 +117,12 @@ router.put("/attribuer/:email", verifierToken, estVerifie, estAdministrateur, at
  * @access  Administrateur
  */
 router.get("/attribuer/", verifierToken, estVerifie, estAdministrateur, getAttribuerComptes);
+
+/**
+ * @route   GET /api/comptes/sauvegardeOffre
+ * @desc    Permet de sauvegarder une offre 
+ * @access  Administrateur
+ */
+router.post("/sauvegardeOffre/", verifierToken, estVerifie, estEtudiant, postSauvegardeOffre);
 
 export default router;

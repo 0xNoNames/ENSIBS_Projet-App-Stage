@@ -2,6 +2,7 @@
 <html lang="fr">
   <head>
     <%- include('../partials/head'); %>
+    <script src="/static/js/offreUnique.js"></script>
   </head>
 
   <body>
@@ -19,12 +20,17 @@
           <h1 class="mt-4">Description</h1>
           <p class="max-h-48 max-w-sm text-justify whitespace-pre-wrap overflow-y-auto"><%=offre.description %></p>
         </div>
+        <div id="Sauvegarde Offre">
+          <button id="buttonSaveOffre">Sauvegarder l'offre</button>
+        </div>
         <% if (offre.binaire.length > 0) { %>
         <iframe src='/api/offres/<%=offre.id%>' class="w-9/12 h-screen m-10 text-white">
           <% } else { %>
             <p class="text-2xl m-10">PAS DE PDF POUR CETTE OFFRE.</p>
             <% } %>
     </div>
+
+    
 
     <!-- <footer> -->
     <%- include('../partials/footer'); %>
