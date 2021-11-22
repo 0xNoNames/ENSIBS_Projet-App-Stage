@@ -19,8 +19,9 @@ dotenv.config({ path: "../.env" });
 
 export const getComptes = async (req, res) => {
   try {
-    const Comptes = await ComptesModel.find();
-    res.status(200).json(Comptes);
+    const comptes = await CompteModel.find();
+    console.log(comptes);
+    res.status(200).json(comptes);
   } catch (erreur) {
     console.log("getComptes() from /controllers/api/comptes.js : ", erreur);
     res.erreur(404).json({ message: erreur.message });

@@ -15,6 +15,7 @@ window.addEventListener("load", () => {
 const ouvrirCV = async (event) => {
   var listelement = event.path;
   var div;
+  console.log("XDDD")
 
   for (var i = 0; i < listelement.length; i++) {
     try {
@@ -23,6 +24,7 @@ const ouvrirCV = async (event) => {
       }
     } catch (erreur) { }
   }
-  var url = "api/cvs/" + div.id + "/pdf";
-  window.open(url, "_blank").focus();
+  var url = "api/cvs/" + div.id;
+  console.log(url);
+  // window.open(url, "_blank").focus();
 };

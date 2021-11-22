@@ -5,7 +5,7 @@ import MotivationModel from "../../models/motivation.js";
 export const getCvsPage = async (req, res) => {
   try {
     const cvs = await CVModel.find();
-    const comptes = await CompteModel.find();
+    const comptes = await CompteModel.find({"estAttribue": true})
     const lms = await MotivationModel.find();
 
     res.render("pages/cvtheque", {

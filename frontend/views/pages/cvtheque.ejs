@@ -24,7 +24,7 @@
                 <p class="text-xl mb-4 font-light">Filière : <%=compte.statut%></p>
                 <div class="flex flex-col space-y-2">
                 <a href="<%=compte.linkedin%>" <% if (compte.linkedin == "" || compte.linkedin == null) { %> style="cursor: not-allowed;" onclick="return false"<% } %>> <img class="<% if (compte.linkedin == "" || compte.linkedin == null) { %> bg-red-200 <% } else { %> bg-white <% } %> w-28 py-2 px-4 rounded hover:opacity-80" src="/static/img/logo-linkedin.png" alt="Logo Linkedin" /></a>
-                <a href="/api/cvs/<%=lm.id_eleve%>" <% if (cv == "") { %> style="cursor: not-allowed;" onclick="return false"<% } %>>  <img class="<% if (cv == "") { %> bg-red-200 <% } else { %> bg-white <% } %> w-28 p-1 rounded hover:opacity-80" src="/static/img/logo-cv.png" alt="Logo CV" /></a>
+                <a href="/api/cvs/<%=cv.id_eleve%>" <% if (cv == "") { %> style="cursor: not-allowed;" onclick="return false"<% } %>>  <img class="<% if (cv == "") { %> bg-red-200 <% } else { %> bg-white <% } %> w-28 p-1 rounded hover:opacity-80" src="/static/img/logo-cv.png" alt="Logo CV" /></a>
                 <a href="/api/motivations/<%=lm.id_eleve%>" <% if (lm == "") { %> style="cursor: not-allowed;" onclick="return false"<% } %>> <img class="<% if (lm == "") { %> bg-red-200 <% } else { %> bg-white <% } %> w-28 p-1 rounded hover:opacity-80" src="/static/img/logo-lm.png" alt="Logo LM" /></a>
                 </div>
             </div>
