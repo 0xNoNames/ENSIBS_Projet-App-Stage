@@ -5,7 +5,7 @@ export const postContactMail = async (req, res) => {
     await envoyerMail(
       "arthur30700@gmail.com",
       "Nouveau e-mail de la page contact",
-      "Nom de l'utilisateur : " + req.body.nom + "\n\n" + "E-mail de l'utilsateur : " + req.body.email + "\n\n" + "Message de l'utilisateur : " + "\n\n" + req.body.message
+      "Nom de l'utilisateur : " + req.body.nom + "<br><br>" + "E-mail de l'utilsateur : " + req.body.email + "<br><br>" + "Message de l'utilisateur : " + "<br><br>" + req.body.message
     );
   } catch (erreur) {
     res.status(500).send(erreur.message);

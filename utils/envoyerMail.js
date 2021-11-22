@@ -20,7 +20,12 @@ const envoyerMail = async (email, subject, text) => {
       from: process.env.USERNAME,
       to: email,
       subject: subject,
-      text: text,
+      html: text + '<img style="height:100px" src="cid:unique@ensibs-logo"/>',
+      attachments: [{
+        filename: 'logo-ensibs.png',
+        path: global.__basedir +'/frontend/assets/img/logo-ensibs.png',
+        cid: 'unique@ensibs-logo' 
+   }]
     });
     console.log("L'email a été envoyé.");
   } catch (erreur) {

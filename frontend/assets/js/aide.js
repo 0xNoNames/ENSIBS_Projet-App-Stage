@@ -10,11 +10,17 @@ window.addEventListener("load", () => {
       const data = await response.json();
 
       if (data) {
-        document.getElementById("messageErreur").innerHTML = data.message;
-        setTimeout(() => {
-          document.getElementById("messageErreur").innerHTML = "";
-        }, 4000);
-      }
+        if (data.status) {
+          if (confirm(data.message)) {
+            window.location.href = "/compte/connexion";
+          } 
+        } else {
+            document.getElementById("messageErreur").innerHTML = data.message;
+            setTimeout(() => {
+              document.getElementById("messageErreur").innerHTML = "";
+            }, 4000);
+          }
+        }
     } catch (erreur) {
       document.getElementById("messageErreur").innerHTML = erreur.message;
       setTimeout(() => {

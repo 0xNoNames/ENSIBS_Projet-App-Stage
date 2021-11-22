@@ -61,7 +61,7 @@ export const createCompte = async (req, res) => {
     await envoyerMail(
       email,
       "Mail de vérification - ENSIBS",
-      "Bonjour MM./M. " + compte.nom + ",\n\n" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : \nhttp://" + req.headers.host + "/api/comptes/valider/" + compte.id + "/" + validation.token + "\n\nCordialement.\n"
+      "Bonjour MM./M. " + compte.nom + ",<br><br>" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : <br>http://" + req.headers.host + "/api/comptes/valider/" + compte.id + "/" + validation.token + "<br><br>Cordialement.<br>"
     );
 
     res.status(200).send({ alert: true, message: "Un email de vérification vous a été envoyé, il expirera après un jour. Si vous n'avez pas reçu l'email de vérification, vérifiez vos spam ou aller sur la page d'AIDE." });
@@ -99,7 +99,7 @@ export const updateCompteMail = async (req, res) => {
     await envoyerMail(
       req.body.email,
       "Mail de vérification - ENSIBS",
-      "Bonjour MM./M. " + req.compte.nom + ",\n\n" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : \nhttp://" + req.headers.host + "/api/comptes/valider/" + req.compte.id + "/" + validation.token + "\n\nCordialement.\n"
+      "Bonjour MM./M. " + req.compte.nom + ",<br><br>" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : <br>http://" + req.headers.host + "/api/comptes/valider/" + req.compte.id + "/" + validation.token + "<br><br>Cordialement.<br>"
     );
 
     res.cookie("token", "", {
@@ -174,7 +174,7 @@ export const deleteAnyCompte = async (req, res) => {
     await envoyerMail(
       req.params.email,
       "Votre compte a été supprimé par un administrateur - ENSIBS",
-      "Bonjour,\n\nVotre compte a été supprimé par un administrateur, veuillez recréer un compte ou contacter un administrateur via le formulaire de contact du site.\n\nCordialement.\n"
+      "Bonjour,<br><br>Votre compte a été supprimé par un administrateur, veuillez recréer un compte ou contacter un administrateur via le formulaire de contact du site.<br><br>Cordialement.<br>"
     );
     res.status(200).send({ message: "OK" });
   } catch (erreur) {
@@ -186,7 +186,7 @@ export const deleteAnyCompte = async (req, res) => {
 export const attribuerCompte = async (req, res) => {
   try {
     await CompteModel.updateOne({ email: req.params.email }, { $set: { estAttribue: true } });
-    await envoyerMail(req.params.email, "Votre compte a été validé - ENSIBS", "Bonjour,\n\nVotre compte a été validé par un administrateur, connectez-vous pour ajouter votre CV via la page Compte.\n\nCordialement.\n");
+    await envoyerMail(req.params.email, "Votre compte a été validé - ENSIBS", "Bonjour,<br><br>Votre compte a été validé par un administrateur, connectez-vous pour ajouter votre CV via la page Compte.<br><br>Cordialement.<br>");
     res.status(200).send({ message: "OK" });
   } catch (erreur) {
     console.log("attribuerCompte() from /controllers/api/comptes.js : ", erreur);
@@ -287,11 +287,11 @@ export const postCompteAideValidation = async (req, res) => {
   const compte = await CompteModel.findOne({ email: req.body.email });
 
   if (!compte) {
-    return res.status(400).send({ message: "Nous n'avons pas pu trouver de compte pour cette vérification, veuillez vous inscrire." });
+    return res.status(400).send({ status: false, message: "Nous n'avons pas pu trouver de compte pour cette vérification, veuillez vous inscrire." });
   }
 
   if (compte.estVerifie) {
-    return res.status(200).send({ message: "Le compte a déjà été vérifié, veuillez vous connecter." });
+    return res.status(200).send({ status: true, message: "Le compte a déjà été vérifié, veuillez vous connecter." });
   }
 
   var validation = await ValidationModel.findOne({ _compteId: compte._id });
@@ -305,16 +305,16 @@ export const postCompteAideValidation = async (req, res) => {
   await envoyerMail(
     req.body.email,
     "Mail de vérification ENSIBS",
-    "Bonjour MM./M. " + compte.nom + ",\n\n" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : \nhttp://" + req.headers.host + "/api/comptes/valider/" + compte.id + "/" + validation.token + "\n\nCordialement.\n"
+    "Bonjour MM./M. " + compte.nom + ",<br><br>" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : <br>http://" + req.headers.host + "/api/comptes/valider/" + compte.id + "/" + validation.token + "<br><br>Cordialement,<br>"
   );
 
-  res.status(200).send({
+  res.status(200).send({ status: true,
     message: "Un email de vérification vous a été envoyé, il expirera après un jour, si vous n'avez pas reçu l'email de vérification vérifiez vos spams.",
   });
 };
 
 export const postCompteAideOublie = async (req, res) => {
-  return res.status(200).send({
+  return res.status(200).send({ status: true, 
     message: "Un email de récupération vous a été envoyé, il expirera après un jour, si vous n'avez pas reçu l'email de vérification vérifiez vos spams.",
   });
 };

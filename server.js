@@ -34,7 +34,10 @@ const app = express();
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+global.__basedir = __dirname;
 
 app.set("view engine", "ejs");
 app.set("views", "./frontend/views");
