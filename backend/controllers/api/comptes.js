@@ -7,10 +7,9 @@ import validator from "validator";
 import CompteModel from "../../models/compte.js";
 import CvModel from "../../models/cv.js";
 import EntretienModel from "../../models/entretien.js";
-import MotivationModel from "../../models/motivation.js"
-import OffreModel from "../../models/offre.js"
-import SoutenanceModel from "../../models/motivation.js"
-
+import MotivationModel from "../../models/motivation.js";
+import OffreModel from "../../models/offre.js";
+import SoutenanceModel from "../../models/motivation.js";
 
 import ValidationModel from "../../models/validation.js";
 import envoyerMail from "../../../utils/envoyerMail.js";
@@ -66,11 +65,7 @@ export const createCompte = async (req, res) => {
 
     const validation = await ValidationModel.create({ _compteId: compte._id, token: crypto.randomBytes(16).toString("hex") });
 
-    await envoyerMail(
-      email,
-      "Mail de vérification - ENSIBS",
-      "Bonjour MM./M. " + compte.nom + ",<br><br>" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : <br>http://" + req.headers.host + "/api/comptes/valider/" + compte.id + "/" + validation.token + "<br><br>Cordialement.<br>"
-    );
+    await envoyerMail(email, "Mail de vérification - ENSIBS", "Bonjour MM./M. " + compte.nom + ",<br><br>" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : <br>http://" + req.headers.host + "/api/comptes/valider/" + compte.id + "/" + validation.token + "<br><br>Cordialement.<br>");
 
     res.status(200).send({ alert: true, message: "Un email de vérification vous a été envoyé, il expirera après un jour. Si vous n'avez pas reçu l'email de vérification, vérifiez vos spam ou aller sur la page d'AIDE." });
   } catch (erreur) {
@@ -104,11 +99,7 @@ export const updateCompteMail = async (req, res) => {
 
     validation = await ValidationModel.create({ _compteId: req.compte._id, token: crypto.randomBytes(16).toString("hex") });
 
-    await envoyerMail(
-      req.body.email,
-      "Mail de vérification - ENSIBS",
-      "Bonjour MM./M. " + req.compte.nom + ",<br><br>" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : <br>http://" + req.headers.host + "/api/comptes/valider/" + req.compte.id + "/" + validation.token + "<br><br>Cordialement.<br>"
-    );
+    await envoyerMail(req.body.email, "Mail de vérification - ENSIBS", "Bonjour MM./M. " + req.compte.nom + ",<br><br>" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : <br>http://" + req.headers.host + "/api/comptes/valider/" + req.compte.id + "/" + validation.token + "<br><br>Cordialement.<br>");
 
     res.cookie("token", "", {
       httpOnly: true,
@@ -116,9 +107,7 @@ export const updateCompteMail = async (req, res) => {
       expires: new Date(0),
       maxAge: parseInt(process.env.JWT_EXPIRES_IN),
     });
-    res
-      .status(200)
-      .send({ alert: true, message: "Veuillez vérifier votre compte via l'email de vérification qui vous a été envoyé, il expirera après un jour. Si vous n'avez pas reçu l'email de vérification, vérifiez vos spam ou aller sur la page d'AIDE." });
+    res.status(200).send({ alert: true, message: "Veuillez vérifier votre compte via l'email de vérification qui vous a été envoyé, il expirera après un jour. Si vous n'avez pas reçu l'email de vérification, vérifiez vos spam ou aller sur la page d'AIDE." });
   } catch (erreur) {
     console.log("updateCompteMail() from /controllers/api/comptes.js :", erreur);
     res.status(500).json({ message: "Erreur interne." });
@@ -170,10 +159,12 @@ export const deleteCompte = async (req, res) => {
   try {
     await CompteModel.deleteOne({ _id: id });
     await CvModel.deleteOne({ id_eleve: id });
-    await EntretienModel.deleteOne({ id_organisateur: id })
+    await EntretienModel.deleteOne({ id_organisateur: id });
     await OffreModel.deleteOne({ id_entreprise: id });
     await MotivationModel.deleteOne({ id_eleve: id });
     await SoutenanceModel.deleteOne({ id_organisateur: id });
+
+    await envoyerMail(req.params.email, "Votre compte a été supprimé par un administrateur - ENSIBS", "Bonjour,<br><br>Votre compte a été supprimé par un administrateur, veuillez recréer un compte ou contacter un administrateur via le formulaire de contact du site.<br><br>Cordialement.<br>");
 
     res.sendStatus(200);
   } catch (erreur) {
@@ -185,11 +176,7 @@ export const deleteCompte = async (req, res) => {
 export const deleteAnyCompte = async (req, res) => {
   try {
     await CompteModel.deleteOne({ email: req.params.email });
-    await envoyerMail(
-      req.params.email,
-      "Votre compte a été supprimé par un administrateur - ENSIBS",
-      "Bonjour,<br><br>Votre compte a été supprimé par un administrateur, veuillez recréer un compte ou contacter un administrateur via le formulaire de contact du site.<br><br>Cordialement.<br>"
-    );
+    await envoyerMail(req.params.email, "Votre compte a bien été supprimé - ENSIBS", "Bonjour,<br><br>Vous avez supprimé votre compte, veuillez recréer un compte ou contacter un administrateur via le formulaire de contact du site s'il s'agit d'une erreur.<br><br>Cordialement.<br>");
     res.status(200).send({ message: "OK" });
   } catch (erreur) {
     console.log("deleteAnyCompte() from /controllers/api/comptes.js : ", erreur);
@@ -316,11 +303,7 @@ export const postCompteAideValidation = async (req, res) => {
 
   validation = await ValidationModel.create({ _compteId: compte._id, token: crypto.randomBytes(16).toString("hex") });
 
-  await envoyerMail(
-    req.body.email,
-    "Mail de vérification ENSIBS",
-    "Bonjour MM./M. " + compte.nom + ",<br><br>" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : <br>http://" + req.headers.host + "/api/comptes/valider/" + compte.id + "/" + validation.token + "<br><br>Cordialement,<br>"
-  );
+  await envoyerMail(req.body.email, "Mail de vérification ENSIBS", "Bonjour MM./M. " + compte.nom + ",<br><br>" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : <br>http://" + req.headers.host + "/api/comptes/valider/" + compte.id + "/" + validation.token + "<br><br>Cordialement,<br>");
 
   res.status(200).send({
     status: true,
@@ -336,7 +319,7 @@ export const postCompteAideOublie = async (req, res) => {
 };
 
 export const updateLinkedin = async (req, res) => {
-  var json = JSON.parse(req.body)
+  var json = JSON.parse(req.body);
   try {
     const mongoCompte = await CompteModel.findOne({ email: req.compte.email });
 
@@ -352,7 +335,6 @@ export const updateLinkedin = async (req, res) => {
   }
 };
 
-
 export const postSauvegardeOffre = async (req, res) => {
   var id_offre = req.body.id;
   try {
@@ -362,4 +344,4 @@ export const postSauvegardeOffre = async (req, res) => {
     console.log("updateCompteLinkedin() from /controllers/api/comptes.js :", erreur);
     res.status(500).json({ message: "Erreur interne." });
   }
-}
+};
