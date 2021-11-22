@@ -5,6 +5,13 @@ import crypto from "crypto";
 import validator from "validator";
 
 import CompteModel from "../../models/compte.js";
+import CvModel from "../../models/cv.js";
+import EntretienModel from "../../models/entretien.js";
+import MotivationModel from "../../models/motivation.js"
+import OffreModel from "../../models/offre.js"
+import SoutenanceModel from "../../models/motivation.js"
+
+
 import ValidationModel from "../../models/validation.js";
 import envoyerMail from "../../../utils/envoyerMail.js";
 
@@ -160,7 +167,13 @@ export const updateCompteMotDePasse = async (req, res) => {
 export const deleteCompte = async (req, res) => {
   const id = req.compte.id;
   try {
-    const supp = await CompteModel.deleteOne({ _id: id });
+    await CompteModel.deleteOne({ _id: id });
+    await CvModel.deleteOne({ id_eleve: id });
+    await EntretienModel.deleteOne({ id_organisateur: id })
+    await OffreModel.deleteOne({ id_entreprise: id });
+    await MotivationModel.deleteOne({ id_eleve: id });
+    await SoutenanceModel.deleteOne({ id_organisateur: id });
+
     res.sendStatus(200);
   } catch (erreur) {
     console.log("deleteCompte() from /controllers/api/comptes.js : ", erreur);
@@ -308,13 +321,15 @@ export const postCompteAideValidation = async (req, res) => {
     "Bonjour MM./M. " + compte.nom + ",<br><br>" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : <br>http://" + req.headers.host + "/api/comptes/valider/" + compte.id + "/" + validation.token + "<br><br>Cordialement,<br>"
   );
 
-  res.status(200).send({ status: true,
+  res.status(200).send({
+    status: true,
     message: "Un email de vérification vous a été envoyé, il expirera après un jour, si vous n'avez pas reçu l'email de vérification vérifiez vos spams.",
   });
 };
 
 export const postCompteAideOublie = async (req, res) => {
-  return res.status(200).send({ status: true, 
+  return res.status(200).send({
+    status: true,
     message: "Un email de récupération vous a été envoyé, il expirera après un jour, si vous n'avez pas reçu l'email de vérification vérifiez vos spams.",
   });
 };
@@ -337,12 +352,12 @@ export const updateLinkedin = async (req, res) => {
 };
 
 
-export const postSauvegardeOffre = async (req,res) => {
+export const postSauvegardeOffre = async (req, res) => {
   var id_offre = req.body.id;
-  try{
+  try {
     await CompteModel.updateOne({ _id: req.compte.id }, { $set: { offres_sauvegardees: id_offre } });
     res.status(200).send({ alert: true, message: "L'offre a bien été sauvegardé." });
-  } catch(erreur){
+  } catch (erreur) {
     console.log("updateCompteLinkedin() from /controllers/api/comptes.js :", erreur);
     res.status(500).json({ message: "Erreur interne." });
   }
