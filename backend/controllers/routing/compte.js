@@ -38,6 +38,7 @@ export const getComptePage = async (req, res) => {
     res.render("pages/compte", {
       estConnecte: true,
       page: "Aide",
+      id: req.compte.id,
       prenom: req.compte.prenom,
       nom: req.compte.nom,
       email: req.compte.email,
@@ -52,6 +53,7 @@ export const getComptePage = async (req, res) => {
     res.render("pages/compte", {
       estConnecte: true,
       page: "Aide",
+      id: req.compte.id,
       prenom: req.compte.prenom,
       nom: req.compte.nom,
       email: req.compte.email,

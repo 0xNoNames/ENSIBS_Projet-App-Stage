@@ -21,7 +21,7 @@ const ouvrirCV = async (event) => {
       if (listelement[i].getAttribute("class").includes("classnameOuvrirCV")) {
         div = listelement[i];
       }
-    } catch (erreur) {}
+    } catch (erreur) { }
   }
   var url = "api/cvs/" + div.id + "/pdf";
   window.open(url, "_blank").focus();
