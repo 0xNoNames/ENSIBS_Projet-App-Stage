@@ -15,7 +15,6 @@ window.addEventListener("load", () => {
 const ouvrirCV = async (event) => {
   var listelement = event.path;
   var div;
-  console.log("XDDD")
 
   for (var i = 0; i < listelement.length; i++) {
     try {
