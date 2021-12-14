@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import ConfigModel from "../../models/config.js";
 import CVModel from "../../models/cv.js";
 import MotivationModel from "../../models/motivation.js";
+import SalleModel from "../../models/salle.js";
 
 dotenv.config({ path: "../.env" });
 
@@ -20,7 +21,10 @@ export const getAdminPage = async (req, res) => {
 
         var nombre_jours = parseInt(finSoutenances.slice(-2)) - parseInt(startSoutenance.slice(-2))
 
-    }
+    };
+
+    var salles = await SalleModel.find()
+
     res.render("pages/admin", {
         estConnecte: true,
         page: "Admin",
@@ -30,6 +34,7 @@ export const getAdminPage = async (req, res) => {
         startSoutenance : startSoutenance,
         finSoutenances: finSoutenances,
         nombre_jours : nombre_jours,
-        juryData: juryData
+        juryData: juryData,
+        salles:salles,
     });
 };

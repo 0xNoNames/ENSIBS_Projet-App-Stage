@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {postUpdateDateSoutenances,postUpdateJury} from "../../controllers/api/admin.js";
+import {postUpdateDateSoutenances,postUpdateJury,postUpdateSalle,putUpdateSalle} from "../../controllers/api/admin.js";
 import { verifierToken, estVerifie, estAdministrateur,estEtudiant, estEtudiantEntreprise } from "../../middleware/auth.js";
 
 
@@ -20,5 +20,19 @@ router.post("/updateDateSoutenances", verifierToken, estVerifie, estAdministrate
  * @access  Administrateur
  */
 router.post("/updateJury", verifierToken, estVerifie, estAdministrateur, postUpdateJury);
+
+/**
+ * @route   POST /api/admin/createSalle
+ * @desc    Creer une nouvelle salle
+ * @access  Administrateur
+ */
+router.post("/createSalle", verifierToken, estVerifie, estAdministrateur, postUpdateSalle);
+
+/**
+ * @route   POST /api/admin/updateSalle
+ * @desc    Modifier une salle
+ * @access  Administrateur
+ */
+router.put("/updateSalle", verifierToken, estVerifie, estAdministrateur, putUpdateSalle);
 
 export default router;

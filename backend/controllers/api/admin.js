@@ -1,4 +1,5 @@
 import ConfigModel from "../../models/config.js";
+import SalleModel from "../../models/salle.js"
 
 export const postUpdateDateSoutenances = async (req, res) => {
     // check si on a deja des infos dans la BDD
@@ -42,6 +43,22 @@ export const postUpdateJury = async (req, res) => {
     // We update the current table 
     var all_config = await ConfigModel.find()
     var id = all_config[0].id
-    await ConfigModel.findOneAndUpdate({ _id: id }, { $set: { nombre_jurys: juryData } })
+    await ConfigModel.updateOne({ _id: id }, { $set: { nombre_jurys: juryData } })
+
+}
+
+
+export const postUpdateSalle = async (req,res) => {
+    var name = req.body.name;
+    await SalleModel.create({ name:name,disponible:true})
+
+}
+
+
+export const putUpdateSalle = async (req,res) => {
+    var name = req.body.name
+    var disponible = req.body.disponible;
+
+    await SalleModel.updateOne({name:name},{$set:{disponible:disponible}})
 
 }

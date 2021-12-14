@@ -13,7 +13,36 @@ formJury.addEventListener("submit", (event) => {
 });
 
 
+formSalle = document.getElementById("formSalle")
+formSalle.addEventListener("submit", (event) => {
+    event.preventDefault();
+    sendSalle();
+});
 
+
+
+var checkboxes = document.querySelectorAll("[id='checkboxSalle']");
+
+for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener('change',onChangeCheckbox)
+}
+
+
+
+async function onChangeCheckbox(event){
+    var name = event.srcElement.name;
+    var disponible = event.srcElement.checked;
+    try {
+        const response = await fetch("/api/admin/updateSalle", {
+            method: "PUT",
+            mode: "cors",
+            credentials: "include",
+            body: JSON.stringify({ name:name,disponible:disponible }),
+        });
+    } catch (erreur) {
+        console.log(erreur);
+    }
+}
 
 
 async function exportDateSoutenances() {
@@ -53,7 +82,23 @@ async function sendNombreJury() {
             method: "POST",
             mode: "cors",
             credentials: "include",
-            body: JSON.stringify({ jury:juryData }),
+            body: JSON.stringify({ jury: juryData }),
+        });
+    } catch (erreur) {
+        console.log(erreur);
+    }
+}
+
+
+async function sendSalle() {
+    var name = document.getElementById('salleName').value
+
+    try {
+        const response = await fetch("/api/admin/createSalle", {
+            method: "POST",
+            mode: "cors",
+            credentials: "include",
+            body: JSON.stringify({ name: name }),
         });
     } catch (erreur) {
         console.log(erreur);
