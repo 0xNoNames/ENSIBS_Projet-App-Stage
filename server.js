@@ -24,6 +24,7 @@ import compteRoutes from "./backend/routes/routing/compte.js";
 import offresRoutes from "./backend/routes/routing/offres.js";
 import soutenancesRoutes from "./backend/routes/routing/soutenance.js";
 import motivationRoutes from "./backend/routes/routing/motivation.js";
+import adminRoutes from "./backend/routes/routing/admin.js";
 
 // -- -- -- -- -- -- -- -- --  -- CONFIG -- -- -- -- -- -- -- -- --  -- \\
 
@@ -70,6 +71,7 @@ app.use("/api/soutenances", soutenancesRoutesAPI);
 app.use("/api/motivations", motivationRoutesAPI);
 app.use("/api/contact", contactRoutesAPI);
 
+
 // Serve static assets if in production
 // if (process.env.NODE_ENV === "production") {
 //     // Set static folder
@@ -111,7 +113,11 @@ app.use("/compte", compteRoutes);
 // Page des offres
 app.use("/offres", offresRoutes);
 
+// Routes lettres de motivations
 app.use("/motivation", motivationRoutes);
+
+// Page d'administation
+app.use("/admin",adminRoutes)
 
 // Page d'erreur 404 (mettre en dernière route)
 app.get("*", verifierToken, (req, res) => {
