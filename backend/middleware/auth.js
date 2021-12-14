@@ -20,7 +20,7 @@ export const verifierToken = async (req, res, next) => {
     } catch (error) {
       req.estConnecte = false;
       req.compte = "";
-      console.error("AUTH.JS : Pas de cookies.", error);
+      console.error("AUTH.JS : Pas de cookies.");
       return next();
     }
     /* On vérifie que le JWT est présent dans les cookies de la requête */

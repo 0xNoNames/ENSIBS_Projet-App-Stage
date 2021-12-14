@@ -37,13 +37,20 @@ export const createCompte = async (req, res) => {
   if (!nom || !prenom || !email || !mot_de_passe || !statut) return res.status(400).json({ message: "Remplissez tous les champs." });
 
   try {
-    try {
-      if (!validator.isAlpha(nom, "fr-FR", { ignore: "-'" })) new Error("Le nom contient des caractères invalides");
-      if (!validator.isAlpha(prenom, "fr-FR", { ignore: "-'" })) new Error("Le prénom contient des caractères invalides");
-      if (!validator.isEmail(email)) new Error("L'email contient des caractères invalide ou est malformé");
-    } catch (erreur) {
+    if (!validator.isAlpha(nom, "fr-FR", { ignore: "-'" })) {
+      var erreur = "Le nom contient des caractères invalides";
       console.error("ERROR backend/controllers/api/comptes.js #createCompte() : " + erreur);
-      return res.status(400).json(erreur.message);
+      return res.status(400).json({ message: erreur });
+    }
+    if (!validator.isAlpha(prenom, "fr-FR", { ignore: "-'" })) {
+      var erreur = "Le prenom contient des caractères invalides";
+      console.error("ERROR backend/controllers/api/comptes.js #createCompte() : " + erreur);
+      return res.status(400).json({ message: erreur });
+    }
+    if (!validator.isEmail(email)) {
+      var erreur = "L'email contient des caractères invalide ou est malformé";
+      console.error("ERROR backend/controllers/api/comptes.js #createCompte() : " + erreur);
+      return res.status(400).json({ message: erreur });
     }
 
     mot_de_passe = sanitizeMDB(mot_de_passe);
@@ -74,20 +81,20 @@ export const createCompte = async (req, res) => {
 };
 
 export const updateCompteMail = async (req, res) => {
-  if (!req.estConnecte) {
+  if (!req.estConnecte)
     return res.status(400).json({ message: "Vous n'êtes pas connecté." });
-  }
+
   const nouveauEmail = req.body.email;
 
-  try {
-    if (!validator.isEmail(nouveauEmail) || nouveauEmail == "") new Error("L'email contient des caractères invalide ou est malformé");
-  } catch (erreur) {
+  if (!validator.isEmail(nouveauEmail) || nouveauEmail == "") {
+    var erreur = "L'email contient des caractères invalide ou est malformé";
     console.error("ERROR backend/controllers/api/comptes.js #updateCompteMail() : " + erreur);
-    return res.status(400).json(erreur.message);
+    return res.status(400).json({ message: erreur });
   }
 
   const mongoCompte = await CompteModel.findOne({ email: nouveauEmail });
-  if (mongoCompte) return res.status(400).json({ message: "L'email est utilisé." });
+  if (mongoCompte)
+    return res.status(400).json({ message: "L'email est utilisé." });
 
   try {
     await CompteModel.updateOne({ _id: req.compte.id }, { $set: { email: nouveauEmail, estVerifie: false } });
@@ -165,11 +172,10 @@ export const deleteCompte = async (req, res) => {
     await MotivationModel.deleteOne({ id_eleve: id });
     await SoutenanceModel.deleteOne({ id_organisateur: id });
 
-    try {
-      if (!validator.isEmail(req.params.email) || req.params.email == "") new Error("L'email contient des caractères invalide ou est malformé");
-    } catch (erreur) {
+    if (!validator.isEmail(nouveauEmail) || nouveauEmail == "") {
+      var erreur = "L'email contient des caractères invalide ou est malformé";
       console.error("ERROR backend/controllers/api/comptes.js #deleteCompte() : " + erreur);
-      return res.status(400).json(erreur.message);
+      return res.status(400).json({ message: erreur });
     }
 
     await envoyerMail(req.params.email, "Votre compte a été supprimé par un administrateur - ENSIBS", "Bonjour,<br><br>Votre compte a été supprimé par un administrateur, veuillez recréer un compte ou contacter un administrateur via le formulaire de contact du site.<br><br>Cordialement.<br>");
@@ -183,11 +189,10 @@ export const deleteCompte = async (req, res) => {
 
 export const deleteAnyCompte = async (req, res) => {
   try {
-    try {
-      if (!validator.isEmail(req.params.email) || req.params.email == "") new Error("L'email contient des caractères invalide ou est malformé");
-    } catch (erreur) {
+    if (!validator.isEmail(req.params.email)) {
+      var erreur = "L'email contient des caractères invalide ou est malformé";
       console.error("ERROR backend/controllers/api/comptes.js #deleteAnyCompte() : " + erreur);
-      return res.status(400).json(erreur.message);
+      return res.status(400).json({ message: erreur });
     }
 
     await CompteModel.deleteOne({ email: req.params.email });
@@ -201,12 +206,10 @@ export const deleteAnyCompte = async (req, res) => {
 
 export const attribuerCompte = async (req, res) => {
   try {
-
-    try {
-      if (!validator.isEmail(req.params.email) || req.params.email == "") new Error("L'email contient des caractères invalide ou est malformé");
-    } catch (erreur) {
+    if (!validator.isEmail(req.params.email)) {
+      var erreur = "L'email contient des caractères invalide ou est malformé";
       console.error("ERROR backend/controllers/api/comptes.js #attribuerCompte() : " + erreur);
-      return res.status(400).json(erreur.message);
+      return res.status(400).json({ message: erreur });
     }
 
     await CompteModel.updateOne({ email: req.params.email }, { $set: { estAttribue: true } });
@@ -252,11 +255,9 @@ export const postCompteConnexion = async (req, res) => {
 
   if (!email || !mot_de_passe) return res.status(400).json({ message: "Remplissez tous les champs" });
 
-  try {
-    if (!validator.isEmail(email)) new Error("L'email contient des caractères invalide ou est malformé");
-  } catch (erreur) {
+  if (!validator.isEmail(email)) {
     console.error("ERROR backend/controllers/api/comptes.js #postCompteConnexion() : " + erreur);
-    return res.status(400).json(erreur.message);
+    res.status(400).json({ message: "L'email contient des caractères invalide ou est malformé" });
   }
 
   mot_de_passe = sanitizeMDB(mot_de_passe);
@@ -293,12 +294,16 @@ export const postCompteConnexion = async (req, res) => {
 export const getCompteValider = async (req, res) => {
   try {
 
-    try {
-      if (!validator.isAlphanumeric(req.params.id, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("L'id contient des caractères invalides");
-      if (!validator.isAlphanumeric(req.params.token, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("Le token contient des caractères invalides");
-    } catch (erreur) {
+    if (!validator.isAlphanumeric(req.params.id, "fr-FR", { ignore: "'() -/,&[]@:." })) {
+      var erreur = "L'id contient des caractères invalides";
       console.error("ERROR backend/controllers/api/comptes.js #getCompteValider() : " + erreur);
-      return res.status(400).json(erreur.message);
+      return res.status(400).json({ message: erreur });
+    }
+
+    if (!validator.isAlphanumeric(req.params.token, "fr-FR", { ignore: "'() -/,&[]@:." })) {
+      var erreur = "Le token contient des caractères invalides";
+      console.error("ERROR backend/controllers/api/comptes.js #getCompteValider() : " + erreur);
+      return res.status(400).json({ message: erreur });
     }
 
     const validation = await ValidationModel.findOne({ _compteId: req.params.id, token: req.params.token });
@@ -327,11 +332,9 @@ export const getCompteValider = async (req, res) => {
 
 export const postCompteAideValidation = async (req, res) => {
 
-  try {
-    if (!validator.isEmail(req.body.email)) new Error("L'email contient des caractères invalides");
-  } catch (erreur) {
-    console.error("ERROR backend/controllers/api/offres.js #postCompteAideValidation() : " + erreur);
-    return res.status(400).json(erreur.message);
+  if (!validator.isEmail(req.body.email)) {
+    console.error("ERROR backend/controllers/api/comptes.js #postCompteAideValidation() : " + erreur);
+    res.status(400).json({ message: "L'email contient des caractères invalide ou est malformé" });
   }
 
   const compte = await CompteModel.findOne({ email: req.body.email });
@@ -369,11 +372,10 @@ export const postCompteAideOublie = async (req, res) => {
 
 export const updateLinkedin = async (req, res) => {
   var json = JSON.parse(req.body);
-  try {
-    if (!validator.isEmail(req.compte.email)) new Error("L'email contient des caractères invalide ou est malformé");
-  } catch (erreur) {
-    console.error("ERROR backend/controllers/api/comptes.js #updateCompteLinkedin() : ", erreur);
-    res.status(500).json({ message: erreur.message });
+
+  if (!validator.isEmail(req.body.email)) {
+    console.error("ERROR backend/controllers/api/comptes.js #updateLinkedin() : " + erreur);
+    res.status(400).json({ message: "L'email contient des caractères invalide ou est malformé" });
   }
 
   try {
@@ -390,11 +392,10 @@ export const updateLinkedin = async (req, res) => {
 export const postSauvegardeOffre = async (req, res) => {
   var id_offre = req.body.id;
 
-  try {
-    if (!validator.isAlphanumeric(id_offre, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("L'id contient des caractères invalides");
-  } catch (erreur) {
-    console.error("ERROR backend/controllers/api/comptes.js #updateCompteLinkedin() : ", erreur);
-    res.status(500).json({ message: erreur.message });
+  if (!validator.isAlphanumeric(id_offre, "fr-FR", { ignore: "'() -/,&[]@:." })) {
+    var erreur = "L'id contient des caractères invalides";
+    console.error("ERROR backend/controllers/api/comptes.js #updateCompteLinkedin() : " + erreur);
+    return res.status(400).json({ message: erreur });
   }
 
   try {
@@ -406,14 +407,14 @@ export const postSauvegardeOffre = async (req, res) => {
   }
 };
 
-export const updateAnnee = async (req,res) => {
+export const updateAnnee = async (req, res) => {
   var annee = req.body.dataAnnee;
   try {
     const mongoCompte = await CompteModel.findOne({ email: req.compte.email });
-    
-    if (!mongoCompte) 
+
+    if (!mongoCompte)
       return res.status(400).json({ message: "Aucun compte trouvé." });
-    
+
     await CompteModel.updateOne({ _id: req.compte.id }, { $set: { annee: annee } });
     res.status(200).send({ alert: true, message: "Votre année a bien été modifié." });
   } catch (erreur) {

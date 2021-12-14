@@ -4,12 +4,16 @@ export const postUpdateDateSoutenances = async (req, res) => {
     // check si on a deja des infos dans la BDD
     var length = await ConfigModel.find().count()
 
-    try {
-        if (!validator.isAlphaNumeric(req.body.start, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("Le début contient des caractères invalides");
-        if (!validator.isAlphaNumeric(req.body.end, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("La fin contient des caractères invalides");
-    } catch (erreur) {
+    if (!validator.isAlphaNumeric(req.body.start, "fr-FR", { ignore: "'() -/,&[]@:." })) {
+        var erreur = "Le début contient des caractères invalides";
         console.error("ERROR backend/controllers/api/comptes.js #postUpdateDateSoutenances() : " + erreur);
-        return res.status(400).json(erreur.message);
+        return res.status(400).json({ message: erreur });
+    }
+
+    if (!validator.isAlphaNumeric(req.body.end, "fr-FR", { ignore: "'() -/,&[]@:." })) {
+        var erreur = "La fin contient des caractères invalides";
+        console.error("ERROR backend/controllers/api/comptes.js #postUpdateDateSoutenances() : " + erreur);
+        return res.status(400).json({ message: erreur });
     }
 
     if (length == 0) {
@@ -29,11 +33,10 @@ export const postUpdateJury = async (req, res) => {
 
     var juryData = req.body.jury
 
-    try {
-        if (!validator.isAlphanumeric(juryData, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("L'id contient des caractères invalides");
-    } catch (erreur) {
+    if (!validator.isAlphanumeric(juryData, "fr-FR", { ignore: "'() -/,&[]@:." })) {
+        var erreur = "L'id contient des caractères invalides";
         console.error("ERROR backend/controllers/api/comptes.js #postUpdateJury() : " + erreur);
-        return res.status(400).json(erreur.message);
+        return res.status(400).json({ message: erreur });
     }
 
     // We update the current table 

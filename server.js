@@ -6,6 +6,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
 import { verifierToken } from "./backend/middleware/auth.js";
+import helmet from "helmet";
+
 
 // -- -- -- -- -- -- -- -- --  -- ROUTES -- -- -- -- -- -- -- -- --  -- \\
 
@@ -52,6 +54,12 @@ app.use("/static", express.static(path.join(__dirname, "/frontend/assets")));
 app.use(cors());
 app.use(express.json({ type: "text/plain", limit: "16mb" }));
 app.use(express.raw({ type: "application/x-www-form-urlencoded", limit: "16mb" }));
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
+app.disable('x-powered-by');
 
 // -- -- -- -- -- -- -- -- --  -- DATABASE -- -- -- -- -- -- -- -- --  -- \\
 
@@ -121,9 +129,9 @@ app.use("/offres", offresRoutes);
 app.use("/motivation", motivationRoutes);
 
 // Page d'administation
-app.use("/admin",adminRoutes)
+app.use("/admin", adminRoutes)
 
-app.use("/contraintes",contraintesRoutes)
+app.use("/contraintes", contraintesRoutes)
 
 // Page d'erreur 404 (mettre en dernière route)
 app.get("*", verifierToken, (req, res) => {

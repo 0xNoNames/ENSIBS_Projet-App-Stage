@@ -18,16 +18,15 @@ export const getOffres = async (req, res) => {
 export const getOffre = async (req, res) => {
   try {
 
-    try {
-      if (!validator.isAlphanumeric(req.params.id, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("L'id est invalide");
-     } catch (erreur) {
-      console.error("ERROR backend/controllers/api/offres.js #getOffre() : " + erreur);
-      return res.status(400).json(erreur.message);
+    if (!validator.isAlphanumeric(req.params.id, "fr-FR", { ignore: "'() -/,&[]@:." })) {
+      var erreur = "L'id est invalide";
+      console.error("ERROR backend/controllers/api/comptes.js #validateOffre() : " + erreur);
+      return res.status(400).json({ message: erreur });
     }
 
     const offre = await OffreModel.findById(req.params.id);
 
-    if (!offre) 
+    if (!offre)
       return res.status(400).send({ message: "Aucune offre trouvée" });
 
     if (offre.binaire == "" || offre.binaire == null)
@@ -43,15 +42,35 @@ export const getOffre = async (req, res) => {
 };
 
 export const createOffre = async (req, res) => {
-  try {
-    if (!validator.isAlphanumeric(req.headers.nom_entreprise, "fr-FR", { ignore: "'() -/,&[]@:.!?" })) new Error("Le nom de l'entreprise contient des caracteres invalides");
-    if (!validator.isAlphanumeric(req.headers.description_poste, "fr-FR", { ignore: "'() -/,&[]" })) new Error("La description du poste contient des caracteres invalides");
-    if (!validator.isAlphanumeric(req.headers.formation_poste, "fr-FR", { ignore: "'() -/,&[]" })) new Error("La formation contient des caracteres invalides");
-    if (!validator.isAlphanumeric(req.headers.nom_poste, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("Le nom du poste contient des caracteres invalides");
-    if (!validator.isAlphanumeric(req.headers.lieu_poste, "fr-FR", { ignore: "'() -/,&[]" })) new Error("Le nom du lieu contient des caracteres invalides");
-  } catch (erreur) {
-    console.error("ERROR backend/controllers/api/offres.js #createOffre() : " + erreur);
-    return res.status(400).json(erreur.message);
+
+  if (!validator.isAlphanumeric(req.headers.nom_entreprise, "fr-FR", { ignore: "'() -/,&[]@:.!?" })) {
+    var erreur = "Le nom de l'entreprise contient des caracteres invalides";
+    console.error("ERROR backend/controllers/api/comptes.js #createOffre() : " + erreur);
+    return res.status(400).json({ message: erreur });
+  }
+
+  if (!validator.isAlphanumeric(req.headers.description_poste, "fr-FR", { ignore: "'() -/,&[]" })) {
+    var erreur = "La description du poste contient des caracteres invalides";
+    console.error("ERROR backend/controllers/api/comptes.js #createOffre() : " + erreur);
+    return res.status(400).json({ message: erreur });
+  }
+
+  if (!validator.isAlphanumeric(req.headers.formation_poste, "fr-FR", { ignore: "'() -/,&[]" })) {
+    var erreur = "La formation contient des caracteres invalides";
+    console.error("ERROR backend/controllers/api/comptes.js #createOffre() : " + erreur);
+    return res.status(400).json({ message: erreur });
+  }
+
+  if (!validator.isAlphanumeric(req.headers.nom_poste, "fr-FR", { ignore: "'() -/,&[]" })) {
+    var erreur = "Le nom du poste contient des caracteres invalides";
+    console.error("ERROR backend/controllers/api/comptes.js #createOffre() : " + erreur);
+    return res.status(400).json({ message: erreur });
+  }
+
+  if (!validator.isAlphanumeric(req.headers.lieu_poste, "fr-FR", { ignore: "'() -/,&[]" })) {
+    var erreur = "Le nom du lieu contient des caracteres invalides";
+    console.error("ERROR backend/controllers/api/comptes.js #createOffre() : " + erreur);
+    return res.status(400).json({ message: erreur });
   }
 
   try {
@@ -73,7 +92,7 @@ export const updateOffre = async (req, res) => {
     const offre = await OffreModel.findById(req.compte.id);
     if (!offre)
       return res.status(400).json({ message: "Pas d'offre trouvée" });
-  
+
     res.status(200).json({ success: true });
   } catch (erreur) {
     console.error("ERROR backend/controllers/api/offres.js #updateOffre() : " + erreur);
@@ -84,11 +103,10 @@ export const updateOffre = async (req, res) => {
 export const updateAnyOffre = async (req, res) => {
   try {
 
-    try {
-      if (!validator.isAlphanumeric(req.params.id, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("L'id est invalide");
-     } catch (erreur) {
-      console.error("ERROR backend/controllers/api/offres.js #deleteOffres() : " + erreur);
-      return res.status(400).json(erreur.message);
+    if (!validator.isAlphanumeric(req.params.id, "fr-FR", { ignore: "'() -/,&[]@:." })) {
+      var erreur = "L'id est invalide";
+      console.error("ERROR backend/controllers/api/comptes.js #deleteOffres() : " + erreur);
+      return res.status(400).json({ message: erreur });
     }
 
     const offre = await OffreModel.findById(req.params.id);
@@ -105,16 +123,15 @@ export const updateAnyOffre = async (req, res) => {
 export const deleteOffre = async (req, res) => {
   try {
 
-    try {
-      if (!validator.isAlphanumeric(req.params.id, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("L'id est invalide");
-     } catch (erreur) {
-      console.error("ERROR backend/controllers/api/offres.js #deleteOffres() : " + erreur);
-      return res.status(400).json(erreur.message);
+    if (!validator.isAlphanumeric(req.params.id, "fr-FR", { ignore: "'() -/,&[]@:." })) {
+      var erreur = "L'id est invalide";
+      console.error("ERROR backend/controllers/api/comptes.js #deleteOffres() : " + erreur);
+      return res.status(400).json({ message: erreur });
     }
 
     const offre = await OffreModel.findById({ _id: req.params.id });
 
-    if (!offre) 
+    if (!offre)
       throw Error("Pas d'offre trouvée");
 
     if (req.compte.statut === "Entreprise") {
@@ -126,7 +143,7 @@ export const deleteOffre = async (req, res) => {
       }
     } else {
       const removed = await offre.deleteOne();
-      if (!removed) 
+      if (!removed)
         throw Error("Quelque chose s'est mal passé en essayant de supprimer l'offre.");
     }
 
@@ -139,11 +156,11 @@ export const deleteOffre = async (req, res) => {
 
 export const validateOffre = async (req, res) => {
   try {
-    try {
-      if (!validator.isAlphanumeric(req.params.id, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("L'id est invalide");
-     } catch (erreur) {
-      console.error("ERROR backend/controllers/api/offres.js #validateOffre() : " + erreur);
-      return res.status(400).json(erreur.message);
+
+    if (!validator.isAlphanumeric(req.params.id, "fr-FR", { ignore: "'() -/,&[]@:." })) {
+      var erreur = "L'id est invalide";
+      console.error("ERROR backend/controllers/api/comptes.js #deleteOffres() : " + erreur);
+      return res.status(400).json({ message: erreur });
     }
 
     const offre = await OffreModel.findById({ _id: req.params.id });

@@ -2,13 +2,22 @@ import envoyerMail from "../../../utils/envoyerMail.js";
 import validator from "validator";
 
 export const postContactMail = async (req, res) => {
-  try {
-    if (!validator.isAlpha(req.body.nom, "fr-FR", { ignore: "-." })) new Error("Le nom contient des caractères invalides");
-    if (!validator.isEmail(req.body.email)) new Error("Le mail contient des caractères invalides");
-    if (!validator.isAlphanumeric(req.body.message, "fr-FR", { ignore: "'`() -/,&[]@:." })) new Error("Le message contient des caractères invalides");
-   } catch (erreur) {
-    console.error("ERROR backend/controllers/api/contact.js #postContactMail() : " + erreur);
-    return res.status(400).json(erreur.message);
+  if (!validator.isAlpha(req.body.nom, "fr-FR", { ignore: "-." })) {
+    var erreur = "Le nom contient des caractères invalides";
+    console.error("ERROR backend/controllers/api/comptes.js #postContactMail() : " + erreur);
+    return res.status(400).json({ message: erreur });
+  }
+
+  if (!validator.isEmail(req.body.email)) {
+    var erreur = "Le mail contient des caractères invalides";
+    console.error("ERROR backend/controllers/api/comptes.js #postContactMail() : " + erreur);
+    return res.status(400).json({ message: erreur });
+  }
+
+  if (!validator.isAlphanumeric(req.body.message, "fr-FR", { ignore: "'`() -/,&[]@:." })) {
+    var erreur = "Le message contient des caractères invalides";
+    console.error("ERROR backend/controllers/api/comptes.js #postContactMail() : " + erreur);
+    return res.status(400).json({ message: erreur });
   }
 
   try {
