@@ -58,6 +58,7 @@ export const getComptePage = async (req, res) => {
       nom: req.compte.nom,
       email: req.compte.email,
       statut: req.compte.statut,
+      annee: req.compte.annee,
       estAttribue: req.compte.estAttribue,
       comptes: "",
       cv: cv,
