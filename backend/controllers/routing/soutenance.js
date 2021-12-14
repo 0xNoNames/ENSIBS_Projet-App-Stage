@@ -24,11 +24,17 @@ export const getSoutenancesPage = async (req, res) => {
 };
 
 export const getUniqueSoutenancePage = async (req, res) => {
+  try {
+    if (!validator.isAlphanumeric(req.params.id, "fr-FR", { ignore: "'`() -/,&[]@:." })) new Error("L'id contient des caractères invalides");
+   } catch (erreur) {
+    console.error("ERROR controller/routing/soutenance.js getUniqueSoutenancePage() : " + erreur);
+    return res.status(400).json(erreur.message);
+  }
+
   const eleve_soutenance = await CompteModel.findOne({ id: req.params.id });
   var soutenance = await SoutenanceModel.findOne({ id_organisateur: req.params.id });;
-  if (!soutenance){
+  if (!soutenance)
     soutenance = await EntretienModel.findOne({ id_organisateur: req.params.id });
-  }
 
   res.render("pages/soutenanceUnique", {
     estConnecte: true,

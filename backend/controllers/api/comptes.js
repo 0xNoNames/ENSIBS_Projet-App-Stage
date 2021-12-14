@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import validator from "validator";
+import sanitizeMDB from "mongo-sanitize";
 
 import CompteModel from "../../models/compte.js";
 import CvModel from "../../models/cv.js";
@@ -19,10 +20,9 @@ dotenv.config({ path: "../.env" });
 export const getComptes = async (req, res) => {
   try {
     const comptes = await CompteModel.find();
-    console.log(comptes);
     res.status(200).json(comptes);
   } catch (erreur) {
-    console.log("getComptes() from /controllers/api/comptes.js : ", erreur);
+    console.error("ERROR backend/controllers/api/comptes.js #getcomptes() : ", erreur);
     res.erreur(404).json({ message: erreur.message });
   }
 };
@@ -37,17 +37,16 @@ export const createCompte = async (req, res) => {
   if (!nom || !prenom || !email || !mot_de_passe || !statut) return res.status(400).json({ message: "Remplissez tous les champs." });
 
   try {
-    if (!validator.isAlpha(nom, "fr-FR", { ignore: "-'" })) return res.status(400).json({ message: "Le nom n'est pas valide" });
+    try {
+      if (!validator.isAlpha(nom, "fr-FR", { ignore: "-'" })) new Error("Le nom contient des caractères invalides");
+      if (!validator.isAlpha(prenom, "fr-FR", { ignore: "-'" })) new Error("Le prénom contient des caractères invalides");
+      if (!validator.isEmail(email)) new Error("L'email contient des caractères invalide ou est malformé");
+    } catch (erreur) {
+      console.error("ERROR backend/controllers/api/comptes.js #createCompte() : " + erreur);
+      return res.status(400).json(erreur.message);
+    }
 
-    if (!validator.isAlpha(prenom, "fr-FR", { ignore: "-'" })) return res.status(400).json({ message: "Le nom n'est pas valide" });
-
-    const emailRegex = new RegExp("[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
-
-    if (!emailRegex.test(email)) return res.status(400).json({ message: "L'adresse mail est mal formée." });
-
-    if (!validator.isEmail(email)) return res.status(400).json({ message: "L'adresse mail n'est pas valide." });
-
-    email = validator.normalizeEmail(email);
+    mot_de_passe = sanitizeMDB(mot_de_passe);
 
     const mongoCompte = await CompteModel.findOne({ email });
 
@@ -69,7 +68,7 @@ export const createCompte = async (req, res) => {
 
     res.status(200).send({ alert: true, message: "Un email de vérification vous a été envoyé, il expirera après un jour. Si vous n'avez pas reçu l'email de vérification, vérifiez vos spam ou aller sur la page d'AIDE." });
   } catch (erreur) {
-    console.log("createCompte() from /controllers/api/comptes.js : ", erreur);
+    console.error("ERROR backend/controllers/api/comptes.js #createCompte() : ", erreur);
     res.status(500).json({ message: "Erreur interne." });
   }
 };
@@ -80,9 +79,11 @@ export const updateCompteMail = async (req, res) => {
   }
   const nouveauEmail = req.body.email;
 
-  // VALIDATE EMAIL
-  if (nouveauEmail == "") {
-    return res.status(400).json({ message: "L'email est mal formée." });
+  try {
+    if (!validator.isEmail(nouveauEmail) || nouveauEmail == "") new Error("L'email contient des caractères invalide ou est malformé");
+  } catch (erreur) {
+    console.error("ERROR backend/controllers/api/comptes.js #updateCompteMail() : " + erreur);
+    return res.status(400).json(erreur.message);
   }
 
   const mongoCompte = await CompteModel.findOne({ email: nouveauEmail });
@@ -99,7 +100,7 @@ export const updateCompteMail = async (req, res) => {
 
     validation = await ValidationModel.create({ _compteId: req.compte._id, token: crypto.randomBytes(16).toString("hex") });
 
-    await envoyerMail(req.body.email, "Mail de vérification - ENSIBS", "Bonjour MM./M. " + req.compte.nom + ",<br><br>" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : <br>http://" + req.headers.host + "/api/comptes/valider/" + req.compte.id + "/" + validation.token + "<br><br>Cordialement.<br>");
+    await envoyerMail(nouveauEmail, "Mail de vérification - ENSIBS", "Bonjour MM./M. " + req.compte.nom + ",<br><br>" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : <br>http://" + req.headers.host + "/api/comptes/valider/" + req.compte.id + "/" + validation.token + "<br><br>Cordialement.<br>");
 
     res.cookie("token", "", {
       httpOnly: true,
@@ -109,7 +110,7 @@ export const updateCompteMail = async (req, res) => {
     });
     res.status(200).send({ alert: true, message: "Veuillez vérifier votre compte via l'email de vérification qui vous a été envoyé, il expirera après un jour. Si vous n'avez pas reçu l'email de vérification, vérifiez vos spam ou aller sur la page d'AIDE." });
   } catch (erreur) {
-    console.log("updateCompteMail() from /controllers/api/comptes.js :", erreur);
+    console.error("ERROR backend/controllers/api/comptes.js #updateCompteMail() : ", erreur);
     res.status(500).json({ message: "Erreur interne." });
   }
 };
@@ -120,8 +121,8 @@ export const updateCompteMotDePasse = async (req, res) => {
   }
 
   try {
-    const ancienMDP = req.body.ancienMDP;
-    const nouveauMDP = req.body.nouveauMDP;
+    const ancienMDP = sanitizeMDB(req.body.ancienMDP);
+    const nouveauMDP = sanitizeMDB(req.body.nouveauMDP);
 
     const mongoCompte = await CompteModel.findOne({ _id: req.compte.id });
 
@@ -149,7 +150,7 @@ export const updateCompteMotDePasse = async (req, res) => {
     });
     res.status(200).send({ alert: true, message: "Votre mot de passe a bien été modifié, veuillez vous reconnecter." });
   } catch (erreur) {
-    console.log("updateCompteMotDePasse() from /controllers/api/comptes.js :", erreur);
+    console.error("ERROR backend/controllers/api/comptes.js #updateCompteMotDePasse() : ", erreur);
     res.status(500).json({ message: "Erreur interne." });
   }
 };
@@ -164,33 +165,55 @@ export const deleteCompte = async (req, res) => {
     await MotivationModel.deleteOne({ id_eleve: id });
     await SoutenanceModel.deleteOne({ id_organisateur: id });
 
+    try {
+      if (!validator.isEmail(req.params.email) || req.params.email == "") new Error("L'email contient des caractères invalide ou est malformé");
+    } catch (erreur) {
+      console.error("ERROR backend/controllers/api/comptes.js #deleteCompte() : " + erreur);
+      return res.status(400).json(erreur.message);
+    }
+
     await envoyerMail(req.params.email, "Votre compte a été supprimé par un administrateur - ENSIBS", "Bonjour,<br><br>Votre compte a été supprimé par un administrateur, veuillez recréer un compte ou contacter un administrateur via le formulaire de contact du site.<br><br>Cordialement.<br>");
 
     res.sendStatus(200);
   } catch (erreur) {
-    console.log("deleteCompte() from /controllers/api/comptes.js : ", erreur);
+    console.error("ERROR backend/controllers/api/comptes.js #deleteCompte() : ", erreur);
     res.status(500).json({ message: "Erreur interne." });
   }
 };
 
 export const deleteAnyCompte = async (req, res) => {
   try {
+    try {
+      if (!validator.isEmail(req.params.email) || req.params.email == "") new Error("L'email contient des caractères invalide ou est malformé");
+    } catch (erreur) {
+      console.error("ERROR backend/controllers/api/comptes.js #deleteAnyCompte() : " + erreur);
+      return res.status(400).json(erreur.message);
+    }
+
     await CompteModel.deleteOne({ email: req.params.email });
     await envoyerMail(req.params.email, "Votre compte a bien été supprimé - ENSIBS", "Bonjour,<br><br>Vous avez supprimé votre compte, veuillez recréer un compte ou contacter un administrateur via le formulaire de contact du site s'il s'agit d'une erreur.<br><br>Cordialement.<br>");
     res.status(200).send({ message: "OK" });
   } catch (erreur) {
-    console.log("deleteAnyCompte() from /controllers/api/comptes.js : ", erreur);
+    console.error("ERROR backend/controllers/api/comptes.js #deleteAnyCompte() : ", erreur);
     res.status(500).send({ message: "Erreur interne." });
   }
 };
 
 export const attribuerCompte = async (req, res) => {
   try {
+
+    try {
+      if (!validator.isEmail(req.params.email) || req.params.email == "") new Error("L'email contient des caractères invalide ou est malformé");
+    } catch (erreur) {
+      console.error("ERROR backend/controllers/api/comptes.js #attribuerCompte() : " + erreur);
+      return res.status(400).json(erreur.message);
+    }
+
     await CompteModel.updateOne({ email: req.params.email }, { $set: { estAttribue: true } });
     await envoyerMail(req.params.email, "Votre compte a été validé - ENSIBS", "Bonjour,<br><br>Votre compte a été validé par un administrateur, connectez-vous pour ajouter votre CV via la page Compte.<br><br>Cordialement.<br>");
     res.status(200).send({ message: "OK" });
   } catch (erreur) {
-    console.log("attribuerCompte() from /controllers/api/comptes.js : ", erreur);
+    console.error("ERROR backend/controllers/api/comptes.js #attribuerCompte(): ", erreur);
     res.status(500).send({ message: "Erreur interne." });
   }
 };
@@ -200,7 +223,7 @@ export const getAttribuerComptes = async (req, res) => {
     const comptesAttribuer = await CompteModel.find({ estAttribue: false, estVerifie: true });
     res.status(200).json(comptesAttribuer);
   } catch (erreur) {
-    console.log("getAttribuerCompte() from /controllers/api/comptes.js : ", erreur);
+    console.error("ERROR backend/controllers/api/comptes.js #getAttribuerCompte() : ", erreur);
     res.status(500).send({ message: "Erreur interne." });
   }
 };
@@ -215,29 +238,39 @@ export const deleteCompteDeconnexion = async (req, res) => {
     });
     res.sendStatus(200);
   } else {
+    console.error("ERROR backend/controllers/api/comptes.js #deleteCompteDeconnexion()");
     res.sendStatus(400);
   }
 };
 
 export const postCompteConnexion = async (req, res) => {
-  if (req.estConnecte) {
+  if (req.estConnecte)
     return res.redirect("/compte");
-  }
 
   const { email, mot_de_passe } = req.body;
 
-  if (!email || !mot_de_passe) return res.status(400).json({ message: "Remplissez tous les champs." });
+
+  if (!email || !mot_de_passe) return res.status(400).json({ message: "Remplissez tous les champs" });
+
+  try {
+    if (!validator.isEmail(email)) new Error("L'email contient des caractères invalide ou est malformé");
+  } catch (erreur) {
+    console.error("ERROR backend/controllers/api/comptes.js #postCompteConnexion() : " + erreur);
+    return res.status(400).json(erreur.message);
+  }
+
+  mot_de_passe = sanitizeMDB(mot_de_passe);
 
   try {
     const mongoCompte = await CompteModel.findOne({ email });
 
-    if (!mongoCompte) return res.status(400).json({ message: "Email ou mot de passe invalide." });
+    if (!mongoCompte) return res.status(400).json({ message: "Email ou mot de passe invalide" });
 
     const verifMotDePasse = await bcrypt.compare(mot_de_passe, mongoCompte.mot_de_passe);
 
-    if (!verifMotDePasse) return res.status(400).json({ message: "Email ou mot de passe invalide." });
+    if (!verifMotDePasse) return res.status(400).json({ message: "Email ou mot de passe invalide" });
 
-    if (!mongoCompte.estVerifie) return res.status(400).json({ message: "Veuillez vérifier votre compte." });
+    if (!mongoCompte.estVerifie) return res.status(400).json({ message: "Veuillez vérifier votre compte" });
 
     /* On créer le JWT */
     const token = jwt.sign({ id: mongoCompte.id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
@@ -252,13 +285,22 @@ export const postCompteConnexion = async (req, res) => {
     });
     res.status(200).json({ message: "OK" });
   } catch (erreur) {
-    console.log("postConnexion() from /controllers/api/comptes.js : ", erreur);
+    console.error("ERROR backend/controllers/api/comptes.js #postConnexion() : ", erreur);
     res.status(500).json({ message: "Erreur interne." });
   }
 };
 
 export const getCompteValider = async (req, res) => {
   try {
+
+    try {
+      if (!validator.isAlphanumeric(req.params.id, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("L'id contient des caractères invalides");
+      if (!validator.isAlphanumeric(req.params.token, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("Le token contient des caractères invalides");
+    } catch (erreur) {
+      console.error("ERROR backend/controllers/api/comptes.js #getCompteValider() : " + erreur);
+      return res.status(400).json(erreur.message);
+    }
+
     const validation = await ValidationModel.findOne({ _compteId: req.params.id, token: req.params.token });
     if (!validation) {
       return res.status(400).send({ message: "Votre lien de vérification a peut-être expiré, veuillez cliquer sur le bouton suivant pour renvoyer l'e-mail de vérification :  <a href='/compte/aide/' class='text-white text-4xl'>AIDE</a>" });
@@ -278,12 +320,20 @@ export const getCompteValider = async (req, res) => {
     await ValidationModel.findByIdAndRemove(validation._id);
     return res.redirect("/compte/connexion");
   } catch (erreur) {
-    console.log("getValiderCompte() from /controllers/api/comptes.js : ", erreur);
+    console.error("ERROR backend/controllers/api/comptes.js #getValiderCompte() : ", erreur);
     res.status(500).send({ message: "Erreur interne." });
   }
 };
 
 export const postCompteAideValidation = async (req, res) => {
+
+  try {
+    if (!validator.isEmail(req.body.email)) new Error("L'email contient des caractères invalides");
+  } catch (erreur) {
+    console.error("ERROR backend/controllers/api/offres.js #postCompteAideValidation() : " + erreur);
+    return res.status(400).json(erreur.message);
+  }
+
   const compte = await CompteModel.findOne({ email: req.body.email });
 
   if (!compte) {
@@ -320,27 +370,38 @@ export const postCompteAideOublie = async (req, res) => {
 export const updateLinkedin = async (req, res) => {
   var json = JSON.parse(req.body);
   try {
+    if (!validator.isEmail(req.compte.email)) new Error("L'email contient des caractères invalide ou est malformé");
+  } catch (erreur) {
+    console.error("ERROR backend/controllers/api/comptes.js #updateCompteLinkedin() : ", erreur);
+    res.status(500).json({ message: erreur.message });
+  }
+
+  try {
     const mongoCompte = await CompteModel.findOne({ email: req.compte.email });
-
-    if (!mongoCompte) {
-      return res.status(400).json({ message: "Aucun compte trouvé." });
-    }
+    if (!mongoCompte) new Error("Aucun compte trouvé");
     await CompteModel.updateOne({ _id: req.compte.id }, { push: { off: json.linkedin } });
-
     res.status(200).send({ alert: true, message: "Votre lien LinkedIn a bien été modifié." });
   } catch (erreur) {
-    console.log("updateCompteLinkedin() from /controllers/api/comptes.js :", erreur);
-    res.status(500).json({ message: "Erreur interne." });
+    console.error("ERROR backend/controllers/api/comptes.js #updateCompteLinkedin() : ", erreur);
+    res.status(500).json({ message: erreur.message });
   }
 };
 
 export const postSauvegardeOffre = async (req, res) => {
   var id_offre = req.body.id;
+
+  try {
+    if (!validator.isAlphanumeric(id_offre, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("L'id contient des caractères invalides");
+  } catch (erreur) {
+    console.error("ERROR backend/controllers/api/comptes.js #updateCompteLinkedin() : ", erreur);
+    res.status(500).json({ message: erreur.message });
+  }
+
   try {
     await CompteModel.updateOne({ _id: req.compte.id }, { $set: { offres_sauvegardees: id_offre } });
     res.status(200).send({ alert: true, message: "L'offre a bien été sauvegardé." });
   } catch (erreur) {
-    console.log("updateCompteLinkedin() from /controllers/api/comptes.js :", erreur);
+    console.error("ERROR backend/controllers/api/comptes.js #updateCompteLinkedin() : ", erreur);
     res.status(500).json({ message: "Erreur interne." });
   }
 };

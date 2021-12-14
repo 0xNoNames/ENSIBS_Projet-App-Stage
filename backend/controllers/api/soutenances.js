@@ -27,7 +27,7 @@ export const getSoutenances = async (req, res) => {
         var entretienResult = { title: title, start: start, end: endDate, id: id };
         result_entretiens.push(entretienResult);
       } catch (erreur) {
-        console.log(erreur);
+        console.error("ERROR backend/controllers/api/soutenances.js #getSoutenances() : " + erreur);
       }
     }
     res.status(200).json(JSON.stringify({ result: result_entretiens }));
@@ -56,7 +56,7 @@ export const getSoutenances = async (req, res) => {
 
         result_soutenances.push(soutenanceResult);
       } catch (erreur) {
-        console.log(erreur);
+        console.error("ERROR backend/controllers/api/soutenances.js #getSoutenances() : " + erreur);
       }
     }
     res.status(200).json(JSON.stringify({ result: result_soutenances }));
@@ -87,7 +87,7 @@ export const getSoutenances = async (req, res) => {
 
         result_soutenances.push(soutenanceResult);
       } catch (erreur) {
-        console.log(erreur);
+        console.error("ERROR backend/controllers/api/soutenances.js #getSoutenances() : " + erreur);
       }
     }
 
@@ -111,13 +111,10 @@ export const getSoutenances = async (req, res) => {
 
         result_soutenances.push(soutenanceResult);
       } catch (erreur) {
-        console.log(erreur);
+        console.error("ERROR backend/controllers/api/soutenances.js #getSoutenances() : " + erreur);
       }
     }
-
     res.status(200).json(JSON.stringify({ result: result_soutenances }));
-
-
   }
 };
 
@@ -131,21 +128,19 @@ export const createSoutenance = async (req, res) => {
   var confidentiel_value = json.confidentiel;
   var nom_soutenance = json.nom_soutenance;
 
-
   try {
-    if (!lieu === undefined && !validator.isAlphanumeric(lieu, "fr-FR", { ignore: " '-_" })) res.status(400).json({ message: "Le nom du lieu contient des caracteres non valides" });
+    if (!lieu === undefined || !validator.isAlphanumeric(lieu, "fr-FR", { ignore: " '-_" })) res.status(400).json({ message: "Le nom du lieu contient des caracteres non valides" });
 
     //if (!validator.isNumeric(date, { ignore: "-" })) res.status(400).json({ message: "La date contient des caracteres non valide" });
     //if (!validator.isNumeric(hour, { ignore: ":" })) res.status(400).json({ message: "L'heure contient des caracteres non valide" });
   } catch (erreur) {
-    console.log(erreur);
+    console.error("ERROR backend/controllers/api/soutenances.js #createSoutenance() : " + erreur);
   }
 
-  if (confidentiel_value == "on") {
+  if (confidentiel_value == "on")
     var confidentiel = true;
-  } else {
+  else 
     var confidentiel = false;
-  }
 
   var id = req.compte.id;
   var email = req.compte.email;
@@ -179,7 +174,7 @@ export const createSoutenance = async (req, res) => {
       }
     }
   } catch (erreur) {
-    console.log(erreur);
+    console.error("ERROR backend/controllers/api/soutenances.js #createSoutenance() : " + erreur);
     res.status(400);
   }
 

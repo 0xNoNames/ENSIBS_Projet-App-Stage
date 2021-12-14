@@ -1,9 +1,16 @@
 import ConfigModel from "../../models/config.js";
-import CompteModel from "../../models/compte.js";
 
 export const postUpdateDateSoutenances = async (req, res) => {
     // check si on a deja des infos dans la BDD
     var length = await ConfigModel.find().count()
+
+    try {
+        if (!validator.isAlphaNumeric(req.body.start, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("Le début contient des caractères invalides");
+        if (!validator.isAlphaNumeric(req.body.end, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("La fin contient des caractères invalides");
+    } catch (erreur) {
+        console.error("ERROR backend/controllers/api/comptes.js #postUpdateDateSoutenances() : " + erreur);
+        return res.status(400).json(erreur.message);
+    }
 
     if (length == 0) {
         // On doit créer la table
@@ -18,13 +25,20 @@ export const postUpdateDateSoutenances = async (req, res) => {
 }
 
 
-export const postUpdateJury = async(req,res) => {
+export const postUpdateJury = async (req, res) => {
 
     var juryData = req.body.jury
-    
+
+    try {
+        if (!validator.isAlphanumeric(juryData, "fr-FR", { ignore: "'() -/,&[]@:." })) new Error("L'id contient des caractères invalides");
+    } catch (erreur) {
+        console.error("ERROR backend/controllers/api/comptes.js #postUpdateJury() : " + erreur);
+        return res.status(400).json(erreur.message);
+    }
+
     // We update the current table 
     var all_config = await ConfigModel.find()
     var id = all_config[0].id
-    await ConfigModel.findOneAndUpdate({ _id: id }, { $set: { nombre_jurys : juryData  } })
-        
+    await ConfigModel.findOneAndUpdate({ _id: id }, { $set: { nombre_jurys: juryData } })
+
 }

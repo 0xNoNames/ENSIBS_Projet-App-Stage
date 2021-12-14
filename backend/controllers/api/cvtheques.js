@@ -14,18 +14,15 @@ export const createCV = async (req, res) => {
   console.log("CV API.JS : upload Unique CV");
   var binaire = req.body;
   var id_eleve = req.compte.id;
-  var email = req.compte.email;
   var formation = req.compte.statut;
-  //New fields
-  //var linkedin = req.body.linkedin;
-  //var description = req.body.description;
+
+  // VALIDER LE BINAIRE
 
   try {
     const mongoCompte = await CompteModel.findOne({ id_eleve });
 
-    if (!mongoCompte) {
+    if (!mongoCompte)
       return res.status(400).json({ message: "Aucun compte trouvé." });
-    }
 
     const cv = await CVModel.findOne({ id_eleve });
 
@@ -37,7 +34,7 @@ export const createCV = async (req, res) => {
     }
     res.status(200).json({ message: "Le CV a bien été envoyée." });
   } catch (erreur) {
-    console.log(erreur);
+    console.error("ERROR backend/controllers/api/cvtheques.js #createCV() : " + erreur);
     res.erreur(500).json({ message: "Erreur interne." });
   }
 };
@@ -46,27 +43,23 @@ export const getCV = async (req, res) => {
   console.log("CV API.JS : REQUEST Unique CV");
   var id_user = req.compte.id;
   var email = req.compte.email;
-  
+
   try {
     const mongoCompte = await CompteModel.findOne({ email });
 
-    if (!mongoCompte) {
+    if (!mongoCompte)
       return res.status(400).json({ message: "Aucun compte trouvé." });
-    }
 
     const pdfBinary = await CVModel.findOne({ id_user });
 
-    if (!pdfBinary) {
+    if (!pdfBinary)
       return res.status(400).json({ message: "Pas de CV trouvé." });
-    }
-    //console.log("CV API.JS : "+ pdfBinary)
-    var username = mongoCompte._id;
+
     var binary = pdfBinary.binaire;
-    //console.log(binary)
     res.contentType("pdf");
     res.end(binary, "binary");
   } catch (erreur) {
-    console.log(erreur);
+    console.error("ERROR backend/controllers/api/cvtheques.js #getCV() : " + erreur);
     res.erreur(404).json({ message: "Erreur interne." });
   }
 };
