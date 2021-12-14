@@ -44,6 +44,10 @@
           <a href="/entretiens" class="py-4 px-3 text-lg <% if (page == "Entretiens") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">ENTRETIENS DE MOTIVATION</a>
            <% } %> 
 
+          <% if (statut == "Administrateur") { %> 
+            <a href="/admin" class="py-4 px-3 text-lg <% if (page == "CVthèque") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">ADMIN</a>
+          <% } %> 
+
           <a href="/contact" class="py-4 px-3 text-lg <% if (page == "Contact") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">CONTACT</a>
         <% } else { %>
           <a href="/" class="py-4 px-2 text-lg <% if (page == "Accueil") { %> text-green-ensibs-light <% } else { %> text-gray-300 <% } %> font-light hover:text-white">ACCUEIL</a>

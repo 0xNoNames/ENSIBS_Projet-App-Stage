@@ -19,7 +19,7 @@ export const getCvsPage = async (req, res) => {
       estAttribue: req.compte.estAttribue,
     });
   } catch (error) {
-    console.log("controllers/routing/cvtheque.js : ", error);
+    console.error("ERROR backend/controllers/routing/cvtheque.js @ getCvsPage() : ", error);
     res.status(500).json({ message: "Erreur interne." });
   }
 };

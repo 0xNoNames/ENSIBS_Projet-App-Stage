@@ -11,21 +11,19 @@ export const postMotivation = async (req, res) => {
   try {
     const mongoCompte = await CompteModel.findOne({ email });
 
-    if (!mongoCompte) {
+    if (!mongoCompte)
       return res.status(400).json({ message: "Aucun compte trouvé." });
-    }
 
     const motivation = await MotivationModel.findOne({ id_eleve });
 
-    if (motivation) {
+    if (motivation)
       await MotivationModel.updateOne({ id_eleve: id_eleve }, { $set: { binaire: binaire } });
-    } else {
+    else
       await MotivationModel.create({ binaire: binaire, id_eleve: id_eleve, formation: formation });
-    }
 
     res.status(200).json({ message: "La lettre de motivation a bien été envoyée." });
   } catch (erreur) {
-    console.log(erreur);
+    console.error("ERROR backend/controllers/api/motivation.js #postMotivation() : " + erreur);
     res.status(500).json({ message: "Erreur interne." });
   }
 };
@@ -47,14 +45,11 @@ export const getMotivation = async (req, res) => {
     if (!pdfBinary) {
       return res.status(400).json({ message: "Pas de CV trouvé." });
     }
-    //console.log("CV API.JS : "+ pdfBinary)
-    var username = mongoCompte._id;
     var binary = pdfBinary.binaire;
-    //console.log(binary)
     res.contentType("pdf");
     res.end(binary, "binary");
   } catch (erreur) {
-    console.log(erreur);
+    console.error("ERROR backend/controllers/api/motivation.js #getMotivation() : " + erreur);
     res.erreur(404).json({ message: "Erreur interne." });
   }
 };
