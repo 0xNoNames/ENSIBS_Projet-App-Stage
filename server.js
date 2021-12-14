@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 import path from "path";
 import { verifierToken } from "./backend/middleware/auth.js";
 import helmet from "helmet";
-
+import rateLimit from "express-rate-limit";
 
 // -- -- -- -- -- -- -- -- --  -- ROUTES -- -- -- -- -- -- -- -- --  -- \\
 
@@ -60,6 +60,12 @@ app.use(
   })
 );
 app.disable('x-powered-by');
+
+const apiLimiter = rateLimit({
+  max: 50
+});
+
+app.use("/api/", apiLimiter);
 
 // -- -- -- -- -- -- -- -- --  -- DATABASE -- -- -- -- -- -- -- -- --  -- \\
 
