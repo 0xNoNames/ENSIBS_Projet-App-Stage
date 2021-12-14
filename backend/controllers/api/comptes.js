@@ -109,13 +109,7 @@ export const updateCompteMail = async (req, res) => {
 
     await envoyerMail(nouveauEmail, "Mail de vérification - ENSIBS", "Bonjour MM./M. " + req.compte.nom + ",<br><br>" + "Veuillez vérifier votre compte en cliquant sur le lien suivant : <br>http://" + req.headers.host + "/api/comptes/valider/" + req.compte.id + "/" + validation.token + "<br><br>Cordialement.<br>");
 
-    res.cookie("token", "", {
-      httpOnly: true,
-      secure: true,
-      expires: new Date(0),
-      maxAge: parseInt(process.env.JWT_EXPIRES_IN),
-    });
-    res.status(200).send({ alert: true, message: "Veuillez vérifier votre compte via l'email de vérification qui vous a été envoyé, il expirera après un jour. Si vous n'avez pas reçu l'email de vérification, vérifiez vos spam ou aller sur la page d'AIDE." });
+    res.clearCookie("token").status(200).send({ alert: true, message: "Veuillez vérifier votre compte via l'email de vérification qui vous a été envoyé, il expirera après un jour. Si vous n'avez pas reçu l'email de vérification, vérifiez vos spam ou aller sur la page d'AIDE." });
   } catch (erreur) {
     console.error("ERROR backend/controllers/api/comptes.js #updateCompteMail() : ", erreur);
     res.status(500).json({ message: "Erreur interne." });
@@ -155,7 +149,7 @@ export const updateCompteMotDePasse = async (req, res) => {
       expires: new Date(0),
       maxAge: parseInt(process.env.JWT_EXPIRES_IN),
     });
-    res.status(200).send({ alert: true, message: "Votre mot de passe a bien été modifié, veuillez vous reconnecter." });
+    res.clearCookie("token").status(200).send({ alert: true, message: "Votre mot de passe a bien été modifié, veuillez vous reconnecter." });
   } catch (erreur) {
     console.error("ERROR backend/controllers/api/comptes.js #updateCompteMotDePasse() : ", erreur);
     res.status(500).json({ message: "Erreur interne." });
@@ -233,13 +227,7 @@ export const getAttribuerComptes = async (req, res) => {
 
 export const deleteCompteDeconnexion = async (req, res) => {
   if (req.estConnecte) {
-    res.cookie("token", "", {
-      httpOnly: true,
-      secure: true,
-      expires: new Date(0),
-      maxAge: parseInt(process.env.JWT_EXPIRES_IN),
-    });
-    res.sendStatus(200);
+    res.clearCookie("token").sendStatus(200);
   } else {
     console.error("ERROR backend/controllers/api/comptes.js #deleteCompteDeconnexion()");
     res.sendStatus(400);
