@@ -105,6 +105,21 @@ export const estEntreprise = (req, res, next) => {
   }
 };
 
+export const estEnseignant = (req,res,next) => {
+  if (req.compte.estAttribue === true && req.estConnecte === true && (req.compte.statut == "Administrateur" || req.compte.statut == "Enseignant")) {
+    return next();
+  } else {
+    console.error("AUTH.JS : Statut enseignant nécéssaire.");
+    return res.render("pages/erreur401", {
+      estConnecte: true,
+      page: "Erreur 401",
+      prenom: req.compte.prenom,
+      statut: req.compte.statut,
+      estAttribue: req.compte.estAttribue,
+    });
+  }
+}
+
 export const estCyberlog = (req, res, next) => {
   if (req.compte.estAttribue === true && req.estConnecte === true && (req.compte.statut == "Administrateur" || req.compte.statut == "CyberLog")) {
     return next();

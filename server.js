@@ -17,6 +17,7 @@ import soutenancesRoutesAPI from "./backend/routes/api/soutenances.js";
 import motivationRoutesAPI from "./backend/routes/api/motivation.js";
 import contactRoutesAPI from "./backend/routes/api/contact.js";
 import adminRoutesAPI from "./backend/routes/api/admin.js";
+import contraintesRoutesAPI from ".//backend/routes/api/contraintes.js"
 
 // -- -- -- non-API -- -- -- \\
 import contactRoutes from "./backend/routes/routing/contact.js";
@@ -26,6 +27,7 @@ import offresRoutes from "./backend/routes/routing/offres.js";
 import soutenancesRoutes from "./backend/routes/routing/soutenance.js";
 import motivationRoutes from "./backend/routes/routing/motivation.js";
 import adminRoutes from "./backend/routes/routing/admin.js";
+import contraintesRoutes from "./backend/routes/routing/contraintes.js";
 
 // -- -- -- -- -- -- -- -- --  -- CONFIG -- -- -- -- -- -- -- -- --  -- \\
 
@@ -72,6 +74,7 @@ app.use("/api/soutenances", soutenancesRoutesAPI);
 app.use("/api/motivations", motivationRoutesAPI);
 app.use("/api/contact", contactRoutesAPI);
 app.use("/api/admin", adminRoutesAPI);
+app.use("/api/contraintes", contraintesRoutesAPI);
 
 // Serve static assets if in production
 // if (process.env.NODE_ENV === "production") {
@@ -119,6 +122,8 @@ app.use("/motivation", motivationRoutes);
 
 // Page d'administation
 app.use("/admin",adminRoutes)
+
+app.use("/contraintes",contraintesRoutes)
 
 // Page d'erreur 404 (mettre en dernière route)
 app.get("*", verifierToken, (req, res) => {
