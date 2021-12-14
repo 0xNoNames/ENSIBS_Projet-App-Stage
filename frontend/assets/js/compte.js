@@ -119,9 +119,9 @@ const sendDataAnnee = async() => {
   try {
     const response = await fetch("/api/comptes/annee", {
       method: "PUT",
+      body: JSON.stringify({dataAnnee : dataAnnee}),
       mode: "cors",
-      credentials: "include",
-      body: dataAnnee,
+      credentials: "include"
     });
     const data = await response.json();
 

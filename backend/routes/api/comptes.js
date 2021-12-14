@@ -126,6 +126,11 @@ router.get("/attribuer/", verifierToken, estVerifie, estAdministrateur, getAttri
  */
 router.post("/sauvegardeOffre/", verifierToken, estVerifie, estEtudiant, postSauvegardeOffre);
 
+/**
+ * @route GET /api/compte/annee
+ * @desc Permet de modifier l'année
+ * @access Etudiant
+ */
 router.put("/annee/",verifierToken, estVerifie, estEtudiant, updateAnnee);
 
 export default router;

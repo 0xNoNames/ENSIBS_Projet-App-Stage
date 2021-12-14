@@ -247,7 +247,7 @@ export const postCompteConnexion = async (req, res) => {
   if (req.estConnecte)
     return res.redirect("/compte");
 
-  const { email, mot_de_passe } = req.body;
+  var { email, mot_de_passe } = req.body;
 
 
   if (!email || !mot_de_passe) return res.status(400).json({ message: "Remplissez tous les champs" });
@@ -407,7 +407,7 @@ export const postSauvegardeOffre = async (req, res) => {
 };
 
 export const updateAnnee = async (req,res) => {
-  var year = req.body;
+  var year = JSON.parse(req.body);
   try {
     const mongoCompte = await CompteModel.findOne({ email: req.compte.email });
     if (!mongoCompte) {
