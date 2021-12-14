@@ -11,6 +11,11 @@ const CompteSchema = new Schema({
     enum: ["CyberLog", "CyberData", "Entreprise", "Administrateur"],
     required: true,
   },
+  annee: {
+    type: String,
+    enum: ["4A", "5A"],
+    required:false
+  },
   estVerifie: { type: Boolean, default: false },
   estAttribue: { type: Boolean, default: false },
   date_inscription: { type: Date, default: Date.now },

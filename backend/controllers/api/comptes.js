@@ -344,3 +344,18 @@ export const postSauvegardeOffre = async (req, res) => {
     res.status(500).json({ message: "Erreur interne." });
   }
 };
+
+export const updateAnnee = async (req,res) => {
+  var year = req.body;
+  try {
+    const mongoCompte = await CompteModel.findOne({ email: req.compte.email });
+    if (!mongoCompte) {
+      return res.status(400).json({ message: "Aucun compte trouvé." });
+    }
+    await CompteModel.updateOne({ _id: req.compte.id }, { $set: { annee: year } });
+    res.status(200).send({ alert: true, message: "Votre Année a bien été modifié." });
+  } catch (erreur) {
+    console.log("updateCompteLinkedin() from /controllers/api/comptes.js :", erreur);
+    res.status(500).json({ message: "Erreur interne." });
+  }
+}

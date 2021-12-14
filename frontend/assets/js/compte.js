@@ -18,12 +18,22 @@ const supprimerCompte = async () => {
   }
 };
 
+const ouvrirPopupAnnee = () => {
+  document.getElementById("popupAnnee").style.display = "block";
+  document.getElementById("popupMail").style.display = "none";
+  document.getElementById("popupMDP").style.display = "none";
+  document.getElementById("popupCV").style.display = "none";
+  document.getElementById("popupLM").style.display = "none";
+  document.getElementById("popupLinkedIn").style.display = "none";
+}
+
 const ouvrirPopupMail = () => {
   document.getElementById("popupMail").style.display = "block";
   document.getElementById("popupMDP").style.display = "none";
   document.getElementById("popupCV").style.display = "none";
   document.getElementById("popupLM").style.display = "none";
   document.getElementById("popupLinkedIn").style.display = "none";
+  document.getElementById("popupAnnee").style.display = "none";
 };
 
 const ouvrirPopupMDP = () => {
@@ -32,6 +42,7 @@ const ouvrirPopupMDP = () => {
   document.getElementById("popupCV").style.display = "none";
   document.getElementById("popupLM").style.display = "none";
   document.getElementById("popupLinkedIn").style.display = "none";
+  document.getElementById("popupAnnee").style.display = "none";
 };
 
 const ouvrirPopupCV = () => {
@@ -40,6 +51,7 @@ const ouvrirPopupCV = () => {
   document.getElementById("popupMDP").style.display = "none";
   document.getElementById("popupLM").style.display = "none";
   document.getElementById("popupLinkedIn").style.display = "none";
+  document.getElementById("popupAnnee").style.display = "none";
 };
 
 const ouvrirPopupLM = () => {
@@ -48,6 +60,7 @@ const ouvrirPopupLM = () => {
   document.getElementById("popupMDP").style.display = "none";
   document.getElementById("popupCV").style.display = "none";
   document.getElementById("popupLinkedIn").style.display = "none";
+  document.getElementById("popupAnnee").style.display = "none";
 };
 
 const ouvrirPopupLinkedIn = () => {
@@ -56,17 +69,24 @@ const ouvrirPopupLinkedIn = () => {
   document.getElementById("popupMDP").style.display = "none";
   document.getElementById("popupCV").style.display = "none";
   document.getElementById("popupLM").style.display = "none";
+  document.getElementById("popupAnnee").style.display = "none";
 };
 
 const fermerPopup = (element) => {
   element.parentNode.parentNode.parentNode.style.display = "none";
 };
 
+const formAnnee = document.getElementById("formAnnee");
 const formMail = document.getElementById("formMail");
 const formMDP = document.getElementById("formMDP");
 const formLM = document.getElementById("formLM");
 const formCV = document.getElementById("formCV");
 const formLinkedIn = document.getElementById("formLinkedIn");
+
+formAnnee.addEventListener("submit", (event) => {
+  event.preventDefault();
+  sendDataAnnee();
+});
 
 formMail.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -92,6 +112,30 @@ formLinkedIn.addEventListener("submit", (event) => {
   event.preventDefault();
   sendDataLinkedIn();
 });
+
+
+const sendDataAnnee = async() => {
+  var dataAnnee = document.getElementById("valueAnnee");
+  try {
+    const response = await fetch("/api/comptes/annee", {
+      method: "PUT",
+      mode: "cors",
+      credentials: "include",
+      body: dataAnnee,
+    });
+    const data = await response.json();
+
+    document.getElementById("messageErreurAnnee").innerHTML = data.message;
+    setTimeout(() => {
+      document.getElementById("messageErreurAnnee").innerHTML = "";
+    }, 5000);
+  } catch (erreur) {
+    document.getElementById("messageErreurAnnee").innerHTML = erreur.message;
+    setTimeout(() => {
+      document.getElementById("messageErreurAnnee").innerHTML = "";
+    }, 5000);
+  }
+}
 
 const sendDataMail = async () => {
   try {

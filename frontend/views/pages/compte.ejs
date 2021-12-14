@@ -25,7 +25,12 @@
         <% if (!estAttribue) { %>
           <p class="my-5 text-red-200">Votre compte n'est pas encore validé,</br>veuillez attendre qu'un administrateur
             le valide.</p>
-          <% } %>
+        <% } %>
+            <% if(statut == "CyberLog" || statut == "CyberData") { %>
+              <button onClick="ouvrirPopupAnnee()"
+              class="py-2 px-3 mt-10 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 rounded-full transition duration-150">Modifier
+              mon année</button>
+            <% } %>
             <button onClick="ouvrirPopupMail()"
               class="py-2 px-3 mt-10 bg-gray-900 bg-opacity-30 hover:bg-opacity-70 rounded-full transition duration-150">Modifier
               mon e-mail</button>
@@ -82,6 +87,29 @@
                   </div>
                   <% } %>
       </div>
+    </div>
+
+    <!-- POPUP CHANGEMENT D'ANNEE-->
+    <div id="popupAnnee"
+      class="px-16 pt-12 pb-8 absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 flex flex-col text-white text-center rounded shadow-2xl backdrop-blur-xl bg-black bg-opacity-20 border border-white border-opacity-50"
+      style="display: none">
+      <form id="formAnnee" class="flex flex-col">
+        <h1 class="text-4xl mb-8 whitespace-nowrap">Modifier mon année</h1>
+
+        <SELECT id="valueAnnee">
+          <Option class="text-black">4A</Option>
+          <Option class="text-black">5A</Option>
+        </SELECT>
+
+        <div class="mt-12 mb-8 flex justify-around">
+          <button
+            class="py-1 px-2 bg-green-500 bg-opacity-50 hover:bg-opacity-70 rounded transition duration-150">Envoyer</button>
+          <button type="button"
+            class="py-1 px-2 bg-red-500 bg-opacity-50 hover:bg-opacity-70 rounded transition duration-150"
+            onclick="fermerPopup(this)">Quitter</button>
+        </div>
+        <span id="messageErreurAnnee" class="text-red-300 font-bold text-base text-center"></span>
+      </form>
     </div>
 
     <!-- POPUP CHANGEMENT DE MAIL -->
