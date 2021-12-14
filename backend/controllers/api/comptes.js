@@ -407,14 +407,15 @@ export const postSauvegardeOffre = async (req, res) => {
 };
 
 export const updateAnnee = async (req,res) => {
-  var year = JSON.parse(req.body);
+  var annee = req.body.dataAnnee;
   try {
     const mongoCompte = await CompteModel.findOne({ email: req.compte.email });
-    if (!mongoCompte) {
+    
+    if (!mongoCompte) 
       return res.status(400).json({ message: "Aucun compte trouvé." });
-    }
-    await CompteModel.updateOne({ _id: req.compte.id }, { $set: { annee: year } });
-    res.status(200).send({ alert: true, message: "Votre Année a bien été modifié." });
+    
+    await CompteModel.updateOne({ _id: req.compte.id }, { $set: { annee: annee } });
+    res.status(200).send({ alert: true, message: "Votre année a bien été modifié." });
   } catch (erreur) {
     console.log("updateCompteLinkedin() from /controllers/api/comptes.js :", erreur);
     res.status(500).json({ message: "Erreur interne." });

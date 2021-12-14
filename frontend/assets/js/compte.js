@@ -114,12 +114,14 @@ formLinkedIn.addEventListener("submit", (event) => {
 });
 
 
-const sendDataAnnee = async() => {
-  var dataAnnee = document.getElementById("valueAnnee");
+const sendDataAnnee = async () => {
+  var select = document.getElementById("valueAnnee");
+  var dataAnnee = select.options[select.selectedIndex].value;
+
   try {
     const response = await fetch("/api/comptes/annee", {
       method: "PUT",
-      body: JSON.stringify({dataAnnee : dataAnnee}),
+      body: JSON.stringify({ dataAnnee: dataAnnee }),
       mode: "cors",
       credentials: "include"
     });
