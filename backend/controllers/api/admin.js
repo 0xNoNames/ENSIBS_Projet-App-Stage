@@ -16,3 +16,15 @@ export const postUpdateDateSoutenances = async (req, res) => {
     }
 
 }
+
+
+export const postUpdateJury = async(req,res) => {
+
+    var juryData = req.body.jury
+    
+    // We update the current table 
+    var all_config = await ConfigModel.find()
+    var id = all_config[0].id
+    await ConfigModel.findOneAndUpdate({ _id: id }, { $set: { nombre_jurys : juryData  } })
+        
+}

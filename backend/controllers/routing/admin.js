@@ -16,6 +16,9 @@ export const getAdminPage = async (req, res) => {
 
         var startSoutenance = config.date_debut_soutenances;
         var finSoutenances = config.date_fin_soutenances;
+        var juryData = config.nombre_jurys;
+
+        var nombre_jours = parseInt(finSoutenances.slice(-2)) - parseInt(startSoutenance.slice(-2))
 
     }
     res.render("pages/admin", {
@@ -26,5 +29,7 @@ export const getAdminPage = async (req, res) => {
         estAttribue: req.compte.estAttribue,
         startSoutenance : startSoutenance,
         finSoutenances: finSoutenances,
+        nombre_jours : nombre_jours,
+        juryData: juryData
     });
 };
