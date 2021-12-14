@@ -16,6 +16,7 @@ import cvsRoutesAPI from "./backend/routes/api/cvs.js";
 import soutenancesRoutesAPI from "./backend/routes/api/soutenances.js";
 import motivationRoutesAPI from "./backend/routes/api/motivation.js";
 import contactRoutesAPI from "./backend/routes/api/contact.js";
+import adminRoutesAPI from "./backend/routes/api/admin.js";
 
 // -- -- -- non-API -- -- -- \\
 import contactRoutes from "./backend/routes/routing/contact.js";
@@ -70,7 +71,7 @@ app.use("/api/cvs", cvsRoutesAPI);
 app.use("/api/soutenances", soutenancesRoutesAPI);
 app.use("/api/motivations", motivationRoutesAPI);
 app.use("/api/contact", contactRoutesAPI);
-
+app.use("/api/admin", adminRoutesAPI);
 
 // Serve static assets if in production
 // if (process.env.NODE_ENV === "production") {
