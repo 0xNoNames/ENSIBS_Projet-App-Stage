@@ -53,17 +53,16 @@ app.use("/static", express.static(path.join(__dirname, "/frontend/assets")));
 
 var corsOptions = {
   origin: 'http://localhost:5000',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200
 }
 
 app.use(cors(corsOptions));
 app.use(express.json({ type: "text/plain", limit: "16mb" }));
 app.use(express.raw({ type: "application/x-www-form-urlencoded", limit: "16mb" }));
-app.use(
-  helmet({
-    contentSecurityPolicy: false,
-  })
-);
+app.use(helmet({
+  contentSecurityPolicy: false,
+}));
+
 app.disable('x-powered-by');
 
 const apiLimiter = rateLimit({
